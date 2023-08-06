@@ -1,0 +1,183 @@
+CONFIG : {
+    "discipline": [
+        {
+            "degree": string,
+            "branches": [string
+            ] // 
+        }
+    ],
+    "organisation_type": [string
+    ],
+    "industry_sector
+    " : [string]
+}
+
+SALARY_DETAILS : {
+    "ctc_gross": string,
+    "ctc_take_home": string,
+    "ctc_bonus_perks": string,
+    "bond_contract": string,
+}
+
+JAF_FORM : {
+    "about_organisation": {
+        "organisation": string,
+        "postal_address": string,
+        "website": URL
+    },
+    "organisation_type": {
+        "options": [string
+        ],
+        "others": string
+    },
+    "industry_sector": {
+        "options": [string
+        ],
+        "others": string
+    },
+    "contact_details": {
+        "head_hr": {
+            "name": string,
+            "email": string,
+            "mobile": string,
+            "phone": string
+        },
+        "first_person_of_contact": {
+            "name": string,
+            "email": string,
+            "mobile": string,
+            "phone": string
+        },
+        "second_person_of_contact": {
+            "name": string,
+            "email": string,
+            "mobile": string,
+            "phone": string
+        },
+    },
+    "job_profile": {
+        "designation": string,
+        "job_description": string,
+        "job_description_pdf": [File
+        ],
+        "place_of_posting": string
+    },
+    "salary_details": {
+        "b_tech": SALARY_DETAILS,
+        "m_tech": SALARY_DETAILS,
+        "m_sc": SALARY_DETAILS,
+        "phd": SALARY_DETAILS,
+    },
+    "selection_process": {
+        "eligibility_criteria": string,
+        "allow_backlog_students": bool,
+        "test_type": {
+            "ppt": bool,
+            "shortlist_from_resume": bool,
+            "written_test": bool,
+            "online_test": bool,
+            "technical_test": bool,
+            "aptitiude_test": bool,
+            "psychometric_test": bool,
+            "group_discussion": bool,
+            "personal_interview": bool,
+        },
+        "test_duration": string,
+        "likely_topics": string,
+        "number_of_rounds": number,
+        "group_discussion_duration": string,
+        "number_of_offers": number,
+        "preferred_period": string,
+        "logistics_requirements": string,
+        "interested_discipline": [
+            {
+                "degree": string,
+                "branches": [string
+                ] // 
+            }
+        ]
+    }
+}
+
+INF_FORM : {
+    "about_organisation": {
+        "organisation": string,
+        "postal_address": string,
+        "website": URL
+    },
+    "organisation_type": {
+        "options": [string
+        ],
+        "others": string
+    },
+    "industry_sector": {
+        "options": [string
+        ],
+        "others": string
+    },
+    "contact_details": {
+        "head_hr": {
+            "name": string,
+            "email": string,
+            "mobile": string,
+            "phone": string
+        },
+        "first_person_of_contact": {
+            "name": string,
+            "email": string,
+            "mobile": string,
+            "phone": string
+        },
+        "second_person_of_contact": {
+            "name": string,
+            "email": string,
+            "mobile": string,
+            "phone": string
+        },
+    },
+    "job_profile": {
+        "job_title": string,
+        "two_month_intern": bool,
+        "six_month_intern": bool,
+        "joint_master_thesis_program": bool,
+        "place_of_posting": string,
+        "job_description": string,
+        "job_destription_pdf": [File
+        ],
+    },
+    "stipend_details": {
+        "stipend_amount": string,
+        "bonus_perks_incentives": string,
+        "accomodation_trip_fare": string,
+        "bond_service_contract": string,
+    },
+    "selection_process": {
+        "eligibility_criteria": number,
+        "allow_backlog_students": bool,
+        "test_type": {
+            "ppt": bool,
+            "shortlist_from_resume": bool,
+            "written_test": bool,
+            "online_test": bool,
+            "technical_test": bool,
+            "aptitiude_test": bool,
+            "psychometric_test": bool,
+            "group_discussion": bool,
+            "personal_interview": bool,
+        },
+        "test_duration": string,
+        "likely_topics": string,
+        "number_of_rounds": number,
+        "group_discussion_duration": number,
+        "number_of_offers": number,
+        "preferred_period": string,
+        "logistics_requirements": string,
+        "interested_discipline": [
+            {
+                "degree": string,
+                "branches": [string
+                ] // 
+            }
+        ]
+    }
+}

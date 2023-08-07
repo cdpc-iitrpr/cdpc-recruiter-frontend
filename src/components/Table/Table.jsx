@@ -1,8 +1,9 @@
 import Table from "react-bootstrap/Table";
+import "./ReusableTable.css"; // Create this CSS file for custom styling
 
 function ReusableTable({ data }) {
   return (
-    <Table responsive>
+    <Table responsive className="custom-table">
       <thead>
         <tr>
           <th>#</th>
@@ -27,10 +28,9 @@ function ReusableTable({ data }) {
 
 export default ReusableTable;
 
-
 // example usage:
 // import React from 'react';
-// import ReusableTable from './ReusableTable';
+// import ReusableTable from './components/Table/Table';
 
 // const tableData = [
 //   { name: 'John', age: 25, city: 'New York' },
@@ -49,3 +49,4 @@ export default ReusableTable;
 // }
 
 // export default App;
+

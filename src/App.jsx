@@ -3,7 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import Header from './components/Header'
 import Landing from './pages/Landing'
+import JAF from './pages/JAF';
 import Email from './pages/Email';
+
 
 function App() {
 

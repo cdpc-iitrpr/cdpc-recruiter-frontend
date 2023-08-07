@@ -4,6 +4,7 @@ import './App.css'
 import Header from './components/Header'
 import Landing from './pages/Landing'
 import Email from './pages/Email';
+import Signup from './pages/Signup';
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
       <div className="App">
         {/* <Header /> */}
         {/* <Landing /> */}
-        <Email />
+        <Signup />
       </div>
     </>
   )

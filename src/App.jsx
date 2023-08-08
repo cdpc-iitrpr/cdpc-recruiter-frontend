@@ -7,6 +7,8 @@ import JAF from './pages/JAF';
 import Email from './pages/Email';
 import Signup from './pages/Signup';
 
+import OrganisationDetails from './pages/OrganisationDetails';
+import InfJobDetails from './pages/InfJobDetails';
 
 function App() {
 
@@ -15,7 +17,7 @@ function App() {
       <div className="App">
         {/* <Header /> */}
         {/* <Landing /> */}
-        <Signup />
+        <InfJobDetails />
       </div>
     </>
   )

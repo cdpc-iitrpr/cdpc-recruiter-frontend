@@ -47,7 +47,7 @@ function InfForm() {
           <h1 className='mb-3'>Organisation Information</h1>
           <h4 className='mb-3'>About</h4>
           <Form.Group className="mb-3" controlId="organisationName">
-            <Form.Label column>Organistaion Name</Form.Label>
+            <Form.Label column>Organisation Name</Form.Label>
             <Form.Control type="text" placeholder="Enter Organisation Name" />
           </Form.Group>
           <Form.Group className="mb-3" controlId="postalAddress">
@@ -80,7 +80,7 @@ function InfForm() {
             )}
           </Row>
           <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">Others</InputGroup.Text>
+            <InputGroup.Text id="organistaionTypeOther">Others</InputGroup.Text>
             <Form.Control
               placeholder="Specify other type"
             />
@@ -104,7 +104,7 @@ function InfForm() {
             )}
           </Row>
           <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">Others</InputGroup.Text>
+            <InputGroup.Text id="industrySectorOther">Others</InputGroup.Text>
             <Form.Control
               placeholder="Specify other type"
             />

@@ -9,6 +9,8 @@ import JobProfile from './components/JobProfile';
 import Signup from './pages/Signup';
 import InfForm from './pages/OrganisationDetails';
 
+import OrganisationDetails from './pages/OrganisationDetails';
+import InfJobDetails from './pages/InfJobDetails';
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
         <JobProfile />
         {/* <Signup /> */}
         {/* <InfForm /> */}
+        {/* <InfJobDetails /> */}
       </div>
     </>
   )

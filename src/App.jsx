@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Landing from './pages/Landing'
 import JAF from './pages/JAF';
 import Email from './pages/Email';
+import JobProfile from './components/JobProfile';
 
 
 function App() {
@@ -12,9 +13,10 @@ function App() {
   return (
     <>
       <div className="App">
-        {/* <Header /> */}
+        <Header />
         {/* <Landing /> */}
-        <Email />
+        {/* <Email /> */}
+        <JobProfile />
       </div>
     </>
   )

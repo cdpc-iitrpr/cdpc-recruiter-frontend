@@ -3,36 +3,105 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import JobSalaryDetails from "./JobSalaryDetails";
 
 export default function JobProfile() {
+
+    const [basicDetails, setBasicDetails] = React.useState({
+        designation: "",
+        description: "",
+        location: ""
+    });
+
+    const [descriptionFile, setDescriptionFile] = React.useState(null);
+    const [salaryFile, setSalaryFile] = React.useState(null);
+    const [salaryDetails, setSalaryDetails] = React.useState({
+        BTech: {
+            gross: 0,
+            takeHome: 0,
+            bonus: 0,
+            serviceContract: ""
+        },
+        MTech: {
+            gross: 0,
+            takeHome: 0,
+            bonus: 0,
+            serviceContract: ""
+        },
+        MSc: {
+            gross: 0,
+            takeHome: 0,
+            bonus: 0,
+            serviceContract: ""
+        },
+        PhD: {
+            gross: 0,
+            takeHome: 0,
+            bonus: 0,
+            serviceContract: ""
+        }
+    });
+
+    function handleBasicDetailChange(e)
+    {
+        const { name, value } = e.target;
+        setBasicDetails((prev) => {
+            console.log(prev);
+            return {
+                ...prev,
+                [name]: value
+            }
+        });
+    }
+
     return (
         <div className="page-container">
             <h1>Job Information</h1>
             <Form>
                 <div className="section-container">
-                <h4>Basic Details</h4>
-                <div className="note-container">
-                    <div className="field-group">
-                        <Form.Group>
-                            <Form.Label className="field-heading">Job Designation</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Designation" />
-                        </Form.Group>
+                    <h4>Basic Details</h4>
+                    <div className="note-container">
+                        <div className="field-group">
+                            <Form.Group>
+                                <Form.Label className="field-heading">Job Designation</Form.Label>
+                                <Form.Control
+                                    name="designation"
+                                    type="text" 
+                                    placeholder="Enter Designation"
+                                    value={basicDetails.designation}
+                                    onChange={handleBasicDetailChange}
+                                />
+                            </Form.Group>
+                        </div>
+                            <div className="field-group">
+                                <Form.Group>
+                                    <Form.Label className="field-heading">Job Description</Form.Label>
+                                    <p>Upload PDF</p>
+                                    <Form.Control
+                                        type="file"
+                                        onChange={(e) => {setDescriptionFile(e.target.files[0])}}
+                                    />
+                                    <br />
+                                    <p>or Enter Below</p>
+                                    <Form.Control 
+                                        name="description"
+                                        as="textarea" 
+                                        placeholder="Enter Description"
+                                        value={basicDetails.description}
+                                        onChange={handleBasicDetailChange}
+                                    />
+                                </Form.Group>
+                            </div>
+                            <div className="field-group">
+                                <Form.Group>
+                                    <Form.Label className="field-heading">Place of Posting</Form.Label>
+                                    <Form.Control 
+                                        name="location"
+                                        type="text"
+                                        placeholder="Enter Location"
+                                        value={basicDetails.location}
+                                        onChange={handleBasicDetailChange}
+                                    />
+                                </Form.Group>
+                            </div>
                     </div>
-                        <div className="field-group">
-                            <Form.Group>
-                                <Form.Label className="field-heading">Job Description</Form.Label>
-                                <p>Upload PDF</p>
-                                <Form.Control type="file" />
-                                <br />
-                                <p>or Enter Below</p>
-                                <Form.Control as="textarea" placeholder="Enter Description" />
-                            </Form.Group>
-                        </div>
-                        <div className="field-group">
-                            <Form.Group>
-                                <Form.Label className="field-heading">Place of Posting</Form.Label>
-                                <Form.Control type="text" placeholder="Enter Location" />
-                            </Form.Group>
-                        </div>
-                </div>
                 </div>
                 <Form.Group>
                     <div className="section-container">
@@ -46,18 +115,37 @@ export default function JobProfile() {
                         </div>
                         <Row>
                             <Col xs={12} md={6}>
-                                <JobSalaryDetails degree="BTech" />
-                                <JobSalaryDetails degree="MTech" />
+                                <JobSalaryDetails
+                                    degree="BTech"
+                                    salaryDetails={salaryDetails.BTech}
+                                    setSalaryDetails={setSalaryDetails}
+                                />
+                                <JobSalaryDetails
+                                    degree="MTech"
+                                    salaryDetails={salaryDetails.MTech}
+                                    setSalaryDetails={setSalaryDetails}
+                                />
                             </Col>
                             <Col xs={12} md={6}>
-                                <JobSalaryDetails degree="M.Sc" />
-                                <JobSalaryDetails degree="Ph.D" />
+                                <JobSalaryDetails
+                                    degree="MSc"
+                                    salaryDetails={salaryDetails.MSc}
+                                    setSalaryDetails={setSalaryDetails}
+                                />
+                                <JobSalaryDetails
+                                    degree="PhD"
+                                    salaryDetails={salaryDetails.PhD}
+                                    setSalaryDetails={setSalaryDetails}
+                                />
                             </Col>
                         </Row>
                         <p>
                             Or, upload these details as an attachment. Please provide a detailed breakup of salary/perks.
                         </p>
-                        <Form.Control type="file" />
+                        <Form.Control
+                            type="file"
+                            onChange={(e) => {setSalaryFile(e.target.files[0])}}
+                        />
                     </div>
                 </Form.Group>
                 <div className="next-button">

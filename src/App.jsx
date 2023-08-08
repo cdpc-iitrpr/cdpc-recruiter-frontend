@@ -7,6 +7,7 @@ import JAF from './pages/JAF';
 import Email from './pages/Email';
 import JobProfile from './components/JobProfile';
 import Signup from './pages/Signup';
+import InfForm from './pages/OrganisationDetails';
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         {/* <Landing /> */}
         {/* <Email /> */}
         <JobProfile />
-        <Signup />
+        {/* <Signup /> */}
+        {/* <InfForm /> */}
       </div>
     </>
   )

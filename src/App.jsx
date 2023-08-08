@@ -6,6 +6,7 @@ import Landing from './pages/Landing'
 import JAF from './pages/JAF';
 import Email from './pages/Email';
 import JobProfile from './components/JobProfile';
+import Signup from './pages/Signup';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         {/* <Landing /> */}
         {/* <Email /> */}
         <JobProfile />
+        <Signup />
       </div>
     </>
   )

@@ -101,8 +101,8 @@ const Email = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <h2>Email</h2>
+    <Container className="mt-5" style={{ maxWidth: "500px" }}>
+      <h2>Login</h2>
       <Form onSubmit={(e) => handleOnSubmit(e)}>
         <Form.Group controlId="email">
           <Form.Label>Email address</Form.Label>

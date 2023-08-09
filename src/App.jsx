@@ -12,6 +12,7 @@ import InfForm from './pages/OrganisationDetails';
 import OrganisationDetails from './pages/OrganisationDetails';
 import InfJobDetails from './pages/InfJobDetails';
 import SPOCInterface from './pages/SPOCInterface';
+import SelectionProcess from './components/Form/SelectionProcess';
 
 function App() {
 
@@ -22,10 +23,11 @@ function App() {
         {/* <Landing /> */}
         {/* <Email /> */}
         {/* <JobProfile /> */}
-        <SPOCInterface />
+        {/* <SPOCInterface /> */}
         {/* <Signup /> */}
         {/* <InfForm /> */}
         {/* <InfJobDetails /> */}
+        <SelectionProcess />
       </div>
     </>
   )

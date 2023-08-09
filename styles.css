@@ -28,3 +28,17 @@
 .field-heading{
     font-weight: 600;
 }
+
+.company-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    padding: 10px;
+    border: #e6e6e6 1.5px solid;
+    border-radius: 5px;
+}
+
+.list-container{
+    max-height: 500px;
+    overflow-y: auto;
+}

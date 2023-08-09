@@ -11,6 +11,7 @@ import InfForm from './pages/OrganisationDetails';
 
 import OrganisationDetails from './pages/OrganisationDetails';
 import InfJobDetails from './pages/InfJobDetails';
+import SPOCInterface from './pages/SPOCInterface';
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
         <Header />
         {/* <Landing /> */}
         {/* <Email /> */}
-        <JobProfile />
+        {/* <JobProfile /> */}
+        <SPOCInterface />
         {/* <Signup /> */}
         {/* <InfForm /> */}
         {/* <InfJobDetails /> */}

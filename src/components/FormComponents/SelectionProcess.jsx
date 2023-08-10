@@ -9,6 +9,8 @@ const SelectionProcess = () => {
         "Aptitude Test",
         "Psychometric Test",
     ]);
+
+    // TODO: setIndustryTypesSelected function to be changed
     return (
         <div>
             <Container>

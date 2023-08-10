@@ -4,7 +4,7 @@ import { Col, Form, InputGroup, Row, Container, Button } from "react-bootstrap";
 function ContactGroup() {
     return (
         <Row>
-            <Col md={6}>
+            <Col>
                 <Form.Group className="mb-2" controlId="contactName">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
@@ -12,8 +12,7 @@ function ContactGroup() {
                         placeholder="Enter Contact Name"
                     />
                 </Form.Group>
-            </Col>
-            <Col md={6}>
+
                 <Form.Group className="mb-2" controlId="contactEmail">
                     <Form.Label>Contact Email</Form.Label>
                     <Form.Control
@@ -21,8 +20,7 @@ function ContactGroup() {
                         placeholder="Enter Contact Email"
                     />
                 </Form.Group>
-            </Col>
-            <Col xs={6}>
+
                 <Form.Group className="mb-2" controlId="contactNumber">
                     <Form.Label>Company Number</Form.Label>
                     <Form.Control
@@ -30,8 +28,7 @@ function ContactGroup() {
                         placeholder="Enter Company Number"
                     />
                 </Form.Group>
-            </Col>
-            <Col xs={6}>
+
                 <Form.Group className="mb-2" controlId="contactNumber">
                     <Form.Label>Personal Phone</Form.Label>
                     <Form.Control
@@ -44,7 +41,8 @@ function ContactGroup() {
     );
 }
 
-function InfForm() {
+function OrganisationDetails(props) {
+    const {back, next} = props;
     let [organisationTypes, setOrganisationTypes] = React.useState([
         "Private Sector",
         "Start-up",
@@ -68,9 +66,9 @@ function InfForm() {
 
     return (
         <div>
-            <Container style={{ maxWidth: "800px" }}>
-                <Form>
-                    <h1 className="mb-3">Organisation Information</h1>
+            <Container>
+                <h1 className="mb-3">Organisation Information</h1>
+                <div className="note-container">
                     <h4 className="mb-3">About</h4>
                     <Form.Group className="mb-3" controlId="organisationName">
                         <Form.Label column>Organisation Name</Form.Label>
@@ -93,6 +91,8 @@ function InfForm() {
                             placeholder="Enter website URL"
                         />
                     </Form.Group>
+                </div>
+                <div className="note-container">
                     <h4 className="mb-3">Type of Organisation</h4>
                     <Row className="mb-3">
                         {organisationTypes.map((type, index) => (
@@ -130,6 +130,8 @@ function InfForm() {
                         </InputGroup.Text>
                         <Form.Control placeholder="Specify other type" />
                     </InputGroup>
+                </div>
+                <div className="note-container">
                     <h4 className="mb-3">Industry Sector</h4>
                     <Row className="mb-3">
                         {industryTypes.map((type, index) => (
@@ -167,22 +169,28 @@ function InfForm() {
                         </InputGroup.Text>
                         <Form.Control placeholder="Specify other type" />
                     </InputGroup>
+                </div>
+                <div className="note-container">
                     <h4 className="mb-3">Contact Details</h4>
-                    <h5 className="my-1">Head HR</h5>
-                    <ContactGroup />
-                    <h5 className="my-1">First Contact Person</h5>
-                    <ContactGroup />
-                    <h5 className="my-1">Second Contact Person</h5>
-                    <ContactGroup />
-                    <div className="d-flex justify-content-end my-3">
-                        <Button variant="primary" type="submit">
-                            Next
-                        </Button>
-                    </div>
-                </Form>
+                    <Row>
+                        <Col md={4}>
+                            <h5 className="my-1">Head HR</h5>
+                            <ContactGroup />
+                        </Col>
+                        <Col md={4}>
+                            <h5 className="my-1">1<sup>st</sup> Contact Person</h5>
+                            <ContactGroup />
+                        </Col>
+                        <Col md={4}>
+                            <h5 className="my-1">2<sup>nd</sup> Contact Person</h5>
+                            <ContactGroup />
+                        </Col>
+                    </Row>
+                </div>
+                
             </Container>
         </div>
     );
 }
 
-export default InfForm;
+export default OrganisationDetails;

@@ -2,52 +2,55 @@ import React from "react";
 import { Form, Row, Col, Container, Button } from "react-bootstrap";
 import JobSalaryDetails from "./JobSalaryDetails";
 
-export default function JafJobDetails() {
-    const [basicDetails, setBasicDetails] = React.useState({
-        designation: "",
-        description: "",
-        location: "",
-    });
+export default function JafJobDetails(props) {
+    const { jafJobDetails, setJafJobDetails } = props;
+    const [basicDetails, setBasicDetails] = React.useState(jafJobDetails.basicDetails);
 
-    const [descriptionFile, setDescriptionFile] = React.useState(null);
-    const [salaryFile, setSalaryFile] = React.useState(null);
-    const [salaryDetails, setSalaryDetails] = React.useState({
-        BTech: {
-            gross: 0,
-            takeHome: 0,
-            bonus: 0,
-            serviceContract: "",
-        },
-        MTech: {
-            gross: 0,
-            takeHome: 0,
-            bonus: 0,
-            serviceContract: "",
-        },
-        MSc: {
-            gross: 0,
-            takeHome: 0,
-            bonus: 0,
-            serviceContract: "",
-        },
-        PhD: {
-            gross: 0,
-            takeHome: 0,
-            bonus: 0,
-            serviceContract: "",
-        },
-    });
+    const [descriptionFile, setDescriptionFile] = React.useState(jafJobDetails.descriptionFile);
+    const [salaryFile, setSalaryFile] = React.useState(jafJobDetails.salaryFile);
+    const [salaryDetails, setSalaryDetails] = React.useState(jafJobDetails.salaryDetails);
 
     function handleBasicDetailChange(e) {
         const { name, value } = e.target;
         setBasicDetails((prev) => {
-            console.log(prev);
             return {
                 ...prev,
                 [name]: value,
             };
         });
     }
+
+    React.useEffect(() => {
+        setJafJobDetails((prev) => {
+            return {
+                ...prev,
+                basicDetails: basicDetails,
+            };
+        });
+
+        setJafJobDetails((prev) => {
+            return {
+                ...prev,
+                descriptionFile: descriptionFile,
+            };
+        });
+
+        setJafJobDetails((prev) => {
+            return {
+                ...prev,
+                salaryFile: salaryFile,
+            };
+        });
+
+        setJafJobDetails((prev) => {
+            return {
+                ...prev,
+                salaryDetails: salaryDetails,
+            };
+        });
+
+        // console.log(jafJobDetails);
+    }, [basicDetails, descriptionFile, salaryFile, salaryDetails]);
 
     return (
         <div>

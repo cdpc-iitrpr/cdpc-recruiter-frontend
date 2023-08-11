@@ -1,0 +1,5 @@
+.bottom-fade {
+    background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0)); /* Adjust colors and transparency */
+    padding-bottom: 50px; /* Add padding to see the fade effect */
+    margin-bottom: -20px;
+  }

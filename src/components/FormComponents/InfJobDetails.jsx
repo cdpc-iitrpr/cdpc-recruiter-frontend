@@ -1,45 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
 
-function OptionGroup({
-    feildName,
-    options,
-    selectedOptions,
-    setSelectedOptions,
-}) {
+function OptionGroup({ feildName, optionName, formState, setFormState }) {
+    function handleOptionChange(e, name, setTo) {
+        if (e.target.checked) {
+            setFormState((prev) => ({
+                ...prev,
+                job_profile: {
+                    ...prev.job_profile,
+                    [name]: setTo,
+                },
+            }));
+        }
+    }
+
     return (
         <Form.Group className="mb-2">
             <Row>
                 <Col xs={6}>
-                    <Form.Label>{feildName}</Form.Label>
+                    <Form.Label>{optionName}</Form.Label>
                 </Col>
                 <Col xs={6}>
                     <div className="d-flex justify-content-around">
-                        {options.map((option, index) => {
-                            return (
-                                <Form.Check
-                                    label={option}
-                                    name={feildName}
-                                    type="radio"
-                                    checked={selectedOptions.includes(option)}
-                                    id={`${feildName}-${option}-${index}`}
-                                    onChange={(e) => {
-                                        if (e.target.checked) {
-                                            setSelectedOptions((prev) => [
-                                                ...prev,
-                                                option,
-                                            ]);
-                                        } else {
-                                            setSelectedOptions((prev) =>
-                                                prev.filter(
-                                                    (item) => item !== option
-                                                )
-                                            );
-                                        }
-                                    }}
-                                />
-                            );
-                        })}
+                        <Form.Check
+                            label="Yes"
+                            type="radio"
+                            checked={formState.job_profile[feildName]}
+                            id={`${feildName}-yes`}
+                            onChange={(e) => {
+                                handleOptionChange(e, feildName, true);
+                            }}
+                        />
+                        <Form.Check
+                            label="No"
+                            type="radio"
+                            checked={!formState.job_profile[feildName]}
+                            id={`${feildName}-no`}
+                            onChange={(e) => {
+                                handleOptionChange(e, feildName, false);
+                            }}
+                        />
                     </div>
                 </Col>
             </Row>
@@ -47,10 +47,33 @@ function OptionGroup({
     );
 }
 
-function InfJobDetails() {
-    const [selected, setSelected] = useState(["Yes"]);
-    // ? There can be issues with the selected state for 3 radio buttons
-    
+function InfJobDetails({ formState, setFormState }) {
+    // const [formState, setFormState] = useState(
+    //     formData === undefined ? initialFormState : formData
+    // );
+
+    function handleJobDetail(e) {
+        const name = e.target.name;
+        setFormState((prev) => ({
+            ...prev,
+            job_profile: {
+                ...prev.job_profile,
+                [name]: e.target.value,
+            },
+        }));
+    }
+
+    function handleStipendDetail(e) {
+        const name = e.target.name;
+        setFormState((prev) => ({
+            ...prev,
+            stipend_details: {
+                ...prev.stipend_details,
+                [name]: e.target.value,
+            },
+        }));
+    }
+
     return (
         <div>
             <div className="container">
@@ -58,28 +81,30 @@ function InfJobDetails() {
                 <div className="note-container">
                     <h4>Job Profile</h4>
                     <OptionGroup
-                        feildName="2 Month Internship"
-                        options={["Yes", "No"]}
-                        selectedOptions={selected}
-                        setSelectedOptions={setSelected}
+                        feildName="two_month_intern"
+                        optionName="2 Month Internship"
+                        formState={formState}
+                        setFormState={setFormState}
                     />
                     <OptionGroup
-                        feildName="6 Month Internship"
-                        options={["Yes", "No"]}
-                        selectedOptions={selected}
-                        setSelectedOptions={setSelected}
+                        feildName="six_month_intern"
+                        optionName="6 Month Internship"
+                        formState={formState}
+                        setFormState={setFormState}
                     />
                     <OptionGroup
-                        feildName="Joint Master Thesis Program"
-                        options={["Yes", "No"]}
-                        selectedOptions={selected}
-                        setSelectedOptions={setSelected}
+                        optionName="Joint Master Thesis Program"
+                        feildName="joint_master_thesis_program"
+                        formState={formState}
+                        setFormState={setFormState}
                     />
                     <Form.Group className="mb-3" controlId="placeOfPosting">
                         <Form.Label column>Place of Posting</Form.Label>
                         <Form.Control
                             type="text"
+                            name="place_of_posting"
                             placeholder="Enter Place of Posting"
+                            onChange={handleJobDetail}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="jobDescription">
@@ -88,6 +113,8 @@ function InfJobDetails() {
                             as="textarea"
                             rows={3}
                             placeholder="Enter a Job Description"
+                            name="job_description"
+                            onChange={handleJobDetail}
                         />
                     </Form.Group>
                     <Form.Group controlId="jobDescriptionFile" className="mb-3">
@@ -103,7 +130,9 @@ function InfJobDetails() {
                         <Form.Label>Compensation</Form.Label>
                         <Form.Control
                             type="text"
+                            name="compensation"
                             placeholder="Enter Compensation"
+                            onChange={handleStipendDetail}
                         />
                     </Form.Group>
                     <Row className="d-flex justify-content-between">
@@ -116,6 +145,8 @@ function InfJobDetails() {
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter Amount"
+                                    name="stipend_amount"
+                                    onChange={handleStipendDetail}
                                 />
                             </Form.Group>
                         </Col>
@@ -128,6 +159,8 @@ function InfJobDetails() {
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter Amount"
+                                    name="bonus_perks_incentives"
+                                    onChange={handleStipendDetail}
                                 />
                             </Form.Group>
                         </Col>
@@ -140,13 +173,20 @@ function InfJobDetails() {
                                 <Form.Control
                                     type="text"
                                     placeholder="Enter Amount"
+                                    name="accomodation_trip_fare"
+                                    onChange={handleStipendDetail}
                                 />
                             </Form.Group>
                         </Col>
                     </Row>
                     <Form.Group className="mb-3" controlId="compensation">
                         <Form.Label>Bond/ Service Contract (if any)</Form.Label>
-                        <Form.Control type="text" placeholder="Enter details" />
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter details"
+                            name="bond_service_contract"
+                            onChange={handleStipendDetail}
+                        />
                     </Form.Group>
                 </div>
             </div>

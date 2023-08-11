@@ -1,89 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Col, Form, InputGroup, Row, Container, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Col, Form, InputGroup, Row, Container } from "react-bootstrap";
+import OrganisationContactGroup from "./OrganistaionContactGroup";
 
-function ContactGroup() {
-    return (
-        <Row>
-            <Col>
-                <Form.Group className="mb-2" controlId="contactName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Contact Name"
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-2" controlId="contactEmail">
-                    <Form.Label>Contact Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter Contact Email"
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-2" controlId="contactNumber">
-                    <Form.Label>Company Number</Form.Label>
-                    <Form.Control
-                        type="tel"
-                        placeholder="Enter Company Number"
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-2" controlId="contactNumber">
-                    <Form.Label>Personal Phone</Form.Label>
-                    <Form.Control
-                        type="tel"
-                        placeholder="Enter Personal Phone"
-                    />
-                </Form.Group>
-            </Col>
-        </Row>
-    );
-}
-
-const initialFormState = {
-    about_organisation: {
-        organisation: "",
-        postal_address: "",
-        website: "",
-    },
-    organisation_type: {
-        options: [],
-        others: "",
-    },
-    industry_sector: {
-        options: [],
-        others: "",
-    },
-    contact_details: {
-        head_hr: {
-            name: "",
-            email: "",
-            mobile: "",
-            phone: "",
-        },
-        first_person_of_contact: {
-            name: "",
-            email: "",
-            mobile: "",
-            phone: "",
-        },
-        second_person_of_contact: {
-            name: "",
-            email: "",
-            mobile: "",
-            phone: "",
-        },
-    },
-};
-
-function OrganisationDetails(props) {
-    const { formPreset } = props;
-    const [formState, setFormState] = useState(
-        formPreset === undefined ? initialFormState : formPreset
-    );
-    const { back, next } = props;
-    let [organisationTypes, setOrganisationTypes] = React.useState([
+function OrganisationDetails({ formState, setFormState }) {
+    let [organisationTypes, setOrganisationTypes] = useState([
         "Private Sector",
         "Start-up",
         "Government",
@@ -91,7 +11,7 @@ function OrganisationDetails(props) {
         "MNC (Indian Origin)",
         "MNC (Foreign Origin)",
     ]);
-    let [industryTypes, setIndustryTypes] = React.useState([
+    let [industryTypes, setIndustryTypes] = useState([
         "Analytics",
         "Consulting",
         "Core",
@@ -100,9 +20,40 @@ function OrganisationDetails(props) {
         "Management",
         "Teaching Research",
     ]);
-    let [organisationTypesSelected, setOrganisationTypesSelected] =
-        React.useState([]);
-    let [industryTypesSelected, setIndustryTypesSelected] = React.useState([]);
+
+    function handleCheck(e, name, value) {
+        setFormState((prev) => ({
+            ...prev,
+            [name]: {
+                ...prev[name],
+                options: prev[name].options.includes(value)
+                    ? prev[name].options.filter((item) => item !== value)
+                    : [...prev[name].options, value],
+            },
+        }));
+    }
+
+    function handleAboutOrganisation(e) {
+        const { name, value } = e.target;
+        setFormState((prev) => ({
+            ...prev,
+            about_organisation: {
+                ...prev.about_organisation,
+                [name]: value,
+            },
+        }));
+    }
+
+    function handleOthers(e, name) {
+        const { value } = e.target;
+        setFormState((prev) => ({
+            ...prev,
+            [name]: {
+                ...prev[name],
+                others: value,
+            },
+        }));
+    }
 
     return (
         <div>
@@ -114,24 +65,30 @@ function OrganisationDetails(props) {
                         <Form.Label column>Organisation Name</Form.Label>
                         <Form.Control
                             type="text"
+                            name="organisation"
                             value={formState.about_organisation.organisation}
                             placeholder="Enter Organisation Name"
+                            onChange={(e) => handleAboutOrganisation(e)}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="postalAddress">
                         <Form.Label>Postal Address</Form.Label>
                         <Form.Control
                             type="text"
+                            name="postal_address"
                             value={formState.about_organisation.postal_address}
                             placeholder="Enter Postal Address"
+                            onChange={(e) => handleAboutOrganisation(e)}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="website">
                         <Form.Label>Website</Form.Label>
                         <Form.Control
                             type="url"
+                            name="website"
                             value={formState.about_organisation.website}
                             placeholder="Enter website URL"
+                            onChange={(e) => handleAboutOrganisation(e)}
                         />
                     </Form.Group>
                 </div>
@@ -143,27 +100,21 @@ function OrganisationDetails(props) {
                                 <Form.Check
                                     type={"checkbox"}
                                     id={`check-organisation-${index}`}
+                                    name="organisation_type"
                                 >
                                     <Form.Check.Input
+                                        name={"organisation_type " + index}
                                         type={"checkbox"}
                                         checked={formState.organisation_type.options.includes(
                                             type
                                         )}
-                                        onChange={(e) => {
-                                            if (e.target.checked) {
-                                                setOrganisationTypesSelected(
-                                                    (prev) => [...prev, type]
-                                                );
-                                            } else {
-                                                setOrganisationTypesSelected(
-                                                    (prev) =>
-                                                        prev.filter(
-                                                            (item) =>
-                                                                item !== type
-                                                        )
-                                                );
-                                            }
-                                        }}
+                                        onChange={(e) =>
+                                            handleCheck(
+                                                e,
+                                                "organisation_type",
+                                                type
+                                            )
+                                        }
                                     />
                                     <Form.Check.Label>{type}</Form.Check.Label>
                                 </Form.Check>
@@ -171,13 +122,16 @@ function OrganisationDetails(props) {
                         ))}
                     </Row>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text
-                            id="organistaionTypeOther"
-                            value={formState.organisation_type.others}
-                        >
+                        <InputGroup.Text id="organistaionTypeOther">
                             Others
                         </InputGroup.Text>
-                        <Form.Control placeholder="Specify other type" />
+                        <Form.Control
+                            value={formState.organisation_type.others}
+                            onChange={(e) =>
+                                handleOthers(e, "organisation_type")
+                            }
+                            placeholder="Specify other type"
+                        />
                     </InputGroup>
                 </div>
                 <div className="note-container">
@@ -191,24 +145,17 @@ function OrganisationDetails(props) {
                                 >
                                     <Form.Check.Input
                                         type={"checkbox"}
+                                        name={"industry_sector " + index}
                                         checked={formState.industry_sector.options.includes(
                                             type
                                         )}
-                                        onChange={(e) => {
-                                            if (e.target.checked) {
-                                                setIndustryTypesSelected(
-                                                    (prev) => [...prev, type]
-                                                );
-                                            } else {
-                                                setIndustryTypesSelected(
-                                                    (prev) =>
-                                                        prev.filter(
-                                                            (item) =>
-                                                                item !== type
-                                                        )
-                                                );
-                                            }
-                                        }}
+                                        onChange={(e) =>
+                                            handleCheck(
+                                                e,
+                                                "industry_sector",
+                                                type
+                                            )
+                                        }
                                     />
                                     <Form.Check.Label>{type}</Form.Check.Label>
                                 </Form.Check>
@@ -216,13 +163,14 @@ function OrganisationDetails(props) {
                         ))}
                     </Row>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text
-                            id="industrySectorOther"
-                            value={formState.industry_sector.others}
-                        >
+                        <InputGroup.Text id="industrySectorOther">
                             Others
                         </InputGroup.Text>
-                        <Form.Control placeholder="Specify other type" />
+                        <Form.Control
+                            value={formState.industry_sector.others}
+                            onChange={(e) => handleOthers(e, "industry_sector")}
+                            placeholder="Specify other type"
+                        />
                     </InputGroup>
                 </div>
                 <div className="note-container">
@@ -230,19 +178,31 @@ function OrganisationDetails(props) {
                     <Row>
                         <Col md={4}>
                             <h5 className="my-1">Head HR</h5>
-                            <ContactGroup />
+                            <OrganisationContactGroup
+                                formState={formState}
+                                setFormState={setFormState}
+                                personType={"head_hr"}
+                            />
                         </Col>
                         <Col md={4}>
                             <h5 className="my-1">
                                 1<sup>st</sup> Contact Person
                             </h5>
-                            <ContactGroup />
+                            <OrganisationContactGroup
+                                formState={formState}
+                                setFormState={setFormState}
+                                personType={"first_person_of_contact"}
+                            />
                         </Col>
                         <Col md={4}>
                             <h5 className="my-1">
                                 2<sup>nd</sup> Contact Person
                             </h5>
-                            <ContactGroup />
+                            <OrganisationContactGroup
+                                formState={formState}
+                                setFormState={setFormState}
+                                personType={"second_person_of_contact"}
+                            />
                         </Col>
                     </Row>
                 </div>

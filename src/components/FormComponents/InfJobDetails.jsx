@@ -49,6 +49,8 @@ function OptionGroup({
 
 function InfJobDetails() {
     const [selected, setSelected] = useState(["Yes"]);
+    // ? There can be issues with the selected state for 3 radio buttons
+    
     return (
         <div>
             <div className="container">

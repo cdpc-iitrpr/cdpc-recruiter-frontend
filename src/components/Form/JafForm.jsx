@@ -6,7 +6,18 @@ import JafJobDetails from "../FormComponents/JafJobDetails";
 
 function JafForm() {
     const [formPage, setFormPage] = React.useState(1);
-    const [progress, setProgress] = React.useState(Math.round((formPage / 3) * 100));
+    const [progress, setProgress] = React.useState(Math.round(((formPage-1) / 3) * 100));
+    const [jafJobDetails, setJafJobDetails] = React.useState({
+        basicDetails: { designation: "", description: "", location: "" },
+        descriptionFile: null,
+        salaryFile: null,
+        salaryDetails: {
+            BTech: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
+            MTech: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
+            MSc: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
+            PhD: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
+        },
+    });
     
     const scrollToTop = () => {
         window.scrollTo({
@@ -16,7 +27,7 @@ function JafForm() {
     };
 
     useEffect(() => {
-        setProgress(Math.round((formPage / 3) * 100));
+        setProgress(Math.round(((formPage-1) / 3) * 100));
     }, [formPage]);
 
 
@@ -31,7 +42,7 @@ function JafForm() {
             </div>
             <Form>
                 {formPage === 1 && <OrganisationalDetails />}
-                {formPage === 2 && <JafJobDetails />}
+                {formPage === 2 && <JafJobDetails jafJobDetails={jafJobDetails} setJafJobDetails={setJafJobDetails} />}
                 {formPage === 3 && <SelectionProcess />}
             </Form>
                 <div className="d-flex justify-content-around my-3">

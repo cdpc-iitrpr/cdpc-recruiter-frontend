@@ -1,34 +1,41 @@
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
-import Header from './components/Header'
-import Landing from './pages/Landing'
-import JAF from './pages/JAF';
-import Email from './pages/Email';
-import JobProfile from './components/JobProfile';
-import Signup from './pages/Signup';
-import InfForm from './pages/OrganisationDetails';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import Header from "./components/Header";
+import { AuthContextProvider } from "./context/AuthContext";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import OrganisationDetails from './pages/OrganisationDetails';
-import InfJobDetails from './pages/InfJobDetails';
-import SPOCInterface from './pages/SPOCInterface';
+import Email from "./pages/Email";
+import Signup from "./pages/Signup";
+import InfForm from "./components/Form/InfForm";
+import JafForm from "./components/Form/JafForm";
+import SPOCInterface from "./pages/SPOCInterface";
 
 function App() {
+    return (
+        <>
+            <AuthContextProvider>
+                <Header />
+                <Router>
+                    <Routes>
 
-  return (
-    <>
-      <div className="App">
-        <Header />
-        {/* <Landing /> */}
-        {/* <Email /> */}
-        {/* <JobProfile /> */}
-        <SPOCInterface />
-        {/* <Signup /> */}
-        {/* <InfForm /> */}
-        {/* <InfJobDetails /> */}
-      </div>
-    </>
-  )
+                        {/* Header */}
+                        <Route path="/" element={<SPOCInterface />} />
+
+                        {/* Login and sigup routes */}
+                        <Route path="/login" element={<Email />} />
+                        <Route path="/signup" element={<Signup />} />
+
+
+                        {/* Form routes */}
+                        
+                        <Route path="/inf" element={<InfForm />} />
+                        <Route path="/jaf" exact element={<JafForm />} />
+                    </Routes>
+                </Router>
+            </AuthContextProvider>
+        </>
+    );
 }
 
-export default App
+export default App;

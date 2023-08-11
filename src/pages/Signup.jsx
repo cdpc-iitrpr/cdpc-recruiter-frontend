@@ -6,8 +6,12 @@ import { OTP_LENGTH } from "../constants/otp";
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [company_name, setCompanyName] = useState("");
+  const [phone, setPhoneNumber] = useState("");
+
+  const [otp, setOtp] = useState("");
+  const [isOtpSent, setIsOtpSent] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -34,19 +38,19 @@ const Signup = () => {
       setLoading(false);
       setError("Name should be at least 3 characters long");
       return;
-    } else if (companyName === "") {
+    } else if (company_name === "") {
       setLoading(false);
       setError("Please enter your company name");
       return;
-    } else if (companyName.length < 3) {
+    } else if (company_name.length < 3) {
       setLoading(false);
       setError("Company name should be at least 3 characters long");
       return;
-    } else if (phoneNumber === "") {
+    } else if (phone === "") {
       setLoading(false);
       setError("Please enter your phone number");
       return;
-    } else if (phoneNumber.length < 10) {
+    } else if (phone.length < 10) {
       setLoading(false);
       setError("Phone number should be 10 digits long");
       return;
@@ -56,12 +60,13 @@ const Signup = () => {
 
     try {
       // Send otp to the django server
-      const res = await fetch(DJANGO_SERVER + "/signup", {
+      const res = await fetch(DJANGO_SERVER + "/api/signup/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, companyName, phoneNumber }),
+        credentials: "include",
+        body: JSON.stringify({ name, email, company_name, phone }),
       });
       const data = await res.json();
 
@@ -71,14 +76,47 @@ const Signup = () => {
       } else {
         // Otp sent successfully
         console.log(data);
+        setIsOtpSent(true);
         setError(null);
       }
     } catch (err) {
       console.log(err);
+      setIsOtpSent(false);
       setError(err.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      // send otp to the django server
+      const res = await fetch(DJANGO_SERVER + "/api/verify/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ otp }),
+      });
+      const data = await res.json();
+
+      if (res.status !== 200) {
+        console.log(data.error);
+        setError(data.error);
+      } else {
+        // otp sent successfully
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -105,27 +143,29 @@ const Signup = () => {
           />
         </Form.Group>
 
-        <Form.Group controlId="companyName">
+        <Form.Group controlId="company_name">
           <Form.Label>Company Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter your company name"
-            value={companyName}
+            value={company_name}
             onChange={(e) => setCompanyName(e.target.value)}
           />
         </Form.Group>
 
-        <Form.Group controlId="phoneNumber">
+        <Form.Group controlId="phone">
           <Form.Label>Phone Number</Form.Label>
           <Form.Control
             type="tel"
             placeholder="Enter your phone number"
-            value={phoneNumber}
+            value={phone}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </Form.Group>
         {error && <Form.Text className="text-danger">{error}</Form.Text>}
 
+
+        {!isOtpSent ? (
         <Button
           variant="primary"
           type="submit"
@@ -142,6 +182,31 @@ const Signup = () => {
             />
           )}
         </Button>
+        ) : (
+          <>
+            <Form.Group controlId="otp">
+              <Form.Label>One-Time Password</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            </Form.Group>
+            <Button
+              variant="success"
+              onClick={handleLogin}
+              disabled={otp.length !== OTP_LENGTH}
+              className="mt-3 d-flex align-items-center justify-content-center gap-2"
+            >
+              Verify OTP
+              {loading && (
+                <Spinner animation="border" variant="info" size="sm" />
+              )}
+            </Button>
+          </>
+        )}
+
       </Form>
     </Container>
   );

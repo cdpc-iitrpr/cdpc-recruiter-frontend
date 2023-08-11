@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";	
-import JobProfile from "../components/JobProfile";
+import JafJobDetails from "../components/FormComponents/JafJobDetails";
 
 function Company(name, email, setCompanyDetails) {
 
@@ -74,7 +74,7 @@ export default function SPOCInterface() {
                     </div>
                 </Col>
                 <Col xs={12} md={8}>
-                    <JobProfile companyDetails={companyDetails}/>
+                    <JafJobDetails />
                 </Col>
             </Row>
         </div>

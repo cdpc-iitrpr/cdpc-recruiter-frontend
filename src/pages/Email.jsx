@@ -37,11 +37,12 @@ const Email = () => {
 
     try {
       // send otp to the django server
-      const res = await fetch(DJANGO_SERVER + "/login", {
+      const res = await fetch(DJANGO_SERVER + "/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
@@ -56,7 +57,7 @@ const Email = () => {
     } catch (err) {
       console.log(err);
       setError(err.message);
-      setIsOtpSent(true); //! for testing
+      // setIsOtpSent(true); //! for testing
     }
     setLoading(false);
   };
@@ -68,12 +69,13 @@ const Email = () => {
 
     try {
       // send otp to the django server
-      const res = await fetch(DJANGO_SERVER + "/verify", {
+      const res = await fetch(DJANGO_SERVER + "/api/verify/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, otp }),
+        credentials: "include",
+        body: JSON.stringify({ otp }),
       });
       const data = await res.json();
 

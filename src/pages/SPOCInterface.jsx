@@ -1,6 +1,6 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";	
-import JafJobDetails from "../components/FormComponents/JafJobDetails";
+import { Row, Col } from "react-bootstrap";
+import JafForm from "../components/Form/JafForm";
 
 function Company(name, email, setCompanyDetails) {
 
@@ -9,7 +9,6 @@ function Company(name, email, setCompanyDetails) {
             name: e.target.getElementsByTagName("h5")[0].innerHTML,
             email: e.target.getElementsByTagName("p")[0].innerHTML
         });
-        console.log(e.target.getElementsByTagName("h5")[0].innerHTML);
     }
 
     return (
@@ -74,7 +73,7 @@ export default function SPOCInterface() {
                     </div>
                 </Col>
                 <Col xs={12} md={8}>
-                    <JafJobDetails />
+                    <JafForm />
                 </Col>
             </Row>
         </div>

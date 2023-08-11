@@ -6,7 +6,7 @@ import JafJobDetails from "../FormComponents/JafJobDetails";
 
 function JafForm() {
     const [formPage, setFormPage] = React.useState(1);
-    const [progress, setProgress] = React.useState(Math.round((formPage / 3) * 100));
+    const [progress, setProgress] = React.useState(Math.round(((formPage-1) / 3) * 100));
     const [jafJobDetails, setJafJobDetails] = React.useState({
         basicDetails: { designation: "", description: "", location: "" },
         descriptionFile: null,
@@ -27,7 +27,7 @@ function JafForm() {
     };
 
     useEffect(() => {
-        setProgress(Math.round((formPage / 3) * 100));
+        setProgress(Math.round(((formPage-1) / 3) * 100));
     }, [formPage]);
 
 

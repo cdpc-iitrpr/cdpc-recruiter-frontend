@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Form, InputGroup, Row, Container, Button } from "react-bootstrap";
 
 function ContactGroup() {
@@ -41,8 +41,48 @@ function ContactGroup() {
     );
 }
 
+const initialFormState = {
+    about_organisation: {
+        organisation: "",
+        postal_address: "",
+        website: "",
+    },
+    organisation_type: {
+        options: [],
+        others: "",
+    },
+    industry_sector: {
+        options: [],
+        others: "",
+    },
+    contact_details: {
+        head_hr: {
+            name: "",
+            email: "",
+            mobile: "",
+            phone: "",
+        },
+        first_person_of_contact: {
+            name: "",
+            email: "",
+            mobile: "",
+            phone: "",
+        },
+        second_person_of_contact: {
+            name: "",
+            email: "",
+            mobile: "",
+            phone: "",
+        },
+    },
+};
+
 function OrganisationDetails(props) {
-    const {back, next} = props;
+    const { formPreset } = props;
+    const [formState, setFormState] = useState(
+        formPreset === undefined ? initialFormState : formPreset
+    );
+    const { back, next } = props;
     let [organisationTypes, setOrganisationTypes] = React.useState([
         "Private Sector",
         "Start-up",
@@ -74,6 +114,7 @@ function OrganisationDetails(props) {
                         <Form.Label column>Organisation Name</Form.Label>
                         <Form.Control
                             type="text"
+                            value={formState.about_organisation.organisation}
                             placeholder="Enter Organisation Name"
                         />
                     </Form.Group>
@@ -81,6 +122,7 @@ function OrganisationDetails(props) {
                         <Form.Label>Postal Address</Form.Label>
                         <Form.Control
                             type="text"
+                            value={formState.about_organisation.postal_address}
                             placeholder="Enter Postal Address"
                         />
                     </Form.Group>
@@ -88,6 +130,7 @@ function OrganisationDetails(props) {
                         <Form.Label>Website</Form.Label>
                         <Form.Control
                             type="url"
+                            value={formState.about_organisation.website}
                             placeholder="Enter website URL"
                         />
                     </Form.Group>
@@ -103,6 +146,9 @@ function OrganisationDetails(props) {
                                 >
                                     <Form.Check.Input
                                         type={"checkbox"}
+                                        checked={formState.organisation_type.options.includes(
+                                            type
+                                        )}
                                         onChange={(e) => {
                                             if (e.target.checked) {
                                                 setOrganisationTypesSelected(
@@ -125,7 +171,10 @@ function OrganisationDetails(props) {
                         ))}
                     </Row>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text id="organistaionTypeOther">
+                        <InputGroup.Text
+                            id="organistaionTypeOther"
+                            value={formState.organisation_type.others}
+                        >
                             Others
                         </InputGroup.Text>
                         <Form.Control placeholder="Specify other type" />
@@ -142,6 +191,9 @@ function OrganisationDetails(props) {
                                 >
                                     <Form.Check.Input
                                         type={"checkbox"}
+                                        checked={formState.industry_sector.options.includes(
+                                            type
+                                        )}
                                         onChange={(e) => {
                                             if (e.target.checked) {
                                                 setIndustryTypesSelected(
@@ -164,7 +216,10 @@ function OrganisationDetails(props) {
                         ))}
                     </Row>
                     <InputGroup className="mb-3">
-                        <InputGroup.Text id="industrySectorOther">
+                        <InputGroup.Text
+                            id="industrySectorOther"
+                            value={formState.industry_sector.others}
+                        >
                             Others
                         </InputGroup.Text>
                         <Form.Control placeholder="Specify other type" />
@@ -178,16 +233,19 @@ function OrganisationDetails(props) {
                             <ContactGroup />
                         </Col>
                         <Col md={4}>
-                            <h5 className="my-1">1<sup>st</sup> Contact Person</h5>
+                            <h5 className="my-1">
+                                1<sup>st</sup> Contact Person
+                            </h5>
                             <ContactGroup />
                         </Col>
                         <Col md={4}>
-                            <h5 className="my-1">2<sup>nd</sup> Contact Person</h5>
+                            <h5 className="my-1">
+                                2<sup>nd</sup> Contact Person
+                            </h5>
                             <ContactGroup />
                         </Col>
                     </Row>
                 </div>
-                
             </Container>
         </div>
     );

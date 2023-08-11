@@ -2,9 +2,21 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";	
 import JobProfile from "../components/JobProfile";
 
-function Company(name, email) {
+function Company(name, email, setCompanyDetails) {
+
+    function handleClick(e) {
+        setCompanyDetails({
+            name: e.target.getElementsByTagName("h5")[0].innerHTML,
+            email: e.target.getElementsByTagName("p")[0].innerHTML
+        });
+        console.log(e.target.getElementsByTagName("h5")[0].innerHTML);
+    }
+
     return (
-        <div className="company-container">
+        <div
+            className="company-container"
+            onClick={handleClick}
+        >
             <div>
                 <span class="material-symbols-outlined">corporate_fare</span>
                 <h5> {name} </h5>
@@ -40,9 +52,16 @@ const data = [
     }
 ]
 
-const companyEls = data.map((company) => Company(company.name, company.email));
 
 export default function SPOCInterface() {
+    
+    const [companyDetails, setCompanyDetails] = React.useState({
+        name: "",
+        email: ""
+    });
+    
+    const companyEls = data.map((company) => Company(company.name, company.email, setCompanyDetails));
+
     return (
         <div className="page-container">
             <h1> Welcome! </h1>
@@ -55,7 +74,7 @@ export default function SPOCInterface() {
                     </div>
                 </Col>
                 <Col xs={12} md={8}>
-                    <JobProfile />
+                    <JobProfile companyDetails={companyDetails}/>
                 </Col>
             </Row>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import JobSalaryDetails from "./JobSalaryDetails";
 
-export default function JobProfile() {
+export default function JobProfile(companyDetails) {
 
     const [basicDetails, setBasicDetails] = React.useState({
         designation: "",

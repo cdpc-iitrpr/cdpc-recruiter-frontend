@@ -10,17 +10,17 @@ import Signup from "./pages/Signup";
 import InfForm from "./components/Form/InfForm";
 import JafForm from "./components/Form/JafForm";
 import SPOCInterface from "./pages/SPOCInterface";
+import Landing from "./pages/Landing";
 
 function App() {
     return (
         <>
             <AuthContextProvider>
+              {/* Header */}
                 <Header />
                 <Router>
                     <Routes>
-
-                        {/* Header */}
-                        <Route path="/" element={<SPOCInterface />} />
+                        <Route path="/" element={<Landing />} />
 
                         {/* Login and sigup routes */}
                         <Route path="/login" element={<Email />} />

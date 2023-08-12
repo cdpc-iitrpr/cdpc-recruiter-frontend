@@ -176,87 +176,110 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                 </div>
                             </Col>
                         </Row>
-                    </Form.Group>
 
-                    <Form.Group
-                        className="mb-3"
-                        controlId="shortlistFromResumes"
-                    >
-                        <Form.Label>Shortlist from Resumes</Form.Label>
-                        <Form.Check
-                            type="radio"
-                            label="Yes"
-                            name="shortlist_from_resume"
-                            id="shortlistFromResumesYes"
-                            checked={formState.test_type.shortlist_from_resume}
-                            onChange={(e) => handleTestType(e)}
-                        />
-                        <Form.Check
-                            type="radio"
-                            label="No"
-                            name="shortlist_from_resume"
-                            id="shortlistFromResumesNo"
-                            checked={!formState.test_type.shortlist_from_resume}
-                            onChange={(e) => handleTestType(e)}
-                        />
-                    </Form.Group>
-                    <Form.Group
-                        className="mb-3"
-                        controlId="writtenTestOnlineTest"
-                    >
-                        <Form.Label>Written Test/ Online Test</Form.Label>
-                        <Form.Check
-                            type="radio"
-                            label="Yes"
-                            name="online_test"
-                            id="writtenTestOnlineTestYes"
-                            checked={formState.test_type.written_test}
-                            onChange={(e) => handleTestType(e)}
-                        />
-                        <Form.Check
-                            type="radio"
-                            label="No"
-                            name="online_test"
-                            id="writtenTestOnlineTestNo"
-                            checked={!formState.test_type.written_test}
-                            onChange={(e) => handleTestType(e)}
-                        />
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Label>Shortlist from Resumes</Form.Label>
+                            </Col>
+                            <Col xs={6}>
+                                <div className="d-flex justify-content-around">
+                                    <Form.Check
+                                        type="radio"
+                                        label="Yes"
+                                        name="shortlist_from_resume"
+                                        id="shortlistFromResumesYes"
+                                        checked={
+                                            formState.test_type
+                                                .shortlist_from_resume
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        label="No"
+                                        name="shortlist_from_resume"
+                                        id="shortlistFromResumesNo"
+                                        checked={
+                                            !formState.test_type
+                                                .shortlist_from_resume
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Label>
+                                    Written Test/ Online Test
+                                </Form.Label>
+                            </Col>
+                            <Col xs={6}>
+                                <div className="d-flex justify-content-around">
+                                    <Form.Check
+                                        type="radio"
+                                        label="Yes"
+                                        name="online_test"
+                                        id="writtenTestOnlineTestYes"
+                                        checked={
+                                            formState.test_type.online_test
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        label="No"
+                                        name="online_test"
+                                        id="writtenTestOnlineTestNo"
+                                        checked={
+                                            !formState.test_type.online_test
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
                     </Form.Group>
                 </div>
 
                 {/* Interested Discipline */}
                 <div className="note-container">
-                    <h4 className="mb-3"> Type of Tests </h4>
-                    <Row className="mb-3">
-                        {testTypes.map((type, index) => (
-                            <Col md={4} xs={6} key={index}>
-                                <Form.Check
-                                    type={"checkbox"}
-                                    id={`check-industry-${index}`}
-                                >
-                                    <Form.Check.Input
-                                        name={`${type
-                                            .split(" ")[0]
-                                            .toLowerCase()}_test`}
+                    <Form.Group className="mb-3" controlId="interestedDegree">
+                        <h4 className="mb-3"> Type of Tests </h4>
+                        <Col className="mb-3">
+                            {testTypes.map((type, index) => (
+                                <Col md={4} xs={6} key={index}>
+                                    <Form.Check
                                         type={"checkbox"}
-                                        checked={
-                                            formState.test_type[
-                                                `${type
-                                                    .split(" ")[0]
-                                                    .toLowerCase()}_test`
-                                            ]
-                                        }
-                                        onChange={(e) => {
-                                            handleCheck(() =>
-                                                handleTestType(e)
-                                            );
-                                        }}
-                                    />
-                                    <Form.Check.Label>{type}</Form.Check.Label>
-                                </Form.Check>
-                            </Col>
-                        ))}
-                    </Row>
+                                        id={`check-industry-${index}`}
+                                    >
+                                        <Form.Check.Input
+                                            name={`${type
+                                                .split(" ")[0]
+                                                .toLowerCase()}_test`}
+                                            type={"checkbox"}
+                                            checked={
+                                                formState.test_type[
+                                                    `${type
+                                                        .split(" ")[0]
+                                                        .toLowerCase()}_test`
+                                                ]
+                                            }
+                                            onChange={(e) => {
+                                                handleCheck(() =>
+                                                    handleTestType(e)
+                                                );
+                                            }}
+                                        />
+                                        <Form.Check.Label>
+                                            {type}
+                                        </Form.Check.Label>
+                                    </Form.Check>
+                                </Col>
+                            ))}
+                        </Col>
+                    </Form.Group>
 
                     {/* For Technical Test please specify likely Topics / Skill sets: */}
                     <Form.Group
@@ -275,45 +298,71 @@ const SelectionProcess = ({ formState, setFormState }) => {
                             onChange={(e) => handleSelectionProcess(e)}
                         />
                     </Form.Group>
-
                     <Form.Group className="mb-3" controlId="groupDiscussion">
-                        <Form.Label>Group Discussion</Form.Label>
-                        <Form.Check
-                            type="radio"
-                            name="group_discussion"
-                            label="Yes"
-                            id="groupDiscussionYes"
-                            checked={formState.test_type.group_discussion}
-                            onChange={(e) => handleTestType(e)}
-                        />
-                        <Form.Check
-                            type="radio"
-                            label="No"
-                            name="group_discussion"
-                            id="groupDiscussionNo"
-                            checked={!formState.test_type.group_discussion}
-                            onChange={(e) => handleTestType(e)}
-                        />
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Label>Group Discussion</Form.Label>
+                            </Col>
+                            <Col xs={6}>
+                                <div className="d-flex justify-content-around">
+                                    <Form.Check
+                                        type="radio"
+                                        label="Yes"
+                                        name="group_discussion"
+                                        id="groupDiscussionYes"
+                                        checked={
+                                            formState.test_type.group_discussion
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        label="No"
+                                        name="group_discussion"
+                                        id="groupDiscussionNo"
+                                        checked={
+                                            !formState.test_type
+                                                .group_discussion
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
 
-                        <Form.Label>
-                            Personal Interview/ Number of Rounds
-                        </Form.Label>
-                        <Form.Check
-                            type="radio"
-                            label="Yes"
-                            name="personal_interview"
-                            id="groupDiscussionYes"
-                            checked={formState.test_type.personal_interview}
-                            onChange={(e) => handleTestType(e)}
-                        />
-                        <Form.Check
-                            type="radio"
-                            label="No"
-                            name="personal_interview"
-                            id="groupDiscussionNo"
-                            checked={!formState.test_type.personal_interview}
-                            onChange={(e) => handleTestType(e)}
-                        />
+                        <Row>
+                            <Col xs={6}>
+                                <Form.Label>
+                                    Personal Interview/ Number of Rounds
+                                </Form.Label>
+                            </Col>
+                            <Col xs={6}>
+                                <div className="d-flex justify-content-around">
+                                    <Form.Check
+                                        type="radio"
+                                        label="Yes"
+                                        name="personal_interview"
+                                        id="personalInterviewYes"
+                                        checked={
+                                            formState.test_type
+                                                .personal_interview
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        label="No"
+                                        name="personal_interview"
+                                        id="personalInterviewNo"
+                                        checked={
+                                            !formState.test_type
+                                                .personal_interview
+                                        }
+                                        onChange={(e) => handleTestType(e)}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
                     </Form.Group>
 
                     {/* Number of offers you intend to make */}

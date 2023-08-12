@@ -5,7 +5,7 @@ import cdpcLogo from "../../assets/cdcrc_logo.png";
 
 export default function Header() {
     return (
-        <div>
+        <div className="shadow">
             <div className="cdpc-primary d-flex justify-content-between p-4">
                 <div className="d-flex">
                     <div className="me-3">

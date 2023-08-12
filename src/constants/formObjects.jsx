@@ -53,7 +53,7 @@ const empty_inf_job_details = {
 };
 
 const empty_selection_process = {
-    eligibility_criteria: 23,
+    eligibility_criteria: 0,
     allow_backlog_students: false,
     test_type: {
         ppt: false,

@@ -107,6 +107,7 @@ function InfJobDetails({ formState, setFormState }) {
                             name="place_of_posting"
                             placeholder="Enter Place of Posting"
                             onChange={handleJobDetail}
+                            value={formState.job_profile.place_of_posting}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="jobDescription">
@@ -116,6 +117,7 @@ function InfJobDetails({ formState, setFormState }) {
                             rows={3}
                             placeholder="Enter a Job Description"
                             name="job_description"
+                            value={formState.job_profile.job_description}
                             onChange={handleJobDetail}
                         />
                     </Form.Group>
@@ -137,6 +139,7 @@ function InfJobDetails({ formState, setFormState }) {
                             name="compensation"
                             placeholder="Enter Compensation"
                             onChange={handleStipendDetail}
+                            value={formState.stipend_details.compensation}
                         />
                     </Form.Group>
                     <Row className="d-flex justify-content-between">
@@ -151,6 +154,7 @@ function InfJobDetails({ formState, setFormState }) {
                                     placeholder="Enter Amount"
                                     name="stipend_amount"
                                     onChange={handleStipendDetail}
+                                    value= {formState.stipend_details.stipend_amount}
                                 />
                             </Form.Group>
                         </Col>
@@ -165,6 +169,7 @@ function InfJobDetails({ formState, setFormState }) {
                                     placeholder="Enter Amount"
                                     name="bonus_perks_incentives"
                                     onChange={handleStipendDetail}
+                                    value = {formState.stipend_details.bonus_perks_incentives}
                                 />
                             </Form.Group>
                         </Col>
@@ -179,6 +184,7 @@ function InfJobDetails({ formState, setFormState }) {
                                     placeholder="Enter Amount"
                                     name="accomodation_trip_fare"
                                     onChange={handleStipendDetail}
+                                    value={formState.stipend_details.accomodation_trip_fare}
                                 />
                             </Form.Group>
                         </Col>
@@ -190,6 +196,7 @@ function InfJobDetails({ formState, setFormState }) {
                             placeholder="Enter details"
                             name="bond_service_contract"
                             onChange={handleStipendDetail}
+                            value={formState.stipend_details.bond_service_contract}
                         />
                     </Form.Group>
                 </div>

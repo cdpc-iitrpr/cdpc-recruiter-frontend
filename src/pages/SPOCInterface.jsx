@@ -17,11 +17,11 @@ function Company(name, email, setCompanyDetails) {
             onClick={handleClick}
         >
             <div>
-                <span class="material-symbols-outlined">corporate_fare</span>
+                <span className="material-symbols-outlined">corporate_fare</span>
                 <h5> {name} </h5>
             </div>
             <div>
-                <span class="material-symbols-outlined">email</span>
+                <span className="material-symbols-outlined">email</span>
                 <p> {email} </p>
             </div>
         </div>

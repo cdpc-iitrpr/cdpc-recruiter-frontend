@@ -26,6 +26,9 @@ function App() {
                         <Route path="/login" element={<Email />} />
                         <Route path="/signup" element={<Signup />} />
 
+                        {/* SPOC routes */}
+                        <Route path="/spoc" element={<SPOCInterface />} />
+                        
 
                         {/* Form routes */}
                         

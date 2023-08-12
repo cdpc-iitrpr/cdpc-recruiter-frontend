@@ -42,3 +42,24 @@
     max-height: 500px;
     overflow-y: auto;
 }
+
+.space-between{
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-margin{
+    margin: 10px;
+}
+
+.text-margin{
+    margin: 10px;
+}
+
+#versionTitle{
+    width: 60%;
+}
+
+.hover-effect:hover{
+    background-color: #e6e6e6;
+}

@@ -17,8 +17,16 @@ export default function Header() {
                             <img width={"50px"} src={cdpcLogo} />
                         </div>
                         <div className="container">
-                            <p className="lg-h1 h4">CDPC Recruitment Portal</p>
-                            <p className="lg-h4 h6">
+                            <p className="d-lg-block d-none h1">
+                                CDPC Recruitment Portal
+                            </p>
+                            <p className="d-lg-none d-block h4">
+                                CDPC Recruitment Portal
+                            </p>
+                            <p className="d-lg-block d-none h4">
+                                Indian Institute of Technology Ropar
+                            </p>
+                            <p className="d-lg-none d-block h6">
                                 Indian Institute of Technology Ropar
                             </p>
                         </div>

@@ -11,6 +11,7 @@ import InfForm from "./components/Form/InfForm";
 import JafForm from "./components/Form/JafForm";
 import SPOCInterface from "./pages/SPOCInterface";
 import Landing from "./pages/Landing";
+import RecruiterInterface from "./pages/RecruiterInterface";
 
 function App() {
     return (
@@ -20,7 +21,7 @@ function App() {
                 <Header />
                 <Router>
                     <Routes>
-                        <Route path="/" element={<Landing />} />
+                        <Route path="/" element={<RecruiterInterface />} />
 
                         {/* Login and sigup routes */}
                         <Route path="/login" element={<Email />} />

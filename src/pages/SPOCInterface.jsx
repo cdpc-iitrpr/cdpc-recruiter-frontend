@@ -13,7 +13,7 @@ function Company(name, email, setCompanyDetails) {
 
     return (
         <div
-            className="company-container"
+            className="company-container hover-effect"
             onClick={handleClick}
         >
             <div>
@@ -65,15 +65,17 @@ export default function SPOCInterface() {
         <div className="page-container">
             <h1> Welcome! </h1>
             <Row>
-                <Col xs={12} md={4}>
-                    <div className="list-container">
+                <Col xs={12} md={5}>
+                    <div className="list-container note-container">
                         <div>
                             {companyEls}
                         </div>
                     </div>
                 </Col>
-                <Col xs={12} md={8}>
-                    <JafForm />
+                <Col xs={12} md={7}>
+                    <div className="note-container">
+                        <JafForm />
+                    </div>
                 </Col>
             </Row>
         </div>

@@ -21,14 +21,15 @@ function App() {
                 <Header />
                 <Router>
                     <Routes>
-                        <Route path="/" element={<RecruiterInterface />} />
+                        <Route path="/" element={<Email />} />
 
                         {/* Login and sigup routes */}
                         <Route path="/login" element={<Email />} />
                         <Route path="/signup" element={<Signup />} />
 
-                        {/* SPOC routes */}
+                        {/* User routes */}
                         <Route path="/spoc" element={<SPOCInterface />} />
+                        <Route path="/recruiter" element={<RecruiterInterface />} />
                         
 
                         {/* Form routes */}

@@ -59,17 +59,21 @@ export default function RecruiterInterface()
     function handleAddJAF()
     {
         // save current form, then create new JAF form
-        handleSaveDraft();
-        setFormType(0);
-        setVersionTitle("");
+        if(handleSaveDraft())
+        {
+            setFormType(0);
+            setVersionTitle("");
+        }
     }
 
     function handleAddINF()
     {
         // save current form, then create new INF form
-        handleSaveDraft();
-        setFormType(1);
-        setVersionTitle("");
+        if(handleSaveDraft())
+        {
+            setFormType(1);
+            setVersionTitle("");
+        }
     }
 
     function handleClone()
@@ -85,7 +89,7 @@ export default function RecruiterInterface()
     {
         if(versionTitle == "")
         {
-            alert("Please enter a version title!");
+            alert("Please enter a version title to save the current draft!");
             return false;
         }
         if(formType == 0)

@@ -43,7 +43,7 @@ function InfForm() {
                 <h1>Internship Notification Form</h1>
             </Container>
             <div className="container progress-container sticky-top pb-3 bottom-fade">
-                <p className="m-0 bg-white ">Progress:</p>
+                <p className="m-0  ">Progress:</p>
                 <ProgressBar
                     striped
                     variant="success"

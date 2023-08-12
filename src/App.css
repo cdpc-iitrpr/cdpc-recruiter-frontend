@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 } */
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #E6EEF1;
+}
+
+.note-container {
+  background: #D9E5E9;
+  box-shadow: #E6EEF1;
+}

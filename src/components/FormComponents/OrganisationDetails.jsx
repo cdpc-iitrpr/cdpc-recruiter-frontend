@@ -59,6 +59,8 @@ function OrganisationDetails({ formState, setFormState }) {
         <div>
             <Container>
                 <h1 className="mb-3">Organisation Information</h1>
+
+                {/* About */}
                 <div className="note-container">
                     <h4 className="mb-3">About</h4>
                     <Form.Group className="mb-3" controlId="organisationName">
@@ -92,6 +94,8 @@ function OrganisationDetails({ formState, setFormState }) {
                         />
                     </Form.Group>
                 </div>
+
+                {/* Type of Organisation */}
                 <div className="note-container">
                     <h4 className="mb-3">Type of Organisation</h4>
                     <Row className="mb-3">
@@ -134,6 +138,8 @@ function OrganisationDetails({ formState, setFormState }) {
                         />
                     </InputGroup>
                 </div>
+
+                {/* Industry Sector */}
                 <div className="note-container">
                     <h4 className="mb-3">Industry Sector</h4>
                     <Row className="mb-3">
@@ -173,6 +179,8 @@ function OrganisationDetails({ formState, setFormState }) {
                         />
                     </InputGroup>
                 </div>
+
+                {/* Contact Details */}
                 <div className="note-container">
                     <h4 className="mb-3">Contact Details</h4>
                     <Row>

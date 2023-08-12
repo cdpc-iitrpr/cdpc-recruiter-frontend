@@ -49,7 +49,6 @@ export default function JafJobDetails(props) {
             };
         });
 
-        // console.log(jafJobDetails);
     }, [basicDetails, descriptionFile, salaryFile, salaryDetails]);
 
     return (

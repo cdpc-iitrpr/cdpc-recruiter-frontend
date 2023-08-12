@@ -4,7 +4,10 @@ import OrganisationalDetails from "../FormComponents/OrganisationDetails";
 import SelectionProcess from "../FormComponents/SelectionProcess";
 import JafJobDetails from "../FormComponents/JafJobDetails";
 import "./Form.css";
-import { empty_organisation_details } from "../../constants/formObjects";
+import {
+    empty_organisation_details,
+    empty_selection_process,
+} from "../../constants/formObjects";
 
 function JafForm() {
     const [formPage, setFormPage] = React.useState(1);
@@ -27,6 +30,10 @@ function JafForm() {
         empty_organisation_details
     );
 
+    const [selectionProcess, setSelectionProcess] = React.useState(
+        empty_selection_process
+    );
+
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -38,7 +45,6 @@ function JafForm() {
         setProgress(Math.round(((formPage - 1) / 3) * 100));
     }, [formPage]);
 
-    console.log(organisationDetails.about_organisation);
 
     return (
         <div>
@@ -68,7 +74,12 @@ function JafForm() {
                         setJafJobDetails={setJafJobDetails}
                     />
                 )}
-                {formPage === 3 && <SelectionProcess />}
+                {formPage === 3 && (
+                    <SelectionProcess
+                        formState={selectionProcess}
+                        setFormState={setSelectionProcess}
+                    />
+                )}
             </Form>
             <div className="d-flex justify-content-around my-3">
                 {formPage > 1 && (

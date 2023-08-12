@@ -78,6 +78,8 @@ function InfJobDetails({ formState, setFormState }) {
         <div>
             <div className="container">
                 <h1 className="mb-3">Internship Details</h1>
+
+                {/* Job Profile */}
                 <div className="note-container">
                     <h4>Job Profile</h4>
                     <OptionGroup
@@ -124,6 +126,8 @@ function InfJobDetails({ formState, setFormState }) {
                         </Form.Text>
                     </Form.Group>
                 </div>
+
+                {/* Stipend Details */}
                 <div className="note-container">
                     <h4>Stipend Details</h4>
                     <Form.Group className="mb-3" controlId="compensation">

@@ -7,6 +7,7 @@ import "./Form.css";
 import {
     empty_inf_job_details,
     empty_organisation_details,
+    empty_selection_process,
 } from "../../constants/formObjects";
 
 function InfForm() {
@@ -19,6 +20,10 @@ function InfForm() {
     );
     const [infJobDetails, setInfJobDetails] = React.useState(
         empty_inf_job_details
+    );
+
+    const [selectionProcess, setSelectionProcess] = React.useState(
+        empty_selection_process
     );
 
     const scrollToTop = () => {
@@ -60,7 +65,12 @@ function InfForm() {
                         setFormState={setInfJobDetails}
                     />
                 )}
-                {formPage === 3 && <SelectionProcess />}
+                {formPage === 3 && (
+                    <SelectionProcess
+                        formState={selectionProcess}
+                        setFormState={setSelectionProcess}
+                    />
+                )}
             </Form>
             <div className="d-flex justify-content-around my-3">
                 {formPage > 1 && (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
 
-function OptionGroup({ feildName, optionName, formState, setFormState }) {
+function OptionGroup({ fieldName, optionName, formState, setFormState }) {
     function handleOptionChange(e, name, setTo) {
         if (e.target.checked) {
             setFormState((prev) => ({
@@ -25,19 +25,19 @@ function OptionGroup({ feildName, optionName, formState, setFormState }) {
                         <Form.Check
                             label="Yes"
                             type="radio"
-                            checked={formState.job_profile[feildName]}
-                            id={`${feildName}-yes`}
+                            checked={formState.job_profile[fieldName]}
+                            id={`${fieldName}-yes`}
                             onChange={(e) => {
-                                handleOptionChange(e, feildName, true);
+                                handleOptionChange(e, fieldName, true);
                             }}
                         />
                         <Form.Check
                             label="No"
                             type="radio"
-                            checked={!formState.job_profile[feildName]}
-                            id={`${feildName}-no`}
+                            checked={!formState.job_profile[fieldName]}
+                            id={`${fieldName}-no`}
                             onChange={(e) => {
-                                handleOptionChange(e, feildName, false);
+                                handleOptionChange(e, fieldName, false);
                             }}
                         />
                     </div>
@@ -83,20 +83,20 @@ function InfJobDetails({ formState, setFormState }) {
                 <div className="note-container">
                     <h4>Job Profile</h4>
                     <OptionGroup
-                        feildName="two_month_intern"
+                        fieldName="two_month_intern"
                         optionName="2 Month Internship"
                         formState={formState}
                         setFormState={setFormState}
                     />
                     <OptionGroup
-                        feildName="six_month_intern"
+                        fieldName="six_month_intern"
                         optionName="6 Month Internship"
                         formState={formState}
                         setFormState={setFormState}
                     />
                     <OptionGroup
                         optionName="Joint Master Thesis Program"
-                        feildName="joint_master_thesis_program"
+                        fieldName="joint_master_thesis_program"
                         formState={formState}
                         setFormState={setFormState}
                     />

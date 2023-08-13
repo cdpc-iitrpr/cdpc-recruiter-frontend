@@ -58,6 +58,7 @@ function JafForm() {
                     variant="success"
                     now={progress}
                     label={`${progress}%`}
+                    className="border border-secondary"
                 />
                 <div className="bottom-fade"></div>
             </div>

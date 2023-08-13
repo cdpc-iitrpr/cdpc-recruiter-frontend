@@ -145,7 +145,7 @@ export default function RecruiterInterface()
                             <h2>Current Drafts</h2>
                             <Button 
                                 variant="primary"
-                                className="button-margin"
+                                className="my-3"
                                 onClick={handleAddJAF}
                             >New JAF</Button>
                             <Accordion.Item eventKey="1">
@@ -158,7 +158,7 @@ export default function RecruiterInterface()
                             </Accordion.Item>
                             <Button 
                                 variant="primary"
-                                className="button-margin"
+                                className="my-3"
                                 onClick={handleAddINF}
                             >New INF</Button>
                             <Accordion.Item eventKey="2">

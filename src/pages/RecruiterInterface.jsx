@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Accordion, Button, Form } from "react-bootstrap";
 import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
+import FormHeader from "../components/FormComponents/FormHeader";
 
 function Draft(versionTitle, date, type)
 {
@@ -174,28 +175,21 @@ export default function RecruiterInterface()
                 </Col>
                 <Col xs={12} md={7}>
                     <div className="note-container">
-                        <div className="space-between text-margin">
-                            <Form.Control
-                                id="versionTitle"
-                                type="text"
-                                placeholder="Version Title"
-                                value={versionTitle}
-                                onChange={(e) => setVersionTitle(e.target.value)}
+                        {formType == 0 ? 
+                            <JafForm 
+                                versionTitle={versionTitle}
+                                setVersionTitle={setVersionTitle}
+                                handleClone={handleClone}
+                                handleSaveDraft={handleSaveDraft}
+                            /> 
+                        : 
+                            <InfForm 
+                                versionTitle={versionTitle}
+                                setVersionTitle={setVersionTitle}
+                                handleClone={handleClone}
+                                handleSaveDraft={handleSaveDraft}
                             />
-                            <div className="space-between">
-                                <Button
-                                variant="primary"
-                                className="button-margin"
-                                onClick={handleClone}
-                                >Clone</Button>
-                                <Button
-                                variant="primary"
-                                className="button-margin"
-                                onClick={handleSaveDraft}
-                                >Save</Button>
-                            </div>
-                        </div>
-                        {formType == 0 ? <JafForm /> : <InfForm />}
+                        }
                     </div>
                 </Col>
             </Row>

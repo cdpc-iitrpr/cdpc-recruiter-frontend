@@ -9,8 +9,9 @@ import {
     empty_organisation_details,
     empty_selection_process,
 } from "../../constants/formObjects";
+import FormHeader from "../FormComponents/FormHeader";
 
-function InfForm() {
+function InfForm({ versionTitle, setVersionTitle, handleSaveDraft, handleClone}) {
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
@@ -39,6 +40,12 @@ function InfForm() {
 
     return (
         <div>
+            <FormHeader
+                versionTitle={versionTitle}
+                setVersionTitle={setVersionTitle}
+                handleSaveDraft={handleSaveDraft}
+                handleClone={handleClone}
+            />
             <Container>
                 <h1>Internship Notification Form</h1>
             </Container>

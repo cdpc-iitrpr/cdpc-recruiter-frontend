@@ -85,7 +85,7 @@ const blank_inf_object = {
     about_organisation: {
         organisation: "",
         postal_address: "",
-        website: URL,
+        website: "",
     },
     organisation_type: {
         options: [],
@@ -164,7 +164,7 @@ const blank_jaf_object = {
     about_organisation: {
         organisation: "",
         postal_address: "",
-        website: URL,
+        website: "",
     },
     organisation_type: {
         options: [],
@@ -197,7 +197,7 @@ const blank_jaf_object = {
     job_profile: {
         designation: "",
         job_description: "",
-        job_description_pdf: [File],
+        job_description_pdf: [],
         place_of_posting: "",
     },
     salary_details: {

@@ -10,7 +10,12 @@ import {
 } from "../../constants/formObjects";
 import FormHeader from "../FormComponents/FormHeader";
 
-function JafForm({versionTitle, setVersionTitle, handleSaveDraft, handleClone}) {
+function JafForm({
+    versionTitle,
+    setVersionTitle,
+    handleSaveDraft,
+    handleClone,
+}) {
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
@@ -24,6 +29,41 @@ function JafForm({versionTitle, setVersionTitle, handleSaveDraft, handleClone}) 
             MTech: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
             MSc: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
             PhD: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
+        },
+    });
+
+    const [jafJobDetailsb, setJafJobDetailsb] = React.useState({
+        job_profile: {
+            designation: "",
+            job_description: "",
+            job_description_pdf: [],
+            place_of_posting: "",
+        },
+        salary_details: {
+            b_tech: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+            m_tech: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+            m_sc: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+            phd: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
         },
     });
 
@@ -46,7 +86,6 @@ function JafForm({versionTitle, setVersionTitle, handleSaveDraft, handleClone}) 
         setProgress(Math.round(((formPage - 1) / 3) * 100));
     }, [formPage]);
 
-
     return (
         <div>
             <FormHeader
@@ -65,6 +104,7 @@ function JafForm({versionTitle, setVersionTitle, handleSaveDraft, handleClone}) 
                     variant="success"
                     now={progress}
                     label={`${progress}%`}
+                    className="border border-secondary"
                 />
                 <div className="bottom-fade"></div>
             </div>

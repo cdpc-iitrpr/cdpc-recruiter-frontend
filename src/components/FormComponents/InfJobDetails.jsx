@@ -132,18 +132,17 @@ function InfJobDetails({ formState, setFormState }) {
                 {/* Stipend Details */}
                 <div className="note-container">
                     <h4>Stipend Details</h4>
-                    <Form.Group className="mb-3" controlId="compensation">
-                        <Form.Label>Compensation</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="compensation"
-                            placeholder="Enter Compensation"
-                            onChange={handleStipendDetail}
-                            value={formState.stipend_details.compensation}
-                        />
-                    </Form.Group>
+                    <h6>Please Note:</h6>
+                    <p>
+                        1. Performance base bonus should not be declared as part
+                        of Gross/CTC but to be indicated in
+                        Bonus/Perks/Incentive section.
+                        <br/>
+                        2. Any amount to be disbursed late than the end of the 3
+                        months should not be a part of Gross/CTC.
+                    </p>
                     <Row className="d-flex justify-content-between">
-                        <Col md={4} xs={12}>
+                        <Col xl={4} xs={12}>
                             <Form.Group
                                 className="mb-3"
                                 controlId="stipendAmount"
@@ -154,11 +153,13 @@ function InfJobDetails({ formState, setFormState }) {
                                     placeholder="Enter Amount"
                                     name="stipend_amount"
                                     onChange={handleStipendDetail}
-                                    value= {formState.stipend_details.stipend_amount}
+                                    value={
+                                        formState.stipend_details.stipend_amount
+                                    }
                                 />
                             </Form.Group>
                         </Col>
-                        <Col md={4} xs={12}>
+                        <Col xl={4} xs={12}>
                             <Form.Group
                                 className="mb-3"
                                 controlId="bonusPerksIncentives"
@@ -169,11 +170,14 @@ function InfJobDetails({ formState, setFormState }) {
                                     placeholder="Enter Amount"
                                     name="bonus_perks_incentives"
                                     onChange={handleStipendDetail}
-                                    value = {formState.stipend_details.bonus_perks_incentives}
+                                    value={
+                                        formState.stipend_details
+                                            .bonus_perks_incentives
+                                    }
                                 />
                             </Form.Group>
                         </Col>
-                        <Col md={4} xs={12}>
+                        <Col xl={4} xs={12}>
                             <Form.Group
                                 className="mb-3"
                                 controlId="accomodationFare"
@@ -184,7 +188,10 @@ function InfJobDetails({ formState, setFormState }) {
                                     placeholder="Enter Amount"
                                     name="accomodation_trip_fare"
                                     onChange={handleStipendDetail}
-                                    value={formState.stipend_details.accomodation_trip_fare}
+                                    value={
+                                        formState.stipend_details
+                                            .accomodation_trip_fare
+                                    }
                                 />
                             </Form.Group>
                         </Col>
@@ -196,7 +203,9 @@ function InfJobDetails({ formState, setFormState }) {
                             placeholder="Enter details"
                             name="bond_service_contract"
                             onChange={handleStipendDetail}
-                            value={formState.stipend_details.bond_service_contract}
+                            value={
+                                formState.stipend_details.bond_service_contract
+                            }
                         />
                     </Form.Group>
                 </div>

@@ -146,9 +146,9 @@ const blank_inf_object = {
         },
         test_duration: "",
         likely_topics: "",
-        number_of_rounds: number,
+        number_of_rounds: 0,
         group_discussion_duration: "",
-        number_of_offers: number,
+        number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
         interested_discipline: [
@@ -242,9 +242,9 @@ const blank_jaf_object = {
         },
         test_duration: "",
         likely_topics: "",
-        number_of_rounds: number,
+        number_of_rounds: 0,
         group_discussion_duration: "",
-        number_of_offers: number,
+        number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
         interested_discipline: [

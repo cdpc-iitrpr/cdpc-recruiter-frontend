@@ -139,7 +139,7 @@ const blank_inf_object = {
             written_test: false,
             online_test: false,
             technical_test: false,
-            aptitiude_test: false,
+            aptitude_test: false,
             psychometric_test: false,
             group_discussion: false,
             personal_interview: false,

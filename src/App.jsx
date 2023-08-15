@@ -11,12 +11,13 @@ import InfForm from "./components/Form/InfForm";
 import JafForm from "./components/Form/JafForm";
 import SPOCInterface from "./pages/SPOCInterface";
 import RecruiterInterface from "./pages/RecruiterInterface";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
     return (
         <>
             <AuthContextProvider>
-              {/* Header */}
+                {/* Header */}
                 <Header />
                 <Router>
                     <Routes>
@@ -27,12 +28,27 @@ function App() {
                         <Route path="/signup" element={<Signup />} />
 
                         {/* User routes */}
-                        <Route path="/spoc" element={<SPOCInterface />} />
-                        <Route path="/recruiter" element={<RecruiterInterface />} />
-                        
+                        <Route
+                            path="/spoc"
+                            element={
+                                <ProtectedRoute
+                                    element={<SPOCInterface />}
+                                    role={"spoc"}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/recruiter"
+                            element={
+                                <ProtectedRoute
+                                    element={<RecruiterInterface />}
+                                    role={"recruiter"}
+                                />
+                            }
+                        />
 
                         {/* Form routes */}
-                        
+
                         <Route path="/inf" element={<InfForm />} />
                         <Route path="/jaf" exact element={<JafForm />} />
                     </Routes>

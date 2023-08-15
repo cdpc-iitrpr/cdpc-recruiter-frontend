@@ -207,7 +207,10 @@ export default function RecruiterInterface()
                         {formType == 0 ? 
                             <JafForm/> 
                         : 
-                            <InfForm/>
+                            <InfForm
+                                formData={currentINFState}
+                                setFormData={setCurrentINFState}
+                            />
                         }
                     </div>
                 </Col>

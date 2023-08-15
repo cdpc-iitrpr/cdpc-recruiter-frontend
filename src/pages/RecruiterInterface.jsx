@@ -57,6 +57,28 @@ export default function RecruiterInterface()
             ]
         });
 
+    React.useEffect(() => {
+        const fetchAllDrafts = async () => {
+            const response = await fetch("http://localhost:5000/recruiterJAF/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const json = await response.json();
+            if(!response.ok)
+            {
+                console.log(json);
+                alert(json.message);
+            }
+            else
+            {
+                console.log(json);
+            }
+        }
+        fetchAllDrafts();
+    }, []);
+
     function handleAddJAF()
     {
         // save current form, then create new JAF form
@@ -133,7 +155,6 @@ export default function RecruiterInterface()
     }
 
     const JAFDraftEls = drafts.JAF.map((draft) => Draft(draft.versionTitle, draft.date, 0));
-
     const INFDraftEls = drafts.INF.map((draft) => Draft(draft.versionTitle, draft.date, 1));
 
 
@@ -175,20 +196,16 @@ export default function RecruiterInterface()
                 </Col>
                 <Col xs={12} md={7}>
                     <div className="note-container">
+                        <FormHeader
+                            versionTitle={versionTitle}
+                            setVersionTitle={setVersionTitle}
+                            handleSaveDraft={handleSaveDraft}
+                            handleClone={handleClone}
+                        />
                         {formType == 0 ? 
-                            <JafForm 
-                                versionTitle={versionTitle}
-                                setVersionTitle={setVersionTitle}
-                                handleClone={handleClone}
-                                handleSaveDraft={handleSaveDraft}
-                            /> 
+                            <JafForm/> 
                         : 
-                            <InfForm 
-                                versionTitle={versionTitle}
-                                setVersionTitle={setVersionTitle}
-                                handleClone={handleClone}
-                                handleSaveDraft={handleSaveDraft}
-                            />
+                            <InfForm/>
                         }
                     </div>
                 </Col>

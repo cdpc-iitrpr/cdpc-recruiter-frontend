@@ -8,9 +8,8 @@ import {
     empty_organisation_details,
     empty_selection_process,
 } from "../../constants/formObjects";
-import FormHeader from "../FormComponents/FormHeader";
 
-function JafForm({versionTitle, setVersionTitle, handleSaveDraft, handleClone}) {
+function JafForm() {
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
@@ -49,12 +48,6 @@ function JafForm({versionTitle, setVersionTitle, handleSaveDraft, handleClone}) 
 
     return (
         <div>
-            <FormHeader
-                versionTitle={versionTitle}
-                setVersionTitle={setVersionTitle}
-                handleSaveDraft={handleSaveDraft}
-                handleClone={handleClone}
-            />
             <Container>
                 <h1>Job Announcement Form</h1>
             </Container>

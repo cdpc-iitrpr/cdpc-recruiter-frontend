@@ -8,8 +8,13 @@ import {
     empty_organisation_details,
     empty_selection_process,
 } from "../../constants/formObjects";
+import { frontToBack } from "../../utils/INFParser";
+import { JAF_SUBMIT_ACTION } from "../../constants/endPoints";
 
-function JafForm() {
+function JafForm({formData, setFormData}) {
+
+    const { user } = useAuth();
+
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
@@ -76,6 +81,24 @@ function JafForm() {
         });
     };
 
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        const parsedFormData = frontToBack(formData);
+        // post request to server
+        fetch(JAF_SUBMIT_ACTION, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.access}`
+            },
+            body: JSON.stringify({
+                form_id: "id",
+                save_as_draft: false,
+                form_data: parsedFormData,
+            }),
+        }).then((response) => response.json());
+    }
+
     useEffect(() => {
         setProgress(Math.round(((formPage - 1) / 3) * 100));
     }, [formPage]);
@@ -96,7 +119,9 @@ function JafForm() {
                 />
                 <div className="bottom-fade"></div>
             </div>
-            <Form>
+            <Form
+                onSubmit={handleFormSubmit}
+            >
                 {formPage === 1 && (
                     <OrganisationalDetails
                         formState={organisationDetails}

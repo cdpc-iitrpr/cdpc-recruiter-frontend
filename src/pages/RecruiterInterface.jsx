@@ -3,7 +3,8 @@ import { Row, Col, Accordion, Button, Form } from "react-bootstrap";
 import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
-import { blank_inf_object } from "../constants/formObjects";
+import { blank_inf_object, blank_jaf_object } from "../constants/formObjects";
+import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS } from "../constants/endPoints";
 
 function Draft(versionTitle, date, type)
 {
@@ -33,51 +34,104 @@ function Draft(versionTitle, date, type)
 
 export default function RecruiterInterface()
 {
+    const { user } = useAuth();
+
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(1);
     const [drafts, setDrafts] = React.useState({
             JAF: [
                 {
+                    id: "",
                     versionTitle: "JAF 1",
-                    date: "2021-12-12"
+                    timestamp: "2021-12-12",
+                    is_draft: false
                 },
                 {
+                    id: "",
                     versionTitle: "JAF 2",
-                    date: "2023-12-12"
+                    timestamp: "2023-12-12",
+                    is_draft: false
                 },
             ],
             INF: [
                 {
+                    id: "",
                     versionTitle: "INF 1",
-                    date: "2021-12-12"
+                    timestamp: "2021-12-12",
+                    is_draft: false
                 },
                 {
+                    id: "",
                     versionTitle: "INF 2",
-                    date: "2023-12-12"
+                    timestamp: "2023-12-12",
+                    is_draft: false
                 },
             ]
         });
 
     React.useEffect(() => {
-        const fetchAllDrafts = async () => {
-            const response = await fetch("http://localhost:5000/recruiterJAF/", {
+        const fetchJAFDrafts = async () => {
+            const response = await fetch(JAF_FETCH_DRAFTS, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.access}`,
                 },
+                body: JSON.stringify({
+                    user:{
+                        role: "recruiter",
+                        email: user.email,
+                    }
+                }),
             });
             const json = await response.json();
             if(!response.ok)
             {
-                console.log(json);
                 alert(json.message);
             }
             else
             {
-                console.log(json);
+                setDrafts(prev => {
+                    return {
+                        ...prev,
+                        JAF: json.JAF_List,
+                    }
+                })
             }
         }
-        fetchAllDrafts();
+
+    const fetchINFDrafts = async () => {
+        const response = await fetch(INF_FETCH_DRAFTS, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.access}`,
+            },
+            body: JSON.stringify({
+                user:{
+                    role: "recruiter",
+                    email: user.email,
+                }
+            }),
+        });
+        const json = await response.json();
+        if(!response.ok)
+        {
+            alert(json.message);
+        }
+        else
+        {
+            setDrafts(prev => {
+                return {
+                    ...prev,
+                    INF: json.INF_List,
+                }
+            })
+        }
+    }
+    
+    fetchJAFDrafts();
+    fetchINFDrafts();
     }, []);
 
     function handleAddJAF()
@@ -159,6 +213,7 @@ export default function RecruiterInterface()
     const INFDraftEls = drafts.INF.map((draft) => Draft(draft.versionTitle, draft.date, 1));
 
     const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
+    const [currentJAFState, setCurrentJAFState] = useState(blank_jaf_object);
 
     return(
         <div className="page-container">
@@ -205,7 +260,10 @@ export default function RecruiterInterface()
                             handleClone={handleClone}
                         />
                         {formType == 0 ? 
-                            <JafForm/> 
+                            <JafForm
+                                formData={currentJAFState}
+                                setFormData={setCurrentJAFState}
+                            /> 
                         : 
                             <InfForm
                                 formData={currentINFState}

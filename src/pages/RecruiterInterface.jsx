@@ -6,6 +6,7 @@ import FormHeader from "../components/FormComponents/FormHeader";
 import { blank_inf_object, blank_jaf_object } from "../constants/formObjects";
 import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS } from "../constants/endPoints";
 import { useAuth } from "../context/AuthContext";
+import useFetch from "../hooks/useFetch";
 
 function Draft(versionTitle, date, type) {
     function handleClickDraft() {
@@ -28,6 +29,7 @@ function Draft(versionTitle, date, type) {
 
 export default function RecruiterInterface() {
     const { user } = useAuth();
+    const { fetch } = useFetch();
 
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(0);

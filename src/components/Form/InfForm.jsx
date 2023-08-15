@@ -6,6 +6,8 @@ import SelectionProcess from "../FormComponents/SelectionProcess";
 import "./Form.css";
 import FormHeader from "../FormComponents/FormHeader";
 import { INF_FORM_ACTION } from "../../constants/endPoints";
+import { frontToBack } from "../../utils/INFParser";
+import { useAuth } from "../../context/AuthContext";
 
 function InfForm({
     versionTitle,
@@ -15,6 +17,9 @@ function InfForm({
     formData,
     setFormData,
 }) {
+
+    const { user } = useAuth();
+
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
@@ -28,16 +33,18 @@ function InfForm({
     };
 
     const handleFormSubmit = (e) => {
+        const parsed_FormData = frontToBack(formData);
         //post request to server
         fetch(INF_FORM_ACTION, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${user.access}`,
             },
             body: JSON.stringify({
                 form_id: "id",
                 save_as_draft: false,
-                data: formData,
+                form_data: parsed_FormData,
             }),
         }).then((response) => response.json());
     };

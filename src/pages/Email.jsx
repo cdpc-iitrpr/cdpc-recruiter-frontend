@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Container, Form, Button, Spinner } from "react-bootstrap";
 import { DJANGO_SERVER } from "../constants/endPoints";
 import { OTP_LENGTH } from "../constants/otp";
-
+import { useAuth } from "../context/AuthContext";
 const Email = () => {
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -85,6 +87,7 @@ const Email = () => {
       } else {
         // otp sent successfully
         console.log(data.message);
+        login(data);
       }
     } catch (err) {
       console.log(err);

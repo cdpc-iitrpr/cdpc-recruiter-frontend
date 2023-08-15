@@ -12,16 +12,24 @@ const initialState = localStorage.getItem("user")
 
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(initialState);
-    const [loggedIn, setLoggedIn] = useState(user.email === "" ? false : true);
+    const [loggedIn, setLoggedIn] = useState(localStorage.getItem("user").access ? true : false);
     const [otp, setOtp] = useState(null);
 
     const sendOTP = async () => {};
 
-    const login = async (email, otpString) => {};
+    const login = async (data) => {
+        setUser(data);
+        setLoggedIn(true);
+        localStorage.setItem("user", JSON.stringify(data));
+    };
 
     const signup = async (email, name, companyName, phoneNumber) => {};
 
-    const logout = () => {};
+    const logout = () => {
+        setUser({ email: "", name: "", phoneNumber: "", companyName: "" });
+        setLoggedIn(false);
+        localStorage.removeItem("user");
+    };
 
     const values = {
         user,

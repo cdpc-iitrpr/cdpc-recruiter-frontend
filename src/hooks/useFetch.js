@@ -34,11 +34,17 @@ const useFetch = () => {
 
         // Check if the token is expired or about to expire (e.g., within a 1-minute threshold)
         if (!accessToken || Date.now() + 60000 >= expirationTime) {
-            const newAccessToken = await refreshAccessToken();
+            try {
+                const newAccessToken = await refreshAccessToken();
 
-            login(newAccessToken);
+                login(newAccessToken);
 
-            accessToken = newAccessToken;
+                accessToken = newAccessToken;
+            } catch (refreshError) {
+                setError("Token refresh failed");
+                setLoading(false);
+                return; 
+            }
         }
 
         const headers = {
@@ -51,18 +57,24 @@ const useFetch = () => {
             headers,
         };
 
-        const response = await fetch(url, updatedOptions);
+        try {
+            const response = await fetch(url, updatedOptions);
 
-        if (!response.ok) {
+            if (!response.ok) {
+                setError("Request failed");
+            }
+
+            setLoading(false);
+
+            return response;
+        } catch (fetchError) {
             setError("Request failed");
+            setLoading(false);
+            return; 
         }
-
-        setLoading(false);
-
-        return response;
     };
 
-    return { fetch:fetchWithTokenRefresh, loading, error };
+    return { fetch: fetchWithTokenRefresh, loading, error };
 };
 
 export default useFetch;

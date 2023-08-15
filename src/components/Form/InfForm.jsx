@@ -8,7 +8,7 @@ import { INF_FORM_ACTION } from "../../constants/endPoints";
 import { frontToBack } from "../../utils/INFParser";
 import { useAuth } from "../../context/AuthContext";
 
-function InfForm() {
+function InfForm({formData, setFormData}) {
 
     const { user } = useAuth();
 

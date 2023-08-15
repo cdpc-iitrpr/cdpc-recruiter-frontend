@@ -4,26 +4,17 @@ import OrganisationalDetails from "../FormComponents/OrganisationDetails";
 import InfJobDetails from "../FormComponents/InfJobDetails";
 import SelectionProcess from "../FormComponents/SelectionProcess";
 import "./Form.css";
-import {
-    empty_inf_job_details,
-    empty_organisation_details,
-    empty_selection_process,
-} from "../../constants/formObjects";
+import { INF_FORM_ACTION } from "../../constants/endPoints";
+import { frontToBack } from "../../utils/INFParser";
+import { useAuth } from "../../context/AuthContext";
 
 function InfForm() {
+
+    const { user } = useAuth();
+
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
-    );
-    const [organisationDetails, setOrganisationDetails] = React.useState(
-        empty_organisation_details
-    );
-    const [infJobDetails, setInfJobDetails] = React.useState(
-        empty_inf_job_details
-    );
-
-    const [selectionProcess, setSelectionProcess] = React.useState(
-        empty_selection_process
     );
 
     const scrollToTop = () => {
@@ -31,6 +22,23 @@ function InfForm() {
             top: 0,
             behavior: "smooth", // Use 'auto' for instant scroll
         });
+    };
+
+    const handleFormSubmit = (e) => {
+        const parsed_FormData = frontToBack(formData);
+        //post request to server
+        fetch(INF_FORM_ACTION, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.access}`,
+            },
+            body: JSON.stringify({
+                form_id: "id",
+                save_as_draft: false,
+                form_data: parsed_FormData,
+            }),
+        }).then((response) => response.json());
     };
 
     useEffect(() => {
@@ -53,23 +61,23 @@ function InfForm() {
                 />
                 <div className="bottom-fade"></div>
             </div>
-            <Form>
+            <Form onSubmit={handleFormSubmit}>
                 {formPage === 1 && (
                     <OrganisationalDetails
-                        formState={organisationDetails}
-                        setFormState={setOrganisationDetails}
+                        formState={formData}
+                        setFormState={setFormData}
                     />
                 )}
                 {formPage === 2 && (
                     <InfJobDetails
-                        formState={infJobDetails}
-                        setFormState={setInfJobDetails}
+                        formState={formData}
+                        setFormState={setFormData}
                     />
                 )}
                 {formPage === 3 && (
                     <SelectionProcess
-                        formState={selectionProcess}
-                        setFormState={setSelectionProcess}
+                        formState={formData}
+                        setFormState={setFormData}
                     />
                 )}
             </Form>
@@ -97,7 +105,11 @@ function InfForm() {
                     </Button>
                 )}
                 {formPage == 3 && (
-                    <Button variant="primary" type="submit" onClick={() => {}}>
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        onClick={handleFormSubmit}
+                    >
                         Submit
                     </Button>
                 )}

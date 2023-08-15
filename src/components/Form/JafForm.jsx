@@ -26,6 +26,41 @@ function JafForm() {
         },
     });
 
+    const [jafJobDetailsb, setJafJobDetailsb] = React.useState({
+        job_profile: {
+            designation: "",
+            job_description: "",
+            job_description_pdf: [],
+            place_of_posting: "",
+        },
+        salary_details: {
+            b_tech: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+            m_tech: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+            m_sc: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+            phd: {
+                ctc_gross: "",
+                ctc_take_home: "",
+                ctc_bonus_perks: "",
+                bond_contract: "",
+            },
+        },
+    });
+
     const [organisationDetails, setOrganisationDetails] = React.useState(
         empty_organisation_details
     );
@@ -45,7 +80,6 @@ function JafForm() {
         setProgress(Math.round(((formPage - 1) / 3) * 100));
     }, [formPage]);
 
-
     return (
         <div>
             <Container>
@@ -58,6 +92,7 @@ function JafForm() {
                     variant="success"
                     now={progress}
                     label={`${progress}%`}
+                    className="border border-secondary"
                 />
                 <div className="bottom-fade"></div>
             </div>

@@ -61,7 +61,7 @@ const empty_selection_process = {
         written_test: false,
         online_test: false,
         technical_test: false,
-        aptitiude_test: false,
+        aptitude_test: false,
         psychometric_test: false,
         group_discussion: false,
         personal_interview: false,
@@ -85,7 +85,7 @@ const blank_inf_object = {
     about_organisation: {
         organisation: "",
         postal_address: "",
-        website: URL,
+        website: "",
     },
     organisation_type: {
         options: [],
@@ -139,7 +139,7 @@ const blank_inf_object = {
             written_test: false,
             online_test: false,
             technical_test: false,
-            aptitiude_test: false,
+            aptitude_test: false,
             psychometric_test: false,
             group_discussion: false,
             personal_interview: false,
@@ -164,7 +164,7 @@ const blank_jaf_object = {
     about_organisation: {
         organisation: "",
         postal_address: "",
-        website: URL,
+        website: "",
     },
     organisation_type: {
         options: [],
@@ -197,7 +197,7 @@ const blank_jaf_object = {
     job_profile: {
         designation: "",
         job_description: "",
-        job_description_pdf: [File],
+        job_description_pdf: [],
         place_of_posting: "",
     },
     salary_details: {
@@ -235,7 +235,7 @@ const blank_jaf_object = {
             written_test: false,
             online_test: false,
             technical_test: false,
-            aptitiude_test: false,
+            aptitude_test: false,
             psychometric_test: false,
             group_discussion: false,
             personal_interview: false,

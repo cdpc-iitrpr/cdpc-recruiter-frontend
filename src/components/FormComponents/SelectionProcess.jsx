@@ -73,10 +73,11 @@ const SelectionProcess = ({ formState, setFormState }) => {
     const handleSelectionProcess = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        setFormState((prev) => ({
-            ...prev,
+        setFormState((prev) => ({...prev,
+            selection_process: {
+            ...prev.selection_process,
             [name]: value,
-        }));
+        }}));
     };
 
     const handleTestType = (e) => {
@@ -84,38 +85,43 @@ const SelectionProcess = ({ formState, setFormState }) => {
         const value = e.target.value;
         setFormState((prev) => ({
             ...prev,
+            selection_process: {
+            ...prev.selection_process,
             test_type: {
-                ...prev.test_type,
-                [name]: prev.test_type[name] ? false : true,
+                ...prev.selection_process.test_type,
+                [name]: prev.selection_process.test_type[name] ? false : true,
             },
-        }));
+        }}));
     };
 
     const handleInterestedDiscipline = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        setFormState((prev) => ({
-            ...prev,
+        setFormState((prev) => ({...prev,
+            selection_process: {
+            ...prev.selection_process,
             interested_discipline: {
-                ...prev.interested_discipline,
+                ...prev.selection_process.interested_discipline,
                 [name]: value,
             },
-        }));
+        }}));
     };
 
     const handleInterestedDisciplineBranches = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setFormState((prev) => ({
-            ...prev,
+            ...prev, 
+            selection_process: {
+            ...prev.selection_process,
             interested_discipline: {
-                ...prev.interested_discipline,
+                ...prev.selection_process.interested_discipline,
                 branches: {
-                    ...prev.interested_discipline.branches,
+                    ...prev.selection_process.interested_discipline.branches,
                     [name]: value,
                 },
             },
-        }));
+        }}));
     };
 
     return (
@@ -145,7 +151,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                             type="number"
                             step="0.01"
                             placeholder="Enter CGPA cutoff"
-                            value={formState.eligibility_criteria}
+                            value={formState.selection_process.eligibility_criteria}
                             onChange={(e) => handleSelectionProcess(e)}
                         />
                     </Form.Group>
@@ -162,7 +168,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         label="Yes"
                                         name="ppt"
                                         id="pptYes"
-                                        checked={formState.test_type.ppt}
+                                        checked={formState.selection_process.test_type.ppt}
                                         onChange={(e) => handleTestType(e)}
                                     />
                                     <Form.Check
@@ -170,7 +176,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         label="No"
                                         name="ppt"
                                         id="pptNo"
-                                        checked={!formState.test_type.ppt}
+                                        checked={!formState.selection_process.test_type.ppt}
                                         onChange={(e) => handleTestType(e)}
                                     />
                                 </div>
@@ -189,7 +195,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="shortlist_from_resume"
                                         id="shortlistFromResumesYes"
                                         checked={
-                                            formState.test_type
+                                            formState.selection_process.test_type
                                                 .shortlist_from_resume
                                         }
                                         onChange={(e) => handleTestType(e)}
@@ -200,7 +206,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="shortlist_from_resume"
                                         id="shortlistFromResumesNo"
                                         checked={
-                                            !formState.test_type
+                                            !formState.selection_process.test_type
                                                 .shortlist_from_resume
                                         }
                                         onChange={(e) => handleTestType(e)}
@@ -223,7 +229,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="online_test"
                                         id="writtenTestOnlineTestYes"
                                         checked={
-                                            formState.test_type.online_test
+                                            formState.selection_process.test_type.online_test
                                         }
                                         onChange={(e) => handleTestType(e)}
                                     />
@@ -233,7 +239,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="online_test"
                                         id="writtenTestOnlineTestNo"
                                         checked={
-                                            !formState.test_type.online_test
+                                            !formState.selection_process.test_type.online_test
                                         }
                                         onChange={(e) => handleTestType(e)}
                                     />
@@ -260,7 +266,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                                 .toLowerCase()}_test`}
                                             type={"checkbox"}
                                             checked={
-                                                formState.test_type[
+                                                formState.selection_process.test_type[
                                                     `${type
                                                         .split(" ")[0]
                                                         .toLowerCase()}_test`
@@ -294,7 +300,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                             type="text"
                             name="likely_topics"
                             placeholder="Enter likely topics"
-                            value={formState.likely_topics}
+                            value={formState.selection_process.likely_topics}
                             onChange={(e) => handleSelectionProcess(e)}
                         />
                     </Form.Group>
@@ -311,7 +317,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="group_discussion"
                                         id="groupDiscussionYes"
                                         checked={
-                                            formState.test_type.group_discussion
+                                            formState.selection_process.test_type.group_discussion
                                         }
                                         onChange={(e) => handleTestType(e)}
                                     />
@@ -321,7 +327,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="group_discussion"
                                         id="groupDiscussionNo"
                                         checked={
-                                            !formState.test_type
+                                            !formState.selection_process.test_type
                                                 .group_discussion
                                         }
                                         onChange={(e) => handleTestType(e)}
@@ -344,7 +350,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="personal_interview"
                                         id="personalInterviewYes"
                                         checked={
-                                            formState.test_type
+                                            formState.selection_process.test_type
                                                 .personal_interview
                                         }
                                         onChange={(e) => handleTestType(e)}
@@ -355,7 +361,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                                         name="personal_interview"
                                         id="personalInterviewNo"
                                         checked={
-                                            !formState.test_type
+                                            !formState.selection_process.test_type
                                                 .personal_interview
                                         }
                                         onChange={(e) => handleTestType(e)}
@@ -375,7 +381,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                             name="number_of_offers"
                             type="number"
                             placeholder="Enter number of offers"
-                            value={formState.number_of_offers}
+                            value={formState.selection_process.number_of_offers}
                             onChange={(e) => handleSelectionProcess(e)}
                         />
                     </Form.Group>
@@ -390,7 +396,7 @@ const SelectionProcess = ({ formState, setFormState }) => {
                             name="preferred_period"
                             type="text"
                             placeholder="Enter preferred period"
-                            value={formState.preferred_period}
+                            value={formState.selection_process.preferred_period}
                             onChange={(e) => handleSelectionProcess(e)}
                         />
                     </Form.Group>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Accordion, Button, Form } from "react-bootstrap";
 import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
+import { blank_inf_object } from "../constants/formObjects";
 
 function Draft(versionTitle, date, type)
 {
@@ -33,7 +34,7 @@ function Draft(versionTitle, date, type)
 export default function RecruiterInterface()
 {
     const [versionTitle, setVersionTitle] = React.useState("");
-    const [formType, setFormType] = React.useState(0);
+    const [formType, setFormType] = React.useState(1);
     const [drafts, setDrafts] = React.useState({
             JAF: [
                 {
@@ -157,6 +158,7 @@ export default function RecruiterInterface()
     const JAFDraftEls = drafts.JAF.map((draft) => Draft(draft.versionTitle, draft.date, 0));
     const INFDraftEls = drafts.INF.map((draft) => Draft(draft.versionTitle, draft.date, 1));
 
+    const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
 
     return(
         <div className="page-container">

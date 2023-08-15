@@ -10,7 +10,6 @@ import Signup from "./pages/Signup";
 import InfForm from "./components/Form/InfForm";
 import JafForm from "./components/Form/JafForm";
 import SPOCInterface from "./pages/SPOCInterface";
-import Landing from "./pages/Landing";
 import RecruiterInterface from "./pages/RecruiterInterface";
 
 function App() {

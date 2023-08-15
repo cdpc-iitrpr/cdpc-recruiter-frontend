@@ -184,7 +184,7 @@ function OrganisationDetails({ formState, setFormState }) {
                 <div className="note-container">
                     <h4 className="mb-3">Contact Details</h4>
                     <Row>
-                        <Col md={4}>
+                        <Col xl={4}>
                             <h5 className="my-1">Head HR</h5>
                             <OrganisationContactGroup
                                 formState={formState}
@@ -192,7 +192,7 @@ function OrganisationDetails({ formState, setFormState }) {
                                 personType={"head_hr"}
                             />
                         </Col>
-                        <Col md={4}>
+                        <Col xl={4}>
                             <h5 className="my-1">
                                 1<sup>st</sup> Contact Person
                             </h5>
@@ -202,7 +202,7 @@ function OrganisationDetails({ formState, setFormState }) {
                                 personType={"first_person_of_contact"}
                             />
                         </Col>
-                        <Col md={4}>
+                        <Col xl={4}>
                             <h5 className="my-1">
                                 2<sup>nd</sup> Contact Person
                             </h5>

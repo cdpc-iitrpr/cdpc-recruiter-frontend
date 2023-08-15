@@ -3,8 +3,10 @@ import { Button } from "react-bootstrap";
 import "./Header.css";
 import cdpcLogo from "../../assets/cdcrc_logo.png";
 import Logout from "../../assets/logout.png";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
+    const { logout } = useAuth();
     return (
         <div>
             <div className="cdpc-primary">
@@ -35,6 +37,7 @@ export default function Header() {
                         <Button
                             className="rounded-pill d-flex align-items-center"
                             style={{ background: "#05709a" }}
+                            onClick={logout}
                         >
                             <span className="d-lg-block d-none">Log Out</span>
                             <img

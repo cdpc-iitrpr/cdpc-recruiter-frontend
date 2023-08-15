@@ -8,8 +8,7 @@ import { INF_FORM_ACTION } from "../../constants/endPoints";
 import { frontToBack } from "../../utils/INFParser";
 import { useAuth } from "../../context/AuthContext";
 
-function InfForm({formData, setFormData}) {
-
+function InfForm({ formData, setFormData }) {
     const { user } = useAuth();
 
     const [formPage, setFormPage] = React.useState(1);
@@ -61,59 +60,48 @@ function InfForm({formData, setFormData}) {
                 />
                 <div className="bottom-fade"></div>
             </div>
-            <Form onSubmit={handleFormSubmit}>
-                {formPage === 1 && (
-                    <OrganisationalDetails
-                        formState={formData}
-                        setFormState={setFormData}
-                    />
-                )}
-                {formPage === 2 && (
-                    <InfJobDetails
-                        formState={formData}
-                        setFormState={setFormData}
-                    />
-                )}
-                {formPage === 3 && (
-                    <SelectionProcess
-                        formState={formData}
-                        setFormState={setFormData}
-                    />
-                )}
-            </Form>
-            <div className="d-flex justify-content-around my-3">
-                {formPage > 1 && (
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            setFormPage((prev) => prev - 1);
-                            scrollToTop();
-                        }}
-                    >
-                        Back
-                    </Button>
-                )}
-                {formPage < 3 && (
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            setFormPage((prev) => prev + 1);
-                            scrollToTop();
-                        }}
-                    >
-                        Next
-                    </Button>
-                )}
-                {formPage == 3 && (
-                    <Button
-                        variant="primary"
-                        type="submit"
-                        onClick={handleFormSubmit}
-                    >
-                        Submit
-                    </Button>
-                )}
-            </div>
+            {formPage === 1 && (
+                <OrganisationalDetails
+                    formState={formData}
+                    setFormState={setFormData}
+                    handleSubmit={(e) => {
+                        e.preventDefault();
+                        console.log("submit");
+                        setFormPage((prev) => prev + 1);
+                        scrollToTop();
+                    }}
+                />
+            )}
+            {formPage === 2 && (
+                <InfJobDetails
+                    formState={formData}
+                    setFormState={setFormData}
+                    handleSubmit={(e) => {
+                        e.preventDefault();
+                        console.log("submit");
+                        setFormPage((prev) => prev + 1);
+                        scrollToTop();
+                    }}
+                    handleBack={() => {
+                        setFormPage((prev) => prev - 1);
+                        scrollToTop();
+                    }}
+                />
+            )}
+            {formPage === 3 && (
+                <SelectionProcess
+                    formState={formData}
+                    setFormState={setFormData}
+                    handleSubmit={(e) => {
+                        e.preventDefault();
+                        handleFormSubmit();
+                    }}
+                    handleBack={() => {
+                        setFormPage((prev) => prev - 1);
+                        scrollToTop();
+                    }}
+                />
+            )}
         </div>
     );
 }

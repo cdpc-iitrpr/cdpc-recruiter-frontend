@@ -6,7 +6,7 @@ import Logout from "../../assets/logout.png";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Header() {
-    const { logout } = useAuth();
+    const { isLoggedIn, logout } = useAuth();
     return (
         <div>
             <div className="cdpc-primary">
@@ -34,20 +34,24 @@ export default function Header() {
                         </div>
                     </div>
                     <div className="d-flex align-items-center">
-                        <Button
-                            className="rounded-pill d-flex align-items-center"
-                            style={{ background: "#05709a" }}
-                            onClick={logout}
-                        >
-                            <span className="d-lg-block d-none">Log Out</span>
-                            <img
-                                src={Logout}
-                                alt=""
-                                width={20}
-                                style={{ filter: "invert(1)" }}
-                                className="ms-lg-2"
-                            />
-                        </Button>
+                        {isLoggedIn && (
+                            <Button
+                                className="rounded-pill d-flex align-items-center"
+                                style={{ background: "#05709a" }}
+                                onClick={logout}
+                            >
+                                <span className="d-lg-block d-none">
+                                    Log Out
+                                </span>
+                                <img
+                                    src={Logout}
+                                    alt=""
+                                    width={20}
+                                    style={{ filter: "invert(1)" }}
+                                    className="ms-lg-2"
+                                />
+                            </Button>
+                        )}
                     </div>
                 </div>
             </div>

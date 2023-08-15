@@ -1,77 +1,19 @@
 import React, { useEffect } from "react";
-import { Container, Form, ProgressBar, Button } from "react-bootstrap";
+import { Container, ProgressBar } from "react-bootstrap";
 import OrganisationalDetails from "../FormComponents/OrganisationDetails";
 import SelectionProcess from "../FormComponents/SelectionProcess";
 import JafJobDetails from "../FormComponents/JafJobDetails";
 import "./Form.css";
-import {
-    empty_organisation_details,
-    empty_selection_process,
-} from "../../constants/formObjects";
-import { frontToBack } from "../../utils/INFParser";
+import { frontToBack } from "../../utils/JAFParser";
 import { JAF_SUBMIT_ACTION } from "../../constants/endPoints";
+import { useAuth } from "../../context/AuthContext";
 
-function JafForm({formData, setFormData}) {
-
+function JafForm({ formData, setFormData }) {
     const { user } = useAuth();
 
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
         Math.round(((formPage - 1) / 3) * 100)
-    );
-    const [jafJobDetails, setJafJobDetails] = React.useState({
-        basicDetails: { designation: "", description: "", location: "" },
-        descriptionFile: null,
-        salaryFile: null,
-        salaryDetails: {
-            BTech: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
-            MTech: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
-            MSc: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
-            PhD: { gross: 0, takeHome: 0, bonus: 0, serviceContract: "" },
-        },
-    });
-
-    const [jafJobDetailsb, setJafJobDetailsb] = React.useState({
-        job_profile: {
-            designation: "",
-            job_description: "",
-            job_description_pdf: [],
-            place_of_posting: "",
-        },
-        salary_details: {
-            b_tech: {
-                ctc_gross: "",
-                ctc_take_home: "",
-                ctc_bonus_perks: "",
-                bond_contract: "",
-            },
-            m_tech: {
-                ctc_gross: "",
-                ctc_take_home: "",
-                ctc_bonus_perks: "",
-                bond_contract: "",
-            },
-            m_sc: {
-                ctc_gross: "",
-                ctc_take_home: "",
-                ctc_bonus_perks: "",
-                bond_contract: "",
-            },
-            phd: {
-                ctc_gross: "",
-                ctc_take_home: "",
-                ctc_bonus_perks: "",
-                bond_contract: "",
-            },
-        },
-    });
-
-    const [organisationDetails, setOrganisationDetails] = React.useState(
-        empty_organisation_details
-    );
-
-    const [selectionProcess, setSelectionProcess] = React.useState(
-        empty_selection_process
     );
 
     const scrollToTop = () => {
@@ -81,15 +23,15 @@ function JafForm({formData, setFormData}) {
         });
     };
 
-    function handleFormSubmit(e) {
-        e.preventDefault();
+    function handleFormSubmit() {
+        console.log(formData);
         const parsedFormData = frontToBack(formData);
         // post request to server
         fetch(JAF_SUBMIT_ACTION, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${user.access}`
+                Authorization: `Bearer ${user.access}`,
             },
             body: JSON.stringify({
                 form_id: "id",
@@ -119,57 +61,48 @@ function JafForm({formData, setFormData}) {
                 />
                 <div className="bottom-fade"></div>
             </div>
-            <Form
-                onSubmit={handleFormSubmit}
-            >
-                {formPage === 1 && (
-                    <OrganisationalDetails
-                        formState={organisationDetails}
-                        setFormState={setOrganisationDetails}
-                    />
-                )}
-                {formPage === 2 && (
-                    <JafJobDetails
-                        jafJobDetails={jafJobDetails}
-                        setJafJobDetails={setJafJobDetails}
-                    />
-                )}
-                {formPage === 3 && (
-                    <SelectionProcess
-                        formState={selectionProcess}
-                        setFormState={setSelectionProcess}
-                    />
-                )}
-            </Form>
-            <div className="d-flex justify-content-around my-3">
-                {formPage > 1 && (
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            setFormPage((prev) => prev - 1);
-                            scrollToTop();
-                        }}
-                    >
-                        Back
-                    </Button>
-                )}
-                {formPage < 3 && (
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            setFormPage((prev) => prev + 1);
-                            scrollToTop();
-                        }}
-                    >
-                        Next
-                    </Button>
-                )}
-                {formPage == 3 && (
-                    <Button variant="primary" type="submit" onClick={() => {}}>
-                        Submit
-                    </Button>
-                )}
-            </div>
+            {formPage === 1 && (
+                <OrganisationalDetails
+                    formState={formData}
+                    setFormState={setFormData}
+                    handleSubmit={(e) => {
+                        e.preventDefault();
+                        console.log("submit");
+                        setFormPage((prev) => prev + 1);
+                        scrollToTop();
+                    }}
+                />
+            )}
+            {formPage === 2 && (
+                <JafJobDetails
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleSubmit={(e) => {
+                        e.preventDefault();
+                        console.log("submit");
+                        setFormPage((prev) => prev + 1);
+                        scrollToTop();
+                    }}
+                    handleBack={() => {
+                        setFormPage((prev) => prev - 1);
+                        scrollToTop();
+                    }}
+                />
+            )}
+            {formPage === 3 && (
+                <SelectionProcess
+                    formState={formData}
+                    setFormState={setFormData}
+                    handleSubmit={(e) => {
+                        e.preventDefault();
+                        handleFormSubmit();
+                    }}
+                    handleBack={() => {
+                        setFormPage((prev) => prev - 1);
+                        scrollToTop();
+                    }}
+                />
+            )}
         </div>
     );
 }

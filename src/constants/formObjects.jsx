@@ -53,32 +53,34 @@ const empty_inf_job_details = {
 };
 
 const empty_selection_process = {
-    eligibility_criteria: 0,
-    allow_backlog_students: false,
-    test_type: {
-        ppt: false,
-        shortlist_from_resume: false,
-        written_test: false,
-        online_test: false,
-        technical_test: false,
-        aptitude_test: false,
-        psychometric_test: false,
-        group_discussion: false,
-        personal_interview: false,
-    },
-    test_duration: "",
-    likely_topics: "",
-    number_of_rounds: 0,
-    group_discussion_duration: "",
-    number_of_offers: 0,
-    preferred_period: "",
-    logistics_requirements: "",
-    interested_discipline: [
-        {
-            degree: "",
-            branches: [],
+    selection_process: {
+        eligibility_criteria: 0,
+        allow_backlog_students: false,
+        test_type: {
+            ppt: false,
+            shortlist_from_resume: false,
+            written_test: false,
+            online_test: false,
+            technical_test: false,
+            aptitude_test: false,
+            psychometric_test: false,
+            group_discussion: false,
+            personal_interview: false,
         },
-    ],
+        test_duration: "",
+        likely_topics: "",
+        number_of_rounds: 0,
+        group_discussion_duration: "",
+        number_of_offers: 0,
+        preferred_period: "",
+        logistics_requirements: "",
+        interested_discipline: [
+            {
+                degree: "",
+                branches: [],
+            },
+        ],
+    },
 };
 
 const blank_inf_object = {

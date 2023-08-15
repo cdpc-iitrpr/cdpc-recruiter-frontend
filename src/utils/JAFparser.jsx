@@ -63,7 +63,7 @@ const blank_back_end_object = {
             written_test: false,
             online_test: false,
             technical_test: false,
-            aptitiude_test: false,
+            aptitude_test: false,
             psychometric_test: false,
             group_discussion: false,
             personal_interview: false,
@@ -72,7 +72,7 @@ const blank_back_end_object = {
         likely_topics: "",
         number_of_rounds: 0,
         group_discussion_duration: "",
-        number_of_offers: number,
+        number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
         interested_discipline: [

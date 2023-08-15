@@ -27,6 +27,7 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="text"
                         onChange={handleChange}
                         placeholder="Enter Contact Name"
+                        required={personType !== "second_person_of_contact"}
                     />
                 </Form.Group>
 
@@ -38,6 +39,7 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="email"
                         onChange={handleChange}
                         placeholder="Enter Contact Email"
+                        required={personType !== "second_person_of_contact"}
                     />
                 </Form.Group>
 
@@ -49,6 +51,7 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="tel"
                         onChange={handleChange}
                         placeholder="Enter Company Number"
+                        required={personType !== "second_person_of_contact"}
                     />
                 </Form.Group>
 
@@ -60,6 +63,7 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="tel"
                         onChange={handleChange}
                         placeholder="Enter Personal Phone"
+                        required={personType !== "second_person_of_contact"}
                     />
                 </Form.Group>
             </Col>

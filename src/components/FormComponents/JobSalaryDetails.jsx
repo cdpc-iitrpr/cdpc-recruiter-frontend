@@ -2,17 +2,20 @@ import React from "react";
 import { Form, InputGroup } from "react-bootstrap";
 
 export default function JobSalaryDetails(props) {
-    const {degree, salaryDetails, setSalaryDetails} = props;
+    const {degree, fieldName, formData, setFormData} = props;
 
     function handleChange(e)
     {
         const {name, value} = e.target;
-        setSalaryDetails((prev) => {
+        setFormData((prev) => {
             return {
                 ...prev,
-                [degree]: {
-                    ...prev[degree],
-                    [name]: value
+                salary_details:{
+                    ...prev.salary_details,
+                    [fieldName]: {
+                        ...prev.salary_details[fieldName],
+                        [name]: value
+                    }
                 }
             }
         });
@@ -26,11 +29,11 @@ export default function JobSalaryDetails(props) {
                 <InputGroup className="field-group">
                     <InputGroup.Text>INR</InputGroup.Text>
                     <Form.Control
-                        name="gross"
+                        name="ctc_gross"
                         type="number"
                         aria-label="Amount (to the nearest rupee)"
                         min={0}
-                        value={salaryDetails.gross}
+                        value={formData.salary_details[fieldName].ctc_gross}
                         onChange={handleChange}
                     />
                     <InputGroup.Text>.00</InputGroup.Text>
@@ -39,11 +42,11 @@ export default function JobSalaryDetails(props) {
                 <InputGroup className="field-group">
                     <InputGroup.Text>INR</InputGroup.Text>
                     <Form.Control
-                        name="takeHome"
+                        name="ctc_take_home"
                         type="number"
                         aria-label="Amount (to the nearest rupee)"
                         min={0}
-                        value={salaryDetails.takeHome}
+                        value={formData.salary_details[fieldName].ctc_take_home}
                         onChange={handleChange}
                     />
                     <InputGroup.Text>.00</InputGroup.Text>
@@ -52,20 +55,20 @@ export default function JobSalaryDetails(props) {
                 <InputGroup className="field-group">
                     <InputGroup.Text>INR</InputGroup.Text>
                     <Form.Control
-                        name="bonus"
+                        name="ctc_bonus_perks"
                         type="number"
                         aria-label="Amount (to the nearest rupee)"
                         min={0}
-                        value={salaryDetails.bonus}
+                        value={formData.salary_details[fieldName].ctc_bonus_perks}
                         onChange={handleChange}
                     />
                     <InputGroup.Text>.00</InputGroup.Text>
                 </InputGroup>
                 <Form.Label>Bond or Service Contract (if yes, please provide details)</Form.Label>
                 <Form.Control
-                        name="serviceContract"
+                        name="bond_contract"
                         as="textarea"
-                        value={salaryDetails.serviceContract}
+                        value={formData.salary_details[fieldName].bond_contract}
                         onChange={handleChange}
                     />
             </Form.Group>

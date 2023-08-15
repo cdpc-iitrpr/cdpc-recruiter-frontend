@@ -12,14 +12,14 @@ const initialState = localStorage.getItem("user")
 
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(initialState);
-    const [loggedIn, setLoggedIn] = useState(localStorage.getItem("user").access ? true : false);
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user")?.access ? true : false);
     const [otp, setOtp] = useState(null);
 
     const sendOTP = async () => {};
 
     const login = async (data) => {
         setUser(data);
-        setLoggedIn(true);
+        setIsLoggedIn(true);
         localStorage.setItem("user", JSON.stringify(data));
     };
 
@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const logout = () => {
         setUser({ email: "", name: "", phoneNumber: "", companyName: "" });
-        setLoggedIn(false);
+        setIsLoggedIn(false);
         localStorage.removeItem("user");
     };
 
@@ -36,8 +36,8 @@ export const AuthContextProvider = ({ children }) => {
         setUser,
         otp,
         setOtp,
-        loggedIn,
-        setLoggedIn,
+        isLoggedIn,
+        setIsLoggedIn,
         sendOTP,
         login,
         logout,

@@ -3,12 +3,12 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const ProtectedRoute = ({ element, role }) => {
-    const { loggedIn, user } = useAuth();
+    const { isLoggedIn, user } = useAuth();
     const userRole = user?.user?.role?.toLowerCase() || "";
 
-    if (loggedIn && userRole === role) {
+    if (isLoggedIn && userRole === role) {
         return element;
-    } else if (loggedIn && userRole !== role) {
+    } else if (isLoggedIn && userRole !== role) {
         return (
             <div className="container text-center mt-5">
                 <h1>403 Forbidden</h1>

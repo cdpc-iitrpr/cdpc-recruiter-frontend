@@ -86,7 +86,7 @@ const Email = () => {
         setError(data.error);
       } else {
         // otp sent successfully
-        console.log(data.message);
+        console.log(data);
         login(data);
       }
     } catch (err) {

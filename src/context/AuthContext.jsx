@@ -8,11 +8,11 @@ export const useAuth = () => {
 
 const initialState = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
-    : { email: "", name: "", phoneNumber: "", companyName: "" };
+    : { email: "", name: "", phoneNumber: "", companyName: "" , access: "", refresh: ""};
 
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(initialState);
-    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user")?.access ? true : false);
+    const [isLoggedIn, setIsLoggedIn] = useState(initialState.access !== "");
     const [otp, setOtp] = useState(null);
 
     const sendOTP = async () => {};

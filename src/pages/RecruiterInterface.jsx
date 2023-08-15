@@ -5,6 +5,7 @@ import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
 import { blank_inf_object, blank_jaf_object } from "../constants/formObjects";
 import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS } from "../constants/endPoints";
+import { useAuth } from "../context/AuthContext";
 
 function Draft(versionTitle, date, type)
 {
@@ -77,12 +78,6 @@ export default function RecruiterInterface()
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${user.access}`,
                 },
-                body: JSON.stringify({
-                    user:{
-                        role: "recruiter",
-                        email: user.email,
-                    }
-                }),
             });
             const json = await response.json();
             if(!response.ok)
@@ -107,12 +102,6 @@ export default function RecruiterInterface()
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${user.access}`,
             },
-            body: JSON.stringify({
-                user:{
-                    role: "recruiter",
-                    email: user.email,
-                }
-            }),
         });
         const json = await response.json();
         if(!response.ok)
@@ -209,8 +198,8 @@ export default function RecruiterInterface()
         return true;
     }
 
-    const JAFDraftEls = drafts.JAF.map((draft) => Draft(draft.versionTitle, draft.date, 0));
-    const INFDraftEls = drafts.INF.map((draft) => Draft(draft.versionTitle, draft.date, 1));
+    const JAFDraftEls = drafts?.JAF.map((draft) => Draft(draft.versionTitle, draft.date, 0));
+    const INFDraftEls = drafts?.INF.map((draft) => Draft(draft.versionTitle, draft.date, 1));
 
     const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
     const [currentJAFState, setCurrentJAFState] = useState(blank_jaf_object);

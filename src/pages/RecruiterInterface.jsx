@@ -7,25 +7,8 @@ import { blank_inf_object, blank_jaf_object } from "../constants/formObjects";
 import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS } from "../constants/endPoints";
 import { useAuth } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
-
-function Draft(versionTitle, date, type) {
-    function handleClickDraft() {
-        if (type == 0) {
-            // load JAF form with data
-        } else {
-            // load INF form with data
-        }
-    }
-
-    return (
-        <div className="note-container hover-effect">
-            <div className="space-between" onClick={handleClickDraft}>
-                <div>{versionTitle}</div>
-                <div>{date}</div>
-            </div>
-        </div>
-    );
-}
+import { backToFront as backToFrontJAF } from "../utils/JAFParser";
+import { backToFront as backToFrontINF } from "../utils/INFParser";
 
 export default function RecruiterInterface() {
     const { user } = useAuth();
@@ -193,11 +176,60 @@ export default function RecruiterInterface() {
         return true;
     }
 
+    
+    function Draft(id, versionTitle, date, type) {
+        const [loadData, setLoadData] = React.useState(false);
+        function handleClickDraft() {
+            setFormType(type);
+            setLoadData(prev => !prev);
+        }
+
+        React.useEffect(() => {
+            const url = formType == 0 ? JAF_FETCH_DRAFTS : INF_FETCH_DRAFTS;
+            const loadFormData = async () => {
+                const response = await fetch(url + `${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${user.access}`,
+                    },
+                });
+                const json = await response.json();
+                if(!response.ok)
+                {
+                    alert(json.message);
+                }
+                else
+                {
+                    if (formType == 0) {
+                        const structuredFormData = backToFrontJAF(json.form_data);
+                        setCurrentJAFState(structuredFormData);
+                    } else {
+                        const structuredFormData = backToFrontINF(json.form_data);
+                        setCurrentINFState(structuredFormData);
+                    }
+                    setVersionTitle(json.versionTitle);
+                }
+            }
+
+            loadFormData();
+        }, [loadData]);
+
+        return (
+            <div className="note-container hover-effect">
+                <div className="space-between" onClick={handleClickDraft}>
+                    <div>{versionTitle}</div>
+                    <div>{date}</div>
+                </div>
+            </div>
+        );
+    }
+
     const JAFDraftEls = drafts?.JAF.map((draft) =>
-        Draft(draft.versionTitle, draft.date, 0)
+        Draft(draft.id, draft.versionTitle, draft.date, 0)
     );
     const  INFDraftEls = drafts?.INF.map((draft) =>
-        Draft(draft.versionTitle, draft.date, 1)
+        Draft(draft.id, draft.versionTitle, draft.date, 1)
     );
 
     const [currentINFState, setCurrentINFState] = useState(blank_inf_object);

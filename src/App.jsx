@@ -12,6 +12,8 @@ import JafForm from "./components/Form/JafForm";
 import SPOCInterface from "./pages/SPOCInterface";
 import RecruiterInterface from "./pages/RecruiterInterface";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import InfDisplay from "./components/Display/InfDisplay";
+import JafDisplay from "./components/Display/JafDisplay";
 
 function App() {
     return (
@@ -51,6 +53,7 @@ function App() {
 
                         <Route path="/inf" element={<InfForm />} />
                         <Route path="/jaf" exact element={<JafForm />} />
+                        <Route path="/display" exact element={<JafDisplay />} />
                     </Routes>
                 </Router>
             </AuthContextProvider>

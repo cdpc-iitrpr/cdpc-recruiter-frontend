@@ -10,6 +10,63 @@ import useFetch from "../hooks/useFetch";
 import { backToFront as backToFrontJAF } from "../utils/JAFParser";
 import { backToFront as backToFrontINF } from "../utils/INFParser";
 
+const Draft = ({
+    id,
+    versionTitle,
+    date,
+    type,
+    setFormType,
+    setCurrentJAFState,
+    setCurrentINFState,
+    setVersionTitle
+}) => {
+    const { fetch } = useFetch();
+
+    const loadFormData = async () => {
+        const url = type == 0 ? JAF_FETCH_DRAFTS : INF_FETCH_DRAFTS;
+        const response = await fetch(url + `${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const json = await response.json();
+        if (!response.ok) {
+            alert(json.message);
+        } else {
+            setVersionTitle(json.Data.versionTitle? json.Data.versionTitle + ` - [${id}]` : `Untitled - [${id}]`);
+
+
+            if (type == 0) {
+                const structuredFormData = backToFrontJAF(json.Data);
+                setCurrentJAFState(structuredFormData);
+            } else {
+                const structuredFormData = backToFrontINF(json.Data);
+                setCurrentINFState(structuredFormData);
+            }
+            // setVersionTitle(json.versionTitle);
+        }
+    };
+
+    function handleClickDraft() {
+        setFormType(type);
+        loadFormData();
+    }
+
+    return (
+        <div className="note-container hover-effect cursor-pointer" onClick={handleClickDraft}>
+            <div className="space-between" >
+                <div>{versionTitle}</div>
+                <div>
+                    {new Date(date).toLocaleDateString() +
+                        " " +
+                        new Date(date).toLocaleTimeString()}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export default function RecruiterInterface() {
     const { user } = useAuth();
     const { fetch } = useFetch();
@@ -18,32 +75,8 @@ export default function RecruiterInterface() {
     const [formType, setFormType] = React.useState(0);
     const [drafts, setDrafts] = React.useState({
         JAF: [
-            {
-                id: "",
-                versionTitle: "JAF 1",
-                timestamp: "2021-12-12",
-                is_draft: false,
-            },
-            {
-                id: "",
-                versionTitle: "JAF 2",
-                timestamp: "2023-12-12",
-                is_draft: false,
-            },
         ],
         INF: [
-            {
-                id: "",
-                versionTitle: "INF 1",
-                timestamp: "2021-12-12",
-                is_draft: false,
-            },
-            {
-                id: "",
-                versionTitle: "INF 2",
-                timestamp: "2023-12-12",
-                is_draft: false,
-            },
         ],
     });
 
@@ -53,22 +86,18 @@ export default function RecruiterInterface() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${user.access}`,
                 },
             });
             const json = await response.json();
-            if(!response.ok)
-            {
+            if (!response.ok) {
                 alert(json.message);
-            }
-            else
-            {
-                setDrafts(prev => {
+            } else {
+                setDrafts((prev) => {
                     return {
                         ...prev,
-                        JAF: json.JAF_List,
-                    }
-                })
+                        JAF: json.JAF_list,
+                    };
+                });
             }
         };
 
@@ -77,22 +106,18 @@ export default function RecruiterInterface() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${user.access}`,
                 },
             });
             const json = await response.json();
-            if(!response.ok)
-            {
+            if (!response.ok) {
                 alert(json.message);
-            }
-            else
-            {
-                setDrafts(prev => {
+            } else {
+                setDrafts((prev) => {
                     return {
                         ...prev,
-                        INF: json.INF_List,
-                    }
-                })
+                        INF: json.INF_list,
+                    };
+                });
             }
         };
 
@@ -122,7 +147,6 @@ export default function RecruiterInterface() {
         setFormType(1);
         setVersionTitle("");
         setCurrentINFState(blank_inf_object);
-        
     }
 
     function handleClone() {
@@ -176,64 +200,35 @@ export default function RecruiterInterface() {
         return true;
     }
 
-    
-    function Draft(id, versionTitle, date, type) {
-        const [loadData, setLoadData] = React.useState(false);
-        function handleClickDraft() {
-            setFormType(type);
-            setLoadData(prev => !prev);
-        }
-
-        React.useEffect(() => {
-            const url = formType == 0 ? JAF_FETCH_DRAFTS : INF_FETCH_DRAFTS;
-            const loadFormData = async () => {
-                const response = await fetch(url + `${id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${user.access}`,
-                    },
-                });
-                const json = await response.json();
-                if(!response.ok)
-                {
-                    alert(json.message);
-                }
-                else
-                {
-                    if (formType == 0) {
-                        const structuredFormData = backToFrontJAF(json.form_data);
-                        setCurrentJAFState(structuredFormData);
-                    } else {
-                        const structuredFormData = backToFrontINF(json.form_data);
-                        setCurrentINFState(structuredFormData);
-                    }
-                    setVersionTitle(json.versionTitle);
-                }
-            }
-
-            loadFormData();
-        }, [loadData]);
-
-        return (
-            <div className="note-container hover-effect">
-                <div className="space-between" onClick={handleClickDraft}>
-                    <div>{versionTitle}</div>
-                    <div>{date}</div>
-                </div>
-            </div>
-        );
-    }
-
-    const JAFDraftEls = drafts?.JAF.map((draft) =>
-        Draft(draft.id, draft.versionTitle, draft.date, 0)
-    );
-    const  INFDraftEls = drafts?.INF.map((draft) =>
-        Draft(draft.id, draft.versionTitle, draft.date, 1)
-    );
-
     const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
     const [currentJAFState, setCurrentJAFState] = useState(blank_jaf_object);
+
+    const JAFDraftEls = drafts?.JAF.map((draft) =>
+        <Draft
+            key={draft.id}
+            id={draft.id}
+            versionTitle={draft.versionTitle}
+            date={draft.timestamp}
+            type={0}
+            setFormType={setFormType}
+            setCurrentJAFState={setCurrentJAFState}
+            setCurrentINFState={setCurrentINFState}
+            setVersionTitle={setVersionTitle}
+        />
+    );
+    const INFDraftEls = drafts?.INF.map((draft) =>
+        <Draft
+            key={draft.id}
+            id={draft.id}
+            versionTitle={draft.versionTitle}
+            date={draft.timestamp}
+            type={1}
+            setFormType={setFormType}
+            setCurrentJAFState={setCurrentJAFState}
+            setCurrentINFState={setCurrentINFState}
+            setVersionTitle={setVersionTitle}
+        />
+    );
 
     return (
         <div className="page-container">
@@ -279,11 +274,13 @@ export default function RecruiterInterface() {
                             <JafForm
                                 formData={currentJAFState}
                                 setFormData={setCurrentJAFState}
+                                versionTitle={versionTitle}
                             />
                         ) : (
                             <InfForm
                                 formData={currentINFState}
                                 setFormData={setCurrentINFState}
+                                versionTitle={versionTitle}
                             />
                         )}
                     </div>

@@ -118,8 +118,7 @@ const frontToBack = (frontEndFormObject) => {
 };
 
 const backToFront = (backEndFormObject) => {
-    let parsed_object = blank_inf
-_object;
+    let parsed_object = blank_inf_object;
     parsed_object.about_organisation.organisation =
         backEndFormObject.organisation_name;
     parsed_object.about_organisation.postal_address =

@@ -8,7 +8,7 @@ import { frontToBack } from "../../utils/JAFParser";
 import { JAF_SUBMIT_ACTION } from "../../constants/endPoints";
 import { useAuth } from "../../context/AuthContext";
 
-function JafForm({ formData, setFormData }) {
+function JafForm({ formData, setFormData ,versionTitle }) {
     const { user } = useAuth();
 
     const [formPage, setFormPage] = React.useState(1);
@@ -26,6 +26,13 @@ function JafForm({ formData, setFormData }) {
     function handleFormSubmit() {
         console.log(formData);
         const parsedFormData = frontToBack(formData);
+
+        // check if version title is empty
+        if (versionTitle === "") {
+            alert("Please enter a version title");
+            return;
+        }
+        
         // post request to server
         fetch(JAF_SUBMIT_ACTION, {
             method: "POST",
@@ -37,6 +44,7 @@ function JafForm({ formData, setFormData }) {
                 form_id: "id",
                 save_as_draft: false,
                 form_data: parsedFormData,
+                versionTitle: versionTitle,
             }),
         }).then((response) => response.json());
     }

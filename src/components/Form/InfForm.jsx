@@ -8,7 +8,7 @@ import { INF_FORM_ACTION } from "../../constants/endPoints";
 import { frontToBack } from "../../utils/INFParser";
 import { useAuth } from "../../context/AuthContext";
 
-function InfForm({ formData, setFormData }) {
+function InfForm({ formData, setFormData ,versionTitle }) {
     const { user } = useAuth();
 
     const [formPage, setFormPage] = React.useState(1);
@@ -25,6 +25,13 @@ function InfForm({ formData, setFormData }) {
 
     const handleFormSubmit = (e) => {
         const parsed_FormData = frontToBack(formData);
+
+        // check if versionTitle is empty
+        if (versionTitle === "") {
+            alert("Please enter a version title");
+            return;
+        }
+
         //post request to server
         fetch(INF_FORM_ACTION, {
             method: "POST",
@@ -36,6 +43,7 @@ function InfForm({ formData, setFormData }) {
                 form_id: "id",
                 save_as_draft: false,
                 form_data: parsed_FormData,
+                versionTitle: versionTitle,
             }),
         }).then((response) => response.json());
     };

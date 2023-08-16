@@ -128,8 +128,7 @@ const frontToBack = (frontEndFormObject) => {
 };
 
 const backToFront = (backEndFormObject) => {
-    let parsed_object = blank_jaf
-_object;
+    let parsed_object = blank_jaf_object;
     parsed_object.about_organisation.organisation =
         backEndFormObject.organisation_name;
     parsed_object.about_organisation.postal_address =
@@ -168,6 +167,7 @@ _object;
         backEndFormObject.salary_details_phd;
     parsed_object.selection_process =
         backEndFormObject.selection_process;
+    return parsed_object;
 };
 
 export { frontToBack, backToFront };

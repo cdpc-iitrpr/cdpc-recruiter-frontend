@@ -9,6 +9,8 @@ import { useAuth } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
 import { backToFront as backToFrontJAF } from "../utils/JAFParser";
 import { backToFront as backToFrontINF } from "../utils/INFParser";
+import JafDisplay from "../components/Display/JafDisplay";
+import InfDisplay from "../components/Display/InfDisplay";
 
 const Draft = ({
     id,
@@ -282,6 +284,11 @@ export default function RecruiterInterface() {
                                 setFormData={setCurrentINFState}
                                 versionTitle={versionTitle}
                             />
+                        )}
+                        {formType == 0 ? (
+                            <JafDisplay formData={currentJAFState} />
+                        ) : (
+                            <InfDisplay formData={currentINFState} />
                         )}
                     </div>
                 </Col>

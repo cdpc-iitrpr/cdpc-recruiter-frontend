@@ -19,7 +19,7 @@ function TypeList(props) {
             <p className={`w-${width} h6 my-auto`}>{keyName}: </p>
             <p className={`my-auto text-break text-end`}>
                 {list.map((item, index) => (
-                    <Badge pill key={index} bg={colors[index%5]} className={"m-1"}>
+                    <Badge pill key={index} bg={colors[index%5]} className={"ms-1 my-1"}>
                         {item}
                     </Badge>
                 ))}

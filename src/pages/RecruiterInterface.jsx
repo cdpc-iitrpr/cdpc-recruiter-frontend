@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Accordion, Button, Form } from "react-bootstrap";
+import { Row, Col, Accordion, Button } from "react-bootstrap";
 import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
@@ -20,7 +20,8 @@ const Draft = ({
     setFormType,
     setCurrentJAFState,
     setCurrentINFState,
-    setVersionTitle
+    setVersionTitle,
+    setIsEditable,
 }) => {
     const { fetch } = useFetch();
 
@@ -52,6 +53,7 @@ const Draft = ({
 
     function handleClickDraft() {
         setFormType(type);
+        setIsEditable(false);
         loadFormData();
     }
 
@@ -72,6 +74,7 @@ const Draft = ({
 export default function RecruiterInterface() {
     const { user } = useAuth();
     const { fetch } = useFetch();
+    const [isEditable, setIsEditable] = useState(false);
 
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(0);
@@ -133,6 +136,7 @@ export default function RecruiterInterface() {
         //     setFormType(0);
         //     setVersionTitle("");
         // }
+        setIsEditable(true);
         if (formType === 0) return;
         setFormType(0);
         setVersionTitle("");
@@ -145,6 +149,7 @@ export default function RecruiterInterface() {
         //     setFormType(1);
         //     setVersionTitle("");
         // }
+        setIsEditable(true);
         if (formType === 1) return;
         setFormType(1);
         setVersionTitle("");
@@ -153,6 +158,7 @@ export default function RecruiterInterface() {
 
     function handleClone() {
         //save current form, then create new form with same data
+        setIsEditable(true);
         if (handleSaveDraft()) {
             setVersionTitle((prev) => prev + " (copy)");
         }
@@ -216,6 +222,7 @@ export default function RecruiterInterface() {
             setCurrentJAFState={setCurrentJAFState}
             setCurrentINFState={setCurrentINFState}
             setVersionTitle={setVersionTitle}
+            setIsEditable={setIsEditable}
         />
     );
     const INFDraftEls = drafts?.INF.map((draft) =>
@@ -229,6 +236,7 @@ export default function RecruiterInterface() {
             setCurrentJAFState={setCurrentJAFState}
             setCurrentINFState={setCurrentINFState}
             setVersionTitle={setVersionTitle}
+            setIsEditable={setIsEditable}
         />
     );
 
@@ -272,22 +280,24 @@ export default function RecruiterInterface() {
                             handleSaveDraft={handleSaveDraft}
                             handleClone={handleClone}
                         />
-                        {formType == 0 ? (
+                        {formType == 0 && isEditable && (
                             <JafForm
                                 formData={currentJAFState}
                                 setFormData={setCurrentJAFState}
                                 versionTitle={versionTitle}
                             />
-                        ) : (
+                        )}
+                        {formType == 1 && isEditable && (
                             <InfForm
                                 formData={currentINFState}
                                 setFormData={setCurrentINFState}
                                 versionTitle={versionTitle}
                             />
                         )}
-                        {formType == 0 ? (
+                        {formType == 0 && !isEditable && (
                             <JafDisplay formData={currentJAFState} />
-                        ) : (
+                        )}
+                        {formType == 1 && !isEditable && (
                             <InfDisplay formData={currentINFState} />
                         )}
                     </div>

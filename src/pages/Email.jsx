@@ -3,6 +3,7 @@ import { Container, Form, Button, Spinner } from "react-bootstrap";
 import { DJANGO_SERVER } from "../constants/endPoints";
 import { OTP_LENGTH } from "../constants/otp";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 const Email = () => {
   const { login } = useAuth();
 
@@ -52,13 +53,16 @@ const Email = () => {
       if (res.status !== 200) {
         console.log(data.error);
         setError(data.error);
+        toast.error(data.error);
       } else {
         // otp sent successfully
         setIsOtpSent(true);
+        toast.success("OTP sent successfully");
       }
     } catch (err) {
       console.log(err);
       setError(err.message);
+      toast.error(err.message);
       // setIsOtpSent(true); //! for testing
     }
     setLoading(false);
@@ -84,14 +88,17 @@ const Email = () => {
       if (res.status !== 200) {
         console.log(data.error);
         setError(data.error);
+        toast.error(data.error);
       } else {
         // otp sent successfully
         console.log(data);
         login(data);
+        toast.success("Logged in successfully");
       }
     } catch (err) {
       console.log(err);
       setError(err.message);
+      toast.error(err.message);
     }
     setLoading(false);
   };

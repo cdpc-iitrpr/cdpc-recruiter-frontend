@@ -6,10 +6,13 @@ import SelectionProcess from "../FormComponents/SelectionProcess";
 import "./Form.css";
 import { INF_FORM_ACTION } from "../../constants/endPoints";
 import { frontToBack } from "../../utils/INFParser";
-import { useAuth } from "../../context/AuthContext";
+import useFetch from "../../hooks/useFetch";
+import { toast } from "react-toastify";
+import JafDisplay from "../Display/JafDisplay";
 
 function InfForm({ formData, setFormData ,versionTitle }) {
-    const { user } = useAuth();
+    const { fetch } = useFetch();
+
 
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
@@ -23,7 +26,7 @@ function InfForm({ formData, setFormData ,versionTitle }) {
         });
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         const parsed_FormData = frontToBack(formData);
 
         // check if versionTitle is empty
@@ -33,11 +36,10 @@ function InfForm({ formData, setFormData ,versionTitle }) {
         }
 
         //post request to server
-        fetch(INF_FORM_ACTION, {
+        const response = await fetch(INF_FORM_ACTION, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${user.access}`,
             },
             body: JSON.stringify({
                 form_id: "id",
@@ -45,7 +47,14 @@ function InfForm({ formData, setFormData ,versionTitle }) {
                 form_data: parsed_FormData,
                 versionTitle: versionTitle,
             }),
-        }).then((response) => response.json());
+        });
+        const json = await response.json();
+        if (!response.ok) {
+            toast.error(json.message);
+        } else {
+            toast.success(json.message);
+        }
+
     };
 
     useEffect(() => {
@@ -102,13 +111,33 @@ function InfForm({ formData, setFormData ,versionTitle }) {
                     setFormState={setFormData}
                     handleSubmit={(e) => {
                         e.preventDefault();
-                        handleFormSubmit();
+                        setFormPage((prev) => prev + 1);
+                        scrollToTop();
                     }}
                     handleBack={() => {
                         setFormPage((prev) => prev - 1);
                         scrollToTop();
                     }}
                 />
+            )}
+            {formPage === 4 && (
+                <>
+                    <JafDisplay formData={formData} />
+                    <div className="d-flex justify-content-around my-3">
+                        <Button
+                            variant="primary"
+                            onClick={() => {
+                                setFormPage((prev) => prev - 1);
+                                scrollToTop();
+                            }}
+                        >
+                            Back
+                        </Button>
+                        <Button variant="danger" onClick={handleFormSubmit}>
+                            Submit
+                        </Button>
+                    </div>
+                </>
             )}
         </div>
     );

@@ -14,6 +14,9 @@ import RecruiterInterface from "./pages/RecruiterInterface";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import InfDisplay from "./components/Display/InfDisplay";
 import JafDisplay from "./components/Display/JafDisplay";
+import { ToastContainer } from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
@@ -56,6 +59,7 @@ function App() {
                         <Route path="/display" exact element={<JafDisplay />} />
                     </Routes>
                 </Router>
+                <ToastContainer />
             </AuthContextProvider>
         </>
     );

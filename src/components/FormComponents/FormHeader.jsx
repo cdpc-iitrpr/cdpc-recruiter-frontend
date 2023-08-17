@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-export default function FormHeader({versionTitle, setVersionTitle, handleSaveDraft, handleClone})
+export default function FormHeader({versionTitle, setVersionTitle, disabled})
 {
     return (
         <div className="space-between text-margin">
@@ -11,8 +11,9 @@ export default function FormHeader({versionTitle, setVersionTitle, handleSaveDra
                 placeholder="Version Title"
                 value={versionTitle}
                 onChange={(e) => setVersionTitle(e.target.value)}
+                disabled={disabled}
             />
-            <div className="space-between">
+            {/* <div className="space-between">
                 <Button
                 variant="primary"
                 className="button-margin"
@@ -23,7 +24,7 @@ export default function FormHeader({versionTitle, setVersionTitle, handleSaveDra
                 className="button-margin"
                 onClick={handleSaveDraft}
                 >Save</Button>
-            </div>
+            </div> */}
         </div>
     )
 }

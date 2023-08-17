@@ -11,6 +11,7 @@ import { backToFront as backToFrontJAF } from "../utils/JAFParser";
 import { backToFront as backToFrontINF } from "../utils/INFParser";
 import JafDisplay from "../components/Display/JafDisplay";
 import InfDisplay from "../components/Display/InfDisplay";
+import { toast } from "react-toastify";
 
 const Draft = ({
     id,
@@ -35,7 +36,8 @@ const Draft = ({
         });
         const json = await response.json();
         if (!response.ok) {
-            alert(json.message);
+            // alert(json.message);
+            toast.error(json.message);
         } else {
             setVersionTitle(json.Data.versionTitle? json.Data.versionTitle + ` - [${id}]` : `Untitled - [${id}]`);
 
@@ -95,7 +97,7 @@ export default function RecruiterInterface() {
             });
             const json = await response.json();
             if (!response.ok) {
-                alert(json.message);
+                toast.error(json.message);
             } else {
                 setDrafts((prev) => {
                     return {
@@ -115,7 +117,7 @@ export default function RecruiterInterface() {
             });
             const json = await response.json();
             if (!response.ok) {
-                alert(json.message);
+                toast.error(json.message);
             } else {
                 setDrafts((prev) => {
                     return {
@@ -279,6 +281,7 @@ export default function RecruiterInterface() {
                             setVersionTitle={setVersionTitle}
                             handleSaveDraft={handleSaveDraft}
                             handleClone={handleClone}
+                            disabled={false}
                         />
                         {formType == 0 && isEditable && (
                             <JafForm

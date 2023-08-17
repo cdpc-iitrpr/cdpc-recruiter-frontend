@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-import { Container, ProgressBar } from "react-bootstrap";
+import { Container, ProgressBar, Button } from "react-bootstrap";
 import OrganisationalDetails from "../FormComponents/OrganisationDetails";
 import SelectionProcess from "../FormComponents/SelectionProcess";
 import JafJobDetails from "../FormComponents/JafJobDetails";
 import "./Form.css";
 import { frontToBack } from "../../utils/JAFParser";
 import { JAF_SUBMIT_ACTION } from "../../constants/endPoints";
-import { useAuth } from "../../context/AuthContext";
+import { blank_jaf_object } from "../../constants/formObjects";
+import JafDisplay from "../Display/JafDisplay";
+import useFetch from "../../hooks/useFetch";
+import { toast } from "react-toastify";
 
-function JafForm({ formData, setFormData ,versionTitle }) {
-    const { user } = useAuth();
+function JafForm(props) {
+    const { formData, setFormData, versionTitle } = props;
+    const { fetch } = useFetch();
 
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
@@ -23,8 +27,9 @@ function JafForm({ formData, setFormData ,versionTitle }) {
         });
     };
 
-    function handleFormSubmit() {
+    const handleFormSubmit = async () => {
         console.log(formData);
+        toast.info("Submitting form...");
         const parsedFormData = frontToBack(formData);
 
         // check if version title is empty
@@ -32,13 +37,12 @@ function JafForm({ formData, setFormData ,versionTitle }) {
             alert("Please enter a version title");
             return;
         }
-        
+
         // post request to server
-        fetch(JAF_SUBMIT_ACTION, {
+        const response = await fetch(JAF_SUBMIT_ACTION, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${user.access}`,
             },
             body: JSON.stringify({
                 form_id: "id",
@@ -46,8 +50,16 @@ function JafForm({ formData, setFormData ,versionTitle }) {
                 form_data: parsedFormData,
                 versionTitle: versionTitle,
             }),
-        }).then((response) => response.json());
-    }
+        });
+        const json = await response.json();
+        if (!response.ok) {
+            toast.error(json.error);
+            console.log(json);
+        } else {
+            toast.success(json.success);
+        }
+
+    };
 
     useEffect(() => {
         setProgress(Math.round(((formPage - 1) / 3) * 100));
@@ -75,7 +87,6 @@ function JafForm({ formData, setFormData ,versionTitle }) {
                     setFormState={setFormData}
                     handleSubmit={(e) => {
                         e.preventDefault();
-                        console.log("submit");
                         setFormPage((prev) => prev + 1);
                         scrollToTop();
                     }}
@@ -87,7 +98,6 @@ function JafForm({ formData, setFormData ,versionTitle }) {
                     setFormData={setFormData}
                     handleSubmit={(e) => {
                         e.preventDefault();
-                        console.log("submit");
                         setFormPage((prev) => prev + 1);
                         scrollToTop();
                     }}
@@ -103,7 +113,8 @@ function JafForm({ formData, setFormData ,versionTitle }) {
                     setFormState={setFormData}
                     handleSubmit={(e) => {
                         e.preventDefault();
-                        handleFormSubmit();
+                        setFormPage((prev) => prev + 1);
+                        scrollToTop();
                     }}
                     handleBack={() => {
                         setFormPage((prev) => prev - 1);
@@ -111,8 +122,31 @@ function JafForm({ formData, setFormData ,versionTitle }) {
                     }}
                 />
             )}
+            {formPage === 4 && (
+                <>
+                    <JafDisplay formData={formData} />
+                    <div className="d-flex justify-content-around my-3">
+                        <Button
+                            variant="primary"
+                            onClick={() => {
+                                setFormPage((prev) => prev - 1);
+                                scrollToTop();
+                            }}
+                        >
+                            Back
+                        </Button>
+                        <Button variant="danger" onClick={handleFormSubmit}>
+                            Submit
+                        </Button>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
+
+JafForm.defaultProps = {
+    formData: blank_jaf_object,
+};
 
 export default JafForm;

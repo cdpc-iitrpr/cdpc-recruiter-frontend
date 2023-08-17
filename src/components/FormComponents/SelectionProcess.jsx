@@ -391,8 +391,8 @@ const SelectionProcess = ({
                     <Button variant="primary" onClick={handleBack}>
                         Back
                     </Button>
-                    <Button variant="danger" type="submit">
-                        Submit
+                    <Button type="submit">
+                        Review
                     </Button>
                 </div>
             </Form>

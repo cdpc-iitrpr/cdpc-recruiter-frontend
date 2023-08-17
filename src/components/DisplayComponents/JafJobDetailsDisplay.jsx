@@ -1,8 +1,29 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { KeyValue } from "./TextDisplay";
+import { useFetch } from "../../hooks/useFetch";
+import { FILE_DOWNLOAD } from "../../constants/endPoints";
 
 function JafJobDetailsDisplay({ formData }) {
+
+    const { fetch } = useFetch();
+
+    const handleDownload = async (item) => {
+        const res = await fetch(`${FILE_DOWNLOAD}${item.id}/`);
+        const blob = await res.blob();
+        console.log(blob);
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+
+        // click on hidden element to download file
+
+        a.href = url;
+        a.download = item.file_name;
+        a.click();
+        a.remove();
+    };
+
+
     return (
         <div>
             <Container>
@@ -25,6 +46,8 @@ function JafJobDetailsDisplay({ formData }) {
                     <KeyValue
                         keyName={"Job Description Files"}
                         valueList={formData.job_profile.job_description_pdf}
+                        handleDownload={handleDownload}
+                        download={true}
                     />
 
                 </div>

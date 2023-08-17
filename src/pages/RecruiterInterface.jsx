@@ -37,10 +37,9 @@ const Draft = ({
         const json = await response.json();
         if (!response.ok) {
             // alert(json.message);
-            toast.error(json.message);
+            toast.error(json.error);
         } else {
-            setVersionTitle(json.Data.versionTitle? json.Data.versionTitle + ` - [${id}]` : `Untitled - [${id}]`);
-
+            setVersionTitle(json.versionTitle?? `Untitled - [${id}]`);
 
             if (type == 0) {
                 const structuredFormData = backToFrontJAF(json.Data);
@@ -53,15 +52,25 @@ const Draft = ({
         }
     };
 
-    function handleClickDraft() {
+    const handleClickDraft = async () => {
+        // toast.info("Loading draft...");
+        toast.info("Click on New JAF/INF to edit this form");
         setFormType(type);
         setIsEditable(false);
-        loadFormData();
-    }
+        try {
+            await loadFormData();
+        } catch (err) {
+            console.log(err);
+            toast.error(err.message);
+        }
+    };
 
     return (
-        <div className="note-container hover-effect cursor-pointer" onClick={handleClickDraft}>
-            <div className="space-between" >
+        <div
+            className="note-container hover-effect cursor-pointer"
+            onClick={handleClickDraft}
+        >
+            <div className="space-between">
                 <div>{versionTitle}</div>
                 <div>
                     {new Date(date).toLocaleDateString() +
@@ -81,50 +90,58 @@ export default function RecruiterInterface() {
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(0);
     const [drafts, setDrafts] = React.useState({
-        JAF: [
-        ],
-        INF: [
-        ],
+        JAF: [],
+        INF: [],
     });
 
     React.useEffect(() => {
         const fetchJAFDrafts = async () => {
-            const response = await fetch(JAF_FETCH_DRAFTS, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const json = await response.json();
-            if (!response.ok) {
-                toast.error(json.message);
-            } else {
-                setDrafts((prev) => {
-                    return {
-                        ...prev,
-                        JAF: json.JAF_list,
-                    };
+            try {
+                const response = await fetch(JAF_FETCH_DRAFTS, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 });
+                const json = await response.json();
+                if (!response.ok) {
+                    toast.error(json.error);
+                } else {
+                    setDrafts((prev) => {
+                        return {
+                            ...prev,
+                            JAF: json.JAF_list,
+                        };
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error(error.message);
             }
         };
 
         const fetchINFDrafts = async () => {
-            const response = await fetch(INF_FETCH_DRAFTS, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const json = await response.json();
-            if (!response.ok) {
-                toast.error(json.message);
-            } else {
-                setDrafts((prev) => {
-                    return {
-                        ...prev,
-                        INF: json.INF_list,
-                    };
+            try {
+                const response = await fetch(INF_FETCH_DRAFTS, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 });
+                const json = await response.json();
+                if (!response.ok) {
+                    toast.error(json.error);
+                } else {
+                    setDrafts((prev) => {
+                        return {
+                            ...prev,
+                            INF: json.INF_list,
+                        };
+                    });
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error(error.message);
             }
         };
 
@@ -213,7 +230,7 @@ export default function RecruiterInterface() {
     const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
     const [currentJAFState, setCurrentJAFState] = useState(blank_jaf_object);
 
-    const JAFDraftEls = drafts?.JAF.map((draft) =>
+    const JAFDraftEls = drafts?.JAF.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -226,8 +243,8 @@ export default function RecruiterInterface() {
             setVersionTitle={setVersionTitle}
             setIsEditable={setIsEditable}
         />
-    );
-    const INFDraftEls = drafts?.INF.map((draft) =>
+    ));
+    const INFDraftEls = drafts?.INF.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -240,7 +257,7 @@ export default function RecruiterInterface() {
             setVersionTitle={setVersionTitle}
             setIsEditable={setIsEditable}
         />
-    );
+    ));
 
     return (
         <div className="page-container">

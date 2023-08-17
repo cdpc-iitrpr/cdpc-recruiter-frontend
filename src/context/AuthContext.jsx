@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -26,6 +27,7 @@ export const AuthContextProvider = ({ children }) => {
     const signup = async (email, name, companyName, phoneNumber) => {};
 
     const logout = () => {
+        toast.success("Logged out successfully");
         setUser({ email: "", name: "", phoneNumber: "", companyName: "" });
         setIsLoggedIn(false);
         localStorage.removeItem("user");

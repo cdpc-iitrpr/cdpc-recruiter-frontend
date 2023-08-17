@@ -50,9 +50,9 @@ function InfForm({ formData, setFormData ,versionTitle }) {
         });
         const json = await response.json();
         if (!response.ok) {
-            toast.error(json.message);
+            toast.error(json.error);
         } else {
-            toast.success(json.message);
+            toast.success(json.success);
         }
 
     };

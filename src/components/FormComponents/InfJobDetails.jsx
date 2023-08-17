@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { FILE_UPLOAD } from "../../constants/endPoints";
+import useFetch from "../../hooks/useFetch";
+import { KeyValue } from "../DisplayComponents/TextDisplay";
 
 function OptionGroup({ fieldName, optionName, formState, setFormState }) {
     function handleOptionChange(e, name, setTo) {
@@ -51,6 +55,41 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
     // const [formState, setFormState] = useState(
     //     formData === undefined ? initialFormState : formData
     // );
+    const { fetch } = useFetch();
+
+    const handleFileChange = async (e) => {
+        toast.info("Uploading file...", { autoClose: 1000 });
+        const { name, files } = e.target;
+
+        const formDataFile = new FormData();
+        formDataFile.append("file", files[0]);
+
+
+        const response = await fetch(FILE_UPLOAD, {
+            method: "POST",
+            contentType: "multipart/form-data",
+            body: formDataFile,
+            });
+        const data = await response.json();
+        if (!response.ok) {
+            toast.error(data.error);
+        } else {
+            toast.success("File uploaded successfully");
+            setFormState((prev) => {
+                return {
+                    ...prev,
+                    job_profile: {
+                        ...prev.job_profile,
+                        [name]: [...prev.job_profile[name], data],
+                    },
+                };
+            });
+        }
+        console.log(formState);
+
+
+        // upload the file and get the response. Then save the response in the formData
+    };
 
     function handleJobDetail(e) {
         const name = e.target.name;
@@ -64,6 +103,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
     }
 
     function handleStipendDetail(e) {
+        console.log(formState);
         const name = e.target.name;
         setFormState((prev) => ({
             ...prev,
@@ -128,9 +168,33 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                             controlId="jobDescriptionFile"
                             className="mb-3"
                         >
-                            <Form.Control type="file" multiple />
+                            <Form.Control
+                                type="file"
+                                name="job_description_pdf"
+                                onChange={handleFileChange}
+                            />
+                            <KeyValue
+                                keyName={"Job Description Files"}
+                                valueList={
+                                    formState.job_profile.job_description_pdf
+                                }
+                                valueListCancel={(item) => {
+                                    setFormState((prev) => {
+                                        return {
+                                            ...prev,
+                                            job_profile: {
+                                                ...prev.job_profile,
+                                                job_description_pdf: prev.job_profile.job_description_pdf.filter(
+                                                    (i) => i.id !== item.id
+                                                ),
+                                            },
+                                        };
+                                    });
+                                }}
+                            />
                             <Form.Text className="text-muted">
-                                Upload Job Description File
+                                Upload Job Description File Files you will
+                                upload here will get uploaded to the server.
                             </Form.Text>
                         </Form.Group>
                     </div>

@@ -9,6 +9,7 @@ import { frontToBack } from "../../utils/INFParser";
 import useFetch from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 import JafDisplay from "../Display/JafDisplay";
+import InfDisplay from "../Display/InfDisplay";
 
 function InfForm({ formData, setFormData ,versionTitle }) {
     const { fetch } = useFetch();
@@ -122,7 +123,7 @@ function InfForm({ formData, setFormData ,versionTitle }) {
             )}
             {formPage === 4 && (
                 <>
-                    <JafDisplay formData={formData} />
+                    <InfDisplay formData={formData} />
                     <div className="d-flex justify-content-around my-3">
                         <Button
                             variant="primary"

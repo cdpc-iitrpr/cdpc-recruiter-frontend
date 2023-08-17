@@ -55,6 +55,10 @@ function InfJobDetailsDisplay({ formData }) {
                         keyName={"Job Description"}
                         value={formData.job_profile.job_description}
                     />
+                    <KeyValue
+                        keyName={"Job Description Files"}
+                        valueList={formData.job_profile.job_description_pdf}
+                    />
                 </div>
                 <div className="note-container">
                     <h3>Stipend Details</h3>

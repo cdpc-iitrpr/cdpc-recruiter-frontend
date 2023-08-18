@@ -8,10 +8,9 @@ export default defineConfig({
     base: '/cdpc/',
     server: {
         proxy: {
-            "/server": {
+            "/admin": {
                 target: DJANGO_SERVER,
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/server/, ""),
                 secure: false,
             },
             "/static": {

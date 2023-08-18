@@ -68,7 +68,7 @@ const blank_back_end_object = {
 };
 
 const frontToBack = (frontEndFormObject) => {
-    let parsed_object = {...blank_back_end_object};
+    let parsed_object = JSON.parse(JSON.stringify(blank_back_end_object));
     parsed_object.organisation_name =
         frontEndFormObject.about_organisation.organisation;
     parsed_object.organisation_postal_address =
@@ -118,7 +118,7 @@ const frontToBack = (frontEndFormObject) => {
 };
 
 const backToFront = (backEndFormObject) => {
-    let parsed_object = {...blank_inf_object};
+    let parsed_object = JSON.parse(JSON.stringify(blank_inf_object));
     parsed_object.about_organisation.organisation =
         backEndFormObject.organisation_name;
     parsed_object.about_organisation.postal_address =

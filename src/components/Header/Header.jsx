@@ -5,9 +5,12 @@ import cdpcLogo from "../../assets/cdcrc_logo.png";
 import Logout from "../../assets/logout.png";
 import Menu from "../../assets/menu.png";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router";
 
 function LinkContainer({ links }) {
     const [showList, setShowList] = useState(false);
+    const navigate = useNavigate();
+
     return (
         <>
             <div className="d-xl-block d-none ">
@@ -128,7 +131,7 @@ export default function Header() {
                             <Button
                                 className="rounded-pill d-flex align-items-center"
                                 style={{ background: "#05709a" }}
-                                onClick={logout}
+                                onClick={() => {logout(); navigate("/");}}
                             >
                                 <span className="d-lg-block d-none">
                                     Log Out

@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { KeyValue } from "./TextDisplay";
-import { useFetch } from "../../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import { FILE_DOWNLOAD } from "../../constants/endPoints";
 
 function JafJobDetailsDisplay({ formData }) {
@@ -9,7 +9,9 @@ function JafJobDetailsDisplay({ formData }) {
     const { fetch } = useFetch();
 
     const handleDownload = async (item) => {
-        const res = await fetch(`${FILE_DOWNLOAD}${item.id}/`);
+        const res = await fetch(`${FILE_DOWNLOAD}${item.id}/`, {
+            method: "POST",
+        });
         const blob = await res.blob();
         console.log(blob);
         const url = window.URL.createObjectURL(blob);
@@ -21,6 +23,7 @@ function JafJobDetailsDisplay({ formData }) {
         a.download = item.file_name;
         a.click();
         a.remove();
+        window.URL.revokeObjectURL(url);
     };
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Accordion, Button } from "react-bootstrap";
+import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
 import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
@@ -39,7 +39,7 @@ const Draft = ({
             // alert(json.message);
             toast.error(json.error);
         } else {
-            setVersionTitle(json.versionTitle?? `Untitled - [${id}]`);
+            setVersionTitle(json.versionTitle ?? `Untitled - [${id}]`);
 
             if (type == 0) {
                 const structuredFormData = backToFrontJAF(json.Data);
@@ -85,7 +85,7 @@ const Draft = ({
 export default function RecruiterInterface() {
     const { user } = useAuth();
     const { fetch } = useFetch();
-    const [isEditable, setIsEditable] = useState(false);
+    const [isEditable, setIsEditable] = useState(true);
 
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(0);
@@ -93,6 +93,7 @@ export default function RecruiterInterface() {
         JAF: [],
         INF: [],
     });
+    const [search, setSearch] = React.useState({ JAF: "", INF: "" });
 
     React.useEffect(() => {
         const fetchJAFDrafts = async () => {
@@ -227,10 +228,48 @@ export default function RecruiterInterface() {
         return true;
     }
 
+    function handleSearch(e, type) {
+        if (type == 0) {
+            setSearch((prev) => ({
+                ...prev,
+                JAF: e.target.value,
+            }));
+        } else {
+            setSearch((prev) => ({
+                ...prev,
+                INF: e.target.value,
+            }));
+        }
+    }
+
+    const JAFSearchResults = [];
+    for (var i = 0; i < drafts.JAF.length; i++) {
+        if (drafts.JAF[i].versionTitle == null) {
+            // JAFSearchResults.push(drafts.JAF[i]);
+        } else if (
+            drafts.JAF[i].versionTitle
+                .toLowerCase()
+                .includes(search.JAF.toLowerCase())
+        )
+            JAFSearchResults.push(drafts.JAF[i]);
+    }
+
+    const INFSearchResults = [];
+    for (var i = 0; i < drafts.INF.length; i++) {
+        if (drafts.INF[i].versionTitle == null) {
+            // INFSearchResults.push(drafts.INF[i]);
+        } else if (
+            drafts.INF[i].versionTitle
+                .toLowerCase()
+                .includes(search.INF.toLowerCase())
+        )
+            INFSearchResults.push(drafts.INF[i]);
+    }
+
     const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
     const [currentJAFState, setCurrentJAFState] = useState(blank_jaf_object);
 
-    const JAFDraftEls = drafts?.JAF.map((draft) => (
+    const JAFDraftEls = JAFSearchResults.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -244,7 +283,7 @@ export default function RecruiterInterface() {
             setIsEditable={setIsEditable}
         />
     ));
-    const INFDraftEls = drafts?.INF.map((draft) => (
+    const INFDraftEls = INFSearchResults.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -266,27 +305,51 @@ export default function RecruiterInterface() {
                     <div className="note-container">
                         <Accordion>
                             <h2>Current Drafts</h2>
-                            <Button
-                                variant="primary"
-                                className="my-3"
-                                onClick={handleAddJAF}
-                            >
-                                New JAF
-                            </Button>
+                            <div className="space-between my-3">
+                                <Button
+                                    variant="primary"
+                                    className=""
+                                    onClick={handleAddJAF}
+                                >
+                                    New JAF
+                                </Button>
+                                <div className="w-75">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Search"
+                                        value={search.JAF}
+                                        onChange={(e) => handleSearch(e, 0)}
+                                    ></Form.Control>
+                                </div>
+                            </div>
                             <Accordion.Item eventKey="1">
                                 <Accordion.Header>JAF Drafts</Accordion.Header>
-                                <Accordion.Body>{JAFDraftEls}</Accordion.Body>
+                                <Accordion.Body className="list-container">
+                                    {JAFDraftEls}
+                                </Accordion.Body>
                             </Accordion.Item>
-                            <Button
-                                variant="primary"
-                                className="my-3"
-                                onClick={handleAddINF}
-                            >
-                                New INF
-                            </Button>
+                            <div className="space-between my-3">
+                                <Button
+                                    variant="primary"
+                                    className=""
+                                    onClick={handleAddINF}
+                                >
+                                    New INF
+                                </Button>
+                                <div className="w-75">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Search"
+                                        value={search.INF}
+                                        onChange={(e) => handleSearch(e, 1)}
+                                    ></Form.Control>
+                                </div>
+                            </div>
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>INF Drafts</Accordion.Header>
-                                <Accordion.Body>{INFDraftEls}</Accordion.Body>
+                                <Accordion.Body className="list-container">
+                                    {INFDraftEls}
+                                </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>
                     </div>

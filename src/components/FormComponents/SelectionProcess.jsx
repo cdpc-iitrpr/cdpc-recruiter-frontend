@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Form, InputGroup, Row, Container, Button } from "react-bootstrap";
 
 const SelectionProcess = ({
@@ -7,6 +7,28 @@ const SelectionProcess = ({
     handleBack,
     handleSubmit,
 }) => {
+    // ALL	CSE	EE	ME	CE	CH	MME	Phy	MA	CY	BME	HSS
+    const [interestedDisciplines, setInterestedDisciplines] = useState({
+        "B.Tech": ["ALL", "CSE", "EE", "ME", "CE", "CH", "MME"],
+        "B.Tech with minor in": ["ALL", "CSE", "EE", "MME", "Phy", "MA"],
+        "M.Tech": ["ALL", "CSE", "EE", "ME", "CE", "CH", "MME", "BME"],
+        "M.Sc": ["ALL", "MME", "Phy", "MA", "CY"],
+        PHD: [
+            "ALL",
+            "CSE",
+            "EE",
+            "ME",
+            "CE",
+            "CH",
+            "MME",
+            "Phy",
+            "MA",
+            "CY",
+            "BME",
+            "HSS",
+        ],
+    });
+
     const [testTypes, setTestTypes] = useState([
         "Technical Test",
         "Aptitude Test",
@@ -61,24 +83,46 @@ const SelectionProcess = ({
         }));
     };
 
-    const handleInterestedDisciplineBranches = (e) => {
+    const handleInterestedDisciplineBranches = (e, degree) => {
         const name = e.target.name;
-        const value = e.target.value;
         setFormState((prev) => ({
             ...prev,
             selection_process: {
                 ...prev.selection_process,
                 interested_discipline: {
                     ...prev.selection_process.interested_discipline,
-                    branches: {
-                        ...prev.selection_process.interested_discipline
-                            .branches,
-                        [name]: value,
-                    },
+                    [degree]: prev.selection_process.interested_discipline[
+                        degree
+                    ]?.includes(name)
+                        ? prev.selection_process.interested_discipline[
+                              degree
+                          ].filter((branch) => branch !== name)
+                        : [
+                              ...prev.selection_process.interested_discipline[
+                                  degree
+                              ],
+                              name,
+                          ],
                 },
             },
         }));
     };
+
+    useEffect(() => {
+        setFormState((prev) => ({
+            ...prev,
+            selection_process: {
+                ...prev.selection_process,
+                interested_discipline: {
+                    "B.Tech": [],
+                    "B.Tech with minor in": [],
+                    "M.Tech": [],
+                    "M.Sc": [],
+                    "PHD": [],
+                },
+            },
+        }));
+    }, []);
 
     return (
         <div>
@@ -385,15 +429,81 @@ const SelectionProcess = ({
                                 onChange={(e) => handleSelectionProcess(e)}
                             />
                         </Form.Group>
+
+                        {/* *Please mark (✓) the disciplines in which you are interested to recruit in */}
+                        <Form.Group
+                            className="mb-3"
+                            controlId="interestedDiscipline"
+                        >
+                            <Form.Label>
+                                Please mark (✓) the disciplines in which you are
+                                interested to recruit in
+                            </Form.Label>
+                            <Row className="mb-3">
+                                {Object.keys(interestedDisciplines).map(
+                                    (degree, index) => (
+                                        <Row md={10} xs={10} key={index}>
+                                            <Form.Label>{degree}</Form.Label>
+
+                                            {/* now ckeck box for rach branch in thaat degree */}
+                                            {/* center */}
+                                            <Col className="mb-3 d-flex align-items-center ml-3 flex-wrap">
+                                                {interestedDisciplines[
+                                                    degree
+                                                ].map((branch, index) => (
+                                                    <Col
+                                                        md={4}
+                                                        xs={6}
+                                                        key={index}
+                                                    >
+                                                        <Form.Check
+                                                            type={"checkbox"}
+                                                            id={`check-industry-${index}`}
+                                                        >
+                                                            <Form.Check.Input
+                                                                name={`${branch}`}
+                                                                type={
+                                                                    "checkbox"
+                                                                }
+                                                                // checked={
+                                                                //     true
+                                                                //     // formState
+                                                                //     //     .selection_process
+                                                                //     //     .interested_discipline
+                                                                //     //     .branches[
+                                                                //     //     `${branch
+                                                                //     //         .split(
+                                                                //     //             " "
+                                                                //     //         )[0]
+                                                                //     //         .toLowerCase()}_branch`
+                                                                //     // ]
+                                                                // }
+                                                                onChange={(e) => {
+                                                                    handleInterestedDisciplineBranches(
+                                                                        e,
+                                                                        degree
+                                                                    );
+                                                                }}
+                                                            />
+                                                            <Form.Check.Label>
+                                                                {branch}
+                                                            </Form.Check.Label>
+                                                        </Form.Check>
+                                                    </Col>
+                                                ))}
+                                            </Col>
+                                        </Row>
+                                    )
+                                )}
+                            </Row>
+                        </Form.Group>
                     </div>
                 </Container>
                 <div className="d-flex justify-content-around my-3">
                     <Button variant="primary" onClick={handleBack}>
                         Back
                     </Button>
-                    <Button type="submit">
-                        Review
-                    </Button>
+                    <Button type="submit">Review</Button>
                 </div>
             </Form>
         </div>

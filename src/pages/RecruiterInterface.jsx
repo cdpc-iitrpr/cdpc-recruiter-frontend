@@ -39,7 +39,7 @@ const Draft = ({
             // alert(json.message);
             toast.error(json.error);
         } else {
-            setVersionTitle(json.versionTitle ?? `Untitled - [${id}]`);
+            setVersionTitle(json.Data.versionTitle ?? `Untitled - [${id}]`);
 
             if (type == 0) {
                 const structuredFormData = backToFrontJAF(json.Data);

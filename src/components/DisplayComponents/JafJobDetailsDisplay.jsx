@@ -5,7 +5,6 @@ import useFetch from "../../hooks/useFetch";
 import { FILE_DOWNLOAD } from "../../constants/endPoints";
 
 function JafJobDetailsDisplay({ formData }) {
-
     const { fetch } = useFetch();
 
     const handleDownload = async (item) => {
@@ -24,7 +23,6 @@ function JafJobDetailsDisplay({ formData }) {
         a.remove();
         window.URL.revokeObjectURL(url);
     };
-
 
     return (
         <div>
@@ -51,7 +49,6 @@ function JafJobDetailsDisplay({ formData }) {
                         handleDownload={handleDownload}
                         download={true}
                     />
-
                 </div>
                 <div className="note-container">
                     <h3>Salary Details</h3>
@@ -63,46 +60,40 @@ function JafJobDetailsDisplay({ formData }) {
                             ["phd", "PHD"],
                         ].map(([key, degree]) => {
                             return (
-                                    <Col md={6} key={key}>
-                                        <h4>{degree}</h4>
-                                        <KeyValue
-                                            key={key}
-                                            keyName={"CTC Gross"}
-                                            value={
-                                                formData.salary_details[key]
-                                                    .ctc_gross
-                                            }
-                                        />
-                                        <KeyValue
-                                            key={key}
-                                            keyName={"CTC Take Home"}
-                                            value={
-                                                formData.salary_details[key]
-                                                    .ctc_take_home
-                                            }
-                                        />
-                                        <KeyValue
-                                            key={key}
-                                            keyName={"Bonus Perks"}
-                                            value={
-                                                formData.salary_details[key]
-                                                    .ctc_bonus_perks
-                                            }
-                                        />
-                                        <KeyValue
-                                            key={key}
-                                            keyName={"Bond Contract"}
-                                            value={
-                                                formData.salary_details[key]
-                                                    .bond_contract
-                                            }
-                                        />
-                                    </Col>
+                                <Col md={6} key={key}>
+                                    <h4>{degree}</h4>
+                                    <KeyValue
+                                        keyName={"CTC Gross"}
+                                        value={
+                                            formData.salary_details[key]
+                                                .ctc_gross
+                                        }
+                                    />
+                                    <KeyValue
+                                        keyName={"CTC Take Home"}
+                                        value={
+                                            formData.salary_details[key]
+                                                .ctc_take_home
+                                        }
+                                    />
+                                    <KeyValue
+                                        keyName={"Bonus Perks"}
+                                        value={
+                                            formData.salary_details[key]
+                                                .ctc_bonus_perks
+                                        }
+                                    />
+                                    <KeyValue
+                                        keyName={"Bond Contract"}
+                                        value={
+                                            formData.salary_details[key]
+                                                .bond_contract
+                                        }
+                                    />
+                                </Col>
                             );
                         })}
                     </Row>
-                    
-                    
                 </div>
             </Container>
         </div>

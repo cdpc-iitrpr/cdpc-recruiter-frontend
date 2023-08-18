@@ -74,12 +74,7 @@ const empty_selection_process = {
         number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
-        interested_discipline: [
-            {
-                degree: "",
-                branches: [],
-            },
-        ],
+        interested_discipline: {}
     },
 };
 
@@ -153,12 +148,7 @@ const blank_inf_object = {
         number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
-        interested_discipline: [
-            {
-                degree: "",
-                branches: [], //
-            },
-        ],
+        interested_discipline: {}
     },
 };
 
@@ -249,12 +239,7 @@ const blank_jaf_object = {
         number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
-        interested_discipline: [
-            {
-                degree: "",
-                branches: [], //
-            },
-        ],
+        interested_discipline: {},
     },
 };
 

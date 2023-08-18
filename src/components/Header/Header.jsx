@@ -14,7 +14,7 @@ function LinkContainer({ links }) {
                 <div className="d-flex justify-content-between">
                     {links.map((key, index) => {
                         return (
-                            <a
+                            <a key={index}
                                 href={key.link}
                                 className="link-light link-underline-opacity-0 pe-4 py-2 m-0"
                             >
@@ -42,7 +42,7 @@ function LinkContainer({ links }) {
                     <div>
                         {links.map((key, index) => {
                             return (
-                                <a
+                                <a key={index}
                                     href={key.link}
                                     className="link-light d-block link-underline-opacity-0 mx-2 py-2 m-0"
                                 >

@@ -58,12 +58,7 @@ const blank_back_end_object = {
         number_of_offers: 0,
         preferred_period: "",
         logistics_requirements: "",
-        interested_discipline: [
-            {
-                degree: "",
-                branches: [], //
-            },
-        ],
+        interested_discipline: {}
     },
 };
 

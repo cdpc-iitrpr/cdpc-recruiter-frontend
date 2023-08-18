@@ -395,6 +395,22 @@ const SelectionProcess = ({
                             </Row>
                         </Form.Group>
 
+                        {/* Number of rounds you intend to make */}
+
+                        <Form.Group className="mb-3" controlId="numberOfOffers">
+                            <Form.Label>
+                                Number of rounds
+                            </Form.Label>
+                            <Form.Control
+                                name="number_of_rounds"
+                                type="number"
+                                placeholder="Enter number of offers"
+                                value={
+                                    formState.selection_process.number_of_rounds
+                                }
+                                onChange={(e) => handleSelectionProcess(e)}
+                            />
+                        </Form.Group>
                         {/* Number of offers you intend to make */}
 
                         <Form.Group className="mb-3" controlId="numberOfOffers">

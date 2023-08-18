@@ -110,6 +110,8 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
         }));
     }
 
+    const reqd = <span className="text-danger">*</span>
+
     return (
         <div>
             <Form onSubmit={handleSubmit}>
@@ -138,7 +140,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                             setFormState={setFormState}
                         />
                         <Form.Group className="mb-3" controlId="placeOfPosting">
-                            <Form.Label column>Place of Posting</Form.Label>
+                            <Form.Label column>Place of Posting {reqd} </Form.Label>
                             <Form.Control
                                 type="text"
                                 name="place_of_posting"
@@ -149,7 +151,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="jobDescription">
-                            <Form.Label>Job Description</Form.Label>
+                            <Form.Label>Job Description {reqd} </Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={3}
@@ -213,7 +215,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     className="mb-3"
                                     controlId="stipendAmount"
                                 >
-                                    <Form.Label>Stipend Amount</Form.Label>
+                                    <Form.Label>Stipend Amount {reqd} </Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter Amount"
@@ -233,7 +235,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     controlId="bonusPerksIncentives"
                                 >
                                     <Form.Label>
-                                        Bonus/Perks/Incentives{" "}
+                                        Bonus/Perks/Incentives{reqd} 
                                     </Form.Label>
                                     <Form.Control
                                         type="text"
@@ -254,7 +256,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     controlId="accomodationFare"
                                 >
                                     <Form.Label>
-                                        Accommodation/Trip Fare
+                                        Accommodation/Trip Fare {reqd} 
                                     </Form.Label>
                                     <Form.Control
                                         type="text"
@@ -272,7 +274,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                         </Row>
                         <Form.Group className="mb-3">
                             <Form.Label>
-                                Bond/ Service Contract (if any)
+                                Bond/ Service Contract (if any) {reqd} 
                             </Form.Label>
                             <Form.Control
                                 type="text"

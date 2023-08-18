@@ -60,6 +60,8 @@ export default function JafJobDetails(props) {
         });
     }
 
+    const reqd = <span className="text-danger">*</span>
+
     return (
         <div>
             <Form onSubmit={handleSubmit}>
@@ -70,7 +72,7 @@ export default function JafJobDetails(props) {
                         <div className="field-group">
                             <Form.Group>
                                 <Form.Label className="field-heading">
-                                    Job Designation
+                                    Job Designation {reqd}
                                 </Form.Label>
                                 <Form.Control
                                     name="designation"
@@ -78,6 +80,7 @@ export default function JafJobDetails(props) {
                                     placeholder="Enter Designation"
                                     value={formData.job_profile.designation}
                                     onChange={handleBasicDetailChange}
+                                    required
                                 />
                             </Form.Group>
                         </div>
@@ -135,7 +138,7 @@ export default function JafJobDetails(props) {
                         <div className="field-group">
                             <Form.Group>
                                 <Form.Label className="field-heading">
-                                    Place of Posting
+                                    Place of Posting {reqd}
                                 </Form.Label>
                                 <Form.Control
                                     name="place_of_posting"
@@ -145,6 +148,7 @@ export default function JafJobDetails(props) {
                                         formData.job_profile.place_of_posting
                                     }
                                     onChange={handleBasicDetailChange}
+                                    required
                                 />
                             </Form.Group>
                         </div>

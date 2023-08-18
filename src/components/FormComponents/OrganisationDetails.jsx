@@ -55,6 +55,8 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
         }));
     }
 
+    const reqd = <span className="text-danger">*</span>;
+
     return (
         <div>
             <Form disabled={true} onSubmit={handleSubmit}>
@@ -68,7 +70,7 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
                             className="mb-3"
                             controlId="organisationName"
                         >
-                            <Form.Label column>Organisation Name</Form.Label>
+                            <Form.Label column>Organisation Name {reqd}</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="organisation"
@@ -81,7 +83,7 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="postalAddress">
-                            <Form.Label>Postal Address</Form.Label>
+                            <Form.Label>Postal Address {reqd}</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="postal_address"
@@ -94,7 +96,7 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="website">
-                            <Form.Label>Website</Form.Label>
+                            <Form.Label>Website {reqd}</Form.Label>
                             <Form.Control
                                 type="website"
                                 name="website"
@@ -202,7 +204,7 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
                         <h4 className="mb-3">Contact Details</h4>
                         <Row>
                             <Col xl={4}>
-                                <h5 className="my-1">Head HR</h5>
+                                <h5 className="my-1">Head HR {reqd}</h5>
                                 <OrganisationContactGroup
                                     formState={formState}
                                     setFormState={setFormState}
@@ -211,7 +213,7 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
                             </Col>
                             <Col xl={4}>
                                 <h5 className="my-1">
-                                    1<sup>st</sup> Contact Person
+                                    1<sup>st</sup> Contact Person {reqd}
                                 </h5>
                                 <OrganisationContactGroup
                                     formState={formState}

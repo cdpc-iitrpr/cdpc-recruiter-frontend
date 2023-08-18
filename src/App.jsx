@@ -17,6 +17,7 @@ import JafDisplay from "./components/Display/JafDisplay";
 import { ToastContainer } from "react-toastify";
 
 import 'react-toastify/dist/ReactToastify.css';
+import NotFound from "./components/NotFound";
 
 function App() {
     return (
@@ -57,6 +58,9 @@ function App() {
                         <Route path="/inf" element={<InfForm />} />
                         <Route path="/jaf" exact element={<JafForm />} />
                         <Route path="/display" exact element={<JafDisplay />} />
+
+                        {/* 404 */}
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>
                 <ToastContainer />

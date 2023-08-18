@@ -141,6 +141,7 @@ export default function RecruiterInterface() {
                     });
                 }
             } catch (error) {
+                toast.dismiss();
                 console.log(error);
                 toast.error(error.message);
             }
@@ -266,8 +267,8 @@ export default function RecruiterInterface() {
             INFSearchResults.push(drafts.INF[i]);
     }
 
-    const [currentINFState, setCurrentINFState] = useState(blank_inf_object);
-    const [currentJAFState, setCurrentJAFState] = useState(blank_jaf_object);
+    const [currentINFState, setCurrentINFState] = useState({...blank_inf_object});
+    const [currentJAFState, setCurrentJAFState] = useState({...blank_jaf_object});
 
     const JAFDraftEls = JAFSearchResults.map((draft) => (
         <Draft
@@ -313,18 +314,18 @@ export default function RecruiterInterface() {
                                 >
                                     New JAF
                                 </Button>
-                                <div className="w-75">
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Search"
-                                        value={search.JAF}
-                                        onChange={(e) => handleSearch(e, 0)}
-                                    ></Form.Control>
-                                </div>
                             </div>
                             <Accordion.Item eventKey="1">
                                 <Accordion.Header>JAF Drafts</Accordion.Header>
                                 <Accordion.Body className="list-container">
+                                    <div className="w-100">
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Search"
+                                            value={search.JAF}
+                                            onChange={(e) => handleSearch(e, 0)}
+                                        ></Form.Control>
+                                    </div>
                                     {JAFDraftEls}
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -336,7 +337,11 @@ export default function RecruiterInterface() {
                                 >
                                     New INF
                                 </Button>
-                                <div className="w-75">
+                            </div>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header>INF Drafts</Accordion.Header>
+                                <Accordion.Body className="list-container">
+                                <div className="w-100">
                                     <Form.Control
                                         type="text"
                                         placeholder="Search"
@@ -344,10 +349,6 @@ export default function RecruiterInterface() {
                                         onChange={(e) => handleSearch(e, 1)}
                                     ></Form.Control>
                                 </div>
-                            </div>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>INF Drafts</Accordion.Header>
-                                <Accordion.Body className="list-container">
                                     {INFDraftEls}
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -368,6 +369,7 @@ export default function RecruiterInterface() {
                                 formData={currentJAFState}
                                 setFormData={setCurrentJAFState}
                                 versionTitle={versionTitle}
+                                setEditable={setIsEditable}
                             />
                         )}
                         {formType == 1 && isEditable && (
@@ -375,6 +377,7 @@ export default function RecruiterInterface() {
                                 formData={currentINFState}
                                 setFormData={setCurrentINFState}
                                 versionTitle={versionTitle}
+                                setEditable={setIsEditable}
                             />
                         )}
                         {formType == 0 && !isEditable && (

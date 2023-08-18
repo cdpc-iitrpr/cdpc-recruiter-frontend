@@ -11,9 +11,8 @@ import { toast } from "react-toastify";
 import JafDisplay from "../Display/JafDisplay";
 import InfDisplay from "../Display/InfDisplay";
 
-function InfForm({ formData, setFormData ,versionTitle }) {
+function InfForm({ formData, setFormData, versionTitle, setEditable }) {
     const { fetch } = useFetch();
-
 
     const [formPage, setFormPage] = React.useState(1);
     const [progress, setProgress] = React.useState(
@@ -54,8 +53,8 @@ function InfForm({ formData, setFormData ,versionTitle }) {
             toast.error(json.error);
         } else {
             toast.success(json.success);
+            setEditable(false);
         }
-
     };
 
     useEffect(() => {

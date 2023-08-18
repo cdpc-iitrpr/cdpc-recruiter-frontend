@@ -12,7 +12,7 @@ import useFetch from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 
 function JafForm(props) {
-    const { formData, setFormData, versionTitle } = props;
+    const { formData, setFormData, versionTitle, setEditable } = props;
     const { fetch } = useFetch();
 
     const [formPage, setFormPage] = React.useState(1);
@@ -30,6 +30,7 @@ function JafForm(props) {
     const handleFormSubmit = async () => {
         console.log(formData);
         toast.info("Submitting form...");
+        
         const parsedFormData = frontToBack(formData);
 
         // check if version title is empty
@@ -57,6 +58,7 @@ function JafForm(props) {
             console.log(json);
         } else {
             toast.success(json.success);
+            setEditable(false);
         }
 
     };

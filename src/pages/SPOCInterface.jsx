@@ -140,6 +140,7 @@ export default function SPOCInterface() {
         JAF: [],
         INF: [],
     });
+    const [search, setSearch] = React.useState({ JAF: "", INF: "" });
 
     const [currentINFState, setCurrentINFState] =
         React.useState(blank_inf_object);
@@ -191,7 +192,45 @@ export default function SPOCInterface() {
         fetchINFDrafts();
     }, []);
 
-    const JAFDraftEls = drafts?.JAF.map((draft) => (
+    function handleSearch(e, type) {
+        if (type == 0) {
+            setSearch((prev) => ({
+                ...prev,
+                JAF: e.target.value,
+            }));
+        } else {
+            setSearch((prev) => ({
+                ...prev,
+                INF: e.target.value,
+            }));
+        }
+    }
+
+    const JAFSearchResults = [];
+    for (var i = 0; i < drafts.JAF.length; i++) {
+        if (drafts.JAF[i].versionTitle == null) {
+            // JAFSearchResults.push(drafts.JAF[i]);
+        } else if (
+            drafts.JAF[i].versionTitle
+                .toLowerCase()
+                .includes(search.JAF.toLowerCase())
+        )
+            JAFSearchResults.push(drafts.JAF[i]);
+    }
+
+    const INFSearchResults = [];
+    for (var i = 0; i < drafts.INF.length; i++) {
+        if (drafts.INF[i].versionTitle == null) {
+            // INFSearchResults.push(drafts.INF[i]);
+        } else if (
+            drafts.INF[i].versionTitle
+                .toLowerCase()
+                .includes(search.INF.toLowerCase())
+        )
+            INFSearchResults.push(drafts.INF[i]);
+    }
+
+    const JAFDraftEls = JAFSearchResults.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -204,7 +243,7 @@ export default function SPOCInterface() {
             setVersionTitle={setVersionTitle}
         />
     ));
-    const INFDraftEls = drafts?.INF.map((draft) => (
+    const INFDraftEls = INFSearchResults.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -225,12 +264,28 @@ export default function SPOCInterface() {
                     <div className="note-container">
                         <Accordion>
                             <h2>Current Drafts</h2>
+                            <div className="w-75">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Search"
+                                    value={search.JAF}
+                                    onChange={(e) => handleSearch(e, 0)}
+                                ></Form.Control>
+                            </div>
                             <Accordion.Item eventKey="1">
                                 <Accordion.Header>JAF Drafts</Accordion.Header>
                                 <Accordion.Body className="list-container">
                                     {JAFDraftEls}
                                 </Accordion.Body>
                             </Accordion.Item>
+                            <div className="w-75">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Search"
+                                    value={search.INF}
+                                    onChange={(e) => handleSearch(e, 1)}
+                                ></Form.Control>
+                            </div>
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>INF Drafts</Accordion.Header>
                                 <Accordion.Body className="list-container">

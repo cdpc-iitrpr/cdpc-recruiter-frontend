@@ -1,7 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { DJANGO_SERVER } from "./src/constants/endPoints";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+    plugins: [react()],
+    base: '/cdpc/',
+    server: {
+        proxy: {
+            "/admin": {
+                target: DJANGO_SERVER,
+                changeOrigin: true,
+                secure: false,
+            },
+            "/static": {
+                target: DJANGO_SERVER,
+                changeOrigin: true,
+            },
+        },
+    },
+
+});

@@ -28,9 +28,9 @@ const Email = () => {
     };
 
     useEffect(() => {
-        if (isLoggedIn && user.access === "recruiter") {
+        if (isLoggedIn && user.user.role === "recruiter") {
             navigate("/recruiter");
-        } else if (isLoggedIn && user.access === "spoc") {
+        } else if (isLoggedIn && user.user.role === "spoc") {
             navigate("/spoc");
         }
     }, []);

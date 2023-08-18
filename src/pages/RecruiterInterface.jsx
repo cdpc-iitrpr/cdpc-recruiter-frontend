@@ -161,7 +161,7 @@ export default function RecruiterInterface() {
         if (formType === 0) return;
         setFormType(0);
         setVersionTitle("");
-        setCurrentJAFState(blank_jaf_object);
+        setCurrentJAFState({...blank_jaf_object});
     }
 
     function handleAddINF() {
@@ -174,7 +174,7 @@ export default function RecruiterInterface() {
         if (formType === 1) return;
         setFormType(1);
         setVersionTitle("");
-        setCurrentINFState(blank_inf_object);
+        setCurrentINFState({...blank_inf_object});
     }
 
     function handleClone() {

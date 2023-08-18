@@ -28,7 +28,6 @@ function JafForm(props) {
     };
 
     const handleFormSubmit = async () => {
-        console.log(formData);
         toast.info("Submitting form...");
         
         const parsedFormData = frontToBack(formData);
@@ -55,7 +54,6 @@ function JafForm(props) {
         const json = await response.json();
         if (!response.ok) {
             toast.error(json.error);
-            console.log(json);
         } else {
             toast.success(json.success);
             setEditable(false);

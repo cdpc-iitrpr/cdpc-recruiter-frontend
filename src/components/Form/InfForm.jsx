@@ -83,7 +83,6 @@ function InfForm({ formData, setFormData, versionTitle, setEditable }) {
                     setFormState={setFormData}
                     handleSubmit={(e) => {
                         e.preventDefault();
-                        console.log("submit");
                         setFormPage((prev) => prev + 1);
                         scrollToTop();
                     }}
@@ -95,7 +94,6 @@ function InfForm({ formData, setFormData, versionTitle, setEditable }) {
                     setFormState={setFormData}
                     handleSubmit={(e) => {
                         e.preventDefault();
-                        console.log("submit");
                         setFormPage((prev) => prev + 1);
                         scrollToTop();
                     }}

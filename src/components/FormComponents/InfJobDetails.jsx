@@ -85,9 +85,6 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                 };
             });
         }
-        console.log(formState);
-
-
         // upload the file and get the response. Then save the response in the formData
     };
 
@@ -103,7 +100,6 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
     }
 
     function handleStipendDetail(e) {
-        console.log(formState);
         const name = e.target.name;
         setFormState((prev) => ({
             ...prev,

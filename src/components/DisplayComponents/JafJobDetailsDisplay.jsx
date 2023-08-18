@@ -13,7 +13,6 @@ function JafJobDetailsDisplay({ formData }) {
             method: "POST",
         });
         const blob = await res.blob();
-        console.log(blob);
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
 

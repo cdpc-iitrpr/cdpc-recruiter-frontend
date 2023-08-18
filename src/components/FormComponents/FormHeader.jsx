@@ -7,7 +7,7 @@ export default function FormHeader({versionTitle, setVersionTitle, disabled})
         <div className="space-between text-margin container">
             <Form.Control
                 id="versionTitle"
-                className="w-100 fs-3 fw-bold"
+                className="w-100 fs-3 fw-bold border-secondary"
                 style={{backgroundColor:"#E6EEF1"}}
                 type="text"
                 placeholder="Version Title"

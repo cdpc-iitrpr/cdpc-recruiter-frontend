@@ -44,9 +44,6 @@ export default function JafJobDetails(props) {
                 };
             });
         }
-        console.log(formData);
-
-
         // upload the file and get the response. Then save the response in the formData
     };
 

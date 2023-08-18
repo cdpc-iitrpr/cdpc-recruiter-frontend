@@ -60,7 +60,6 @@ const Draft = ({
         try {
             await loadFormData();
         } catch (err) {
-            console.log(err);
             toast.error(err.message);
         }
     };
@@ -116,7 +115,6 @@ export default function RecruiterInterface() {
                     });
                 }
             } catch (error) {
-                console.log(error);
                 toast.error(error.message);
             }
         };
@@ -142,7 +140,6 @@ export default function RecruiterInterface() {
                 }
             } catch (error) {
                 toast.dismiss();
-                console.log(error);
                 toast.error(error.message);
             }
         };
@@ -161,7 +158,7 @@ export default function RecruiterInterface() {
         if (formType === 0) return;
         setFormType(0);
         setVersionTitle("");
-        setCurrentJAFState({...blank_jaf_object});
+        setCurrentJAFState({ ...blank_jaf_object });
     }
 
     function handleAddINF() {
@@ -174,7 +171,7 @@ export default function RecruiterInterface() {
         if (formType === 1) return;
         setFormType(1);
         setVersionTitle("");
-        setCurrentINFState({...blank_inf_object});
+        setCurrentINFState({ ...blank_inf_object });
     }
 
     function handleClone() {
@@ -267,8 +264,12 @@ export default function RecruiterInterface() {
             INFSearchResults.push(drafts.INF[i]);
     }
 
-    const [currentINFState, setCurrentINFState] = useState({...blank_inf_object});
-    const [currentJAFState, setCurrentJAFState] = useState({...blank_jaf_object});
+    const [currentINFState, setCurrentINFState] = useState({
+        ...blank_inf_object,
+    });
+    const [currentJAFState, setCurrentJAFState] = useState({
+        ...blank_jaf_object,
+    });
 
     const JAFDraftEls = JAFSearchResults.map((draft) => (
         <Draft
@@ -300,9 +301,9 @@ export default function RecruiterInterface() {
     ));
 
     return (
-        <div className="page-container">
+        <div className="container">
             <Row>
-                <Col xs={12} md={5}>
+                <Col xs={12} lg={4}>
                     <div className="note-container">
                         <Accordion>
                             <h2>Current Drafts</h2>
@@ -316,8 +317,8 @@ export default function RecruiterInterface() {
                                 </Button>
                             </div>
                             <Accordion.Item eventKey="1">
-                                <Accordion.Header>JAF Drafts</Accordion.Header>
-                                <Accordion.Body className="list-container">
+                                <Accordion.Header>JAF Entries</Accordion.Header>
+                                <Accordion.Body className="list-container rounded">
                                     <div className="w-100">
                                         <Form.Control
                                             type="text"
@@ -326,6 +327,13 @@ export default function RecruiterInterface() {
                                             onChange={(e) => handleSearch(e, 0)}
                                         ></Form.Control>
                                     </div>
+                                    {JAFDraftEls.length == 0 ? (
+                                        <p className="text-center mt-3">
+                                            No JAF Entries
+                                        </p>
+                                    ) : (
+                                        <></>
+                                    )}
                                     {JAFDraftEls}
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -339,24 +347,31 @@ export default function RecruiterInterface() {
                                 </Button>
                             </div>
                             <Accordion.Item eventKey="2">
-                                <Accordion.Header>INF Drafts</Accordion.Header>
+                                <Accordion.Header>INF Entries</Accordion.Header>
                                 <Accordion.Body className="list-container">
-                                <div className="w-100">
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Search"
-                                        value={search.INF}
-                                        onChange={(e) => handleSearch(e, 1)}
-                                    ></Form.Control>
-                                </div>
+                                    <div className="w-100">
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Search"
+                                            value={search.INF}
+                                            onChange={(e) => handleSearch(e, 1)}
+                                        ></Form.Control>
+                                    </div>
+                                    {JAFDraftEls.length == 0 ? (
+                                        <p className="text-center mt-3">
+                                            No INF Entries
+                                        </p>
+                                    ) : (
+                                        <></>
+                                    )}
                                     {INFDraftEls}
                                 </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>
                     </div>
                 </Col>
-                <Col xs={12} md={7}>
-                    <div className="">
+                <Col xs={12} lg={8}>
+                    <div>
                         <FormHeader
                             versionTitle={versionTitle}
                             setVersionTitle={setVersionTitle}

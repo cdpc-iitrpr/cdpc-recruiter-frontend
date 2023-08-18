@@ -8,12 +8,10 @@ function InfJobDetailsDisplay({ formData }) {
     const { fetch } = useFetch();
 
     const handleDownload = async (item) => {
-        console.log(item);
         const res = await fetch(`${FILE_DOWNLOAD}${item.id}/`, {
             method: "POST",
         });
         const blob = await res.blob();
-        console.log(blob);
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
 

@@ -62,7 +62,6 @@ const Email = () => {
             const data = await res.json();
 
             if (res.status !== 200) {
-                console.log(data.error);
                 setError(data.error);
                 toast.error(data.error);
             } else {
@@ -71,7 +70,6 @@ const Email = () => {
                 toast.success("OTP sent successfully");
             }
         } catch (err) {
-            console.log(err);
             setError(err.message);
             toast.error(err.message);
             // setIsOtpSent(true); //! for testing
@@ -97,18 +95,15 @@ const Email = () => {
             const data = await res.json();
 
             if (res.status !== 200) {
-                console.log(data.error);
                 setError(data.error);
                 toast.error(data.error);
             } else {
                 // otp sent successfully
-                console.log(data);
                 login(data);
                 toast.success("Logged in successfully");
                 navigate("/recruiter");
             }
         } catch (err) {
-            console.log(err);
             setError(err.message);
             toast.error(err.message);
         }

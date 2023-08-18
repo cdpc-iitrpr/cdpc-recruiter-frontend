@@ -86,16 +86,13 @@ const Signup = () => {
             const data = await res.json();
 
             if (res.status !== 200) {
-                console.log(data.error);
                 setError(data.error);
             } else {
                 // Otp sent successfully
-                console.log(data);
                 setIsOtpSent(true);
                 setError(null);
             }
         } catch (err) {
-            console.log(err);
             setIsOtpSent(false);
             setError(err.message);
         } finally {
@@ -121,14 +118,12 @@ const Signup = () => {
             const data = await res.json();
 
             if (res.status !== 200) {
-                console.log(data.error);
                 setError(data.error);
             } else {
                 toast.success("Login Successful");
                 navigate("/recruiter");
             }
         } catch (err) {
-            console.log(err);
             setError(err.message);
         }
         setLoading(false);

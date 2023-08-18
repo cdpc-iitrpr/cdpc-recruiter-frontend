@@ -24,7 +24,7 @@ function App() {
             <AuthContextProvider>
                 {/* Header */}
                 <Header />
-                <Router>
+                <Router basename="/cdpc">
                     <Routes>
                         <Route path="/" element={<Email />} />
 

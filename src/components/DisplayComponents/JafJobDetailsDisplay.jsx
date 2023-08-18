@@ -67,6 +67,7 @@ function JafJobDetailsDisplay({ formData }) {
                                     <Col md={6} key={key}>
                                         <h4>{degree}</h4>
                                         <KeyValue
+                                            key={key}
                                             keyName={"CTC Gross"}
                                             value={
                                                 formData.salary_details[key]
@@ -74,6 +75,7 @@ function JafJobDetailsDisplay({ formData }) {
                                             }
                                         />
                                         <KeyValue
+                                            key={key}
                                             keyName={"CTC Take Home"}
                                             value={
                                                 formData.salary_details[key]
@@ -81,6 +83,7 @@ function JafJobDetailsDisplay({ formData }) {
                                             }
                                         />
                                         <KeyValue
+                                            key={key}
                                             keyName={"Bonus Perks"}
                                             value={
                                                 formData.salary_details[key]
@@ -88,6 +91,7 @@ function JafJobDetailsDisplay({ formData }) {
                                             }
                                         />
                                         <KeyValue
+                                            key={key}
                                             keyName={"Bond Contract"}
                                             value={
                                                 formData.salary_details[key]

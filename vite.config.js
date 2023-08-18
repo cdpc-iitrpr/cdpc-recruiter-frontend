@@ -5,7 +5,7 @@ import { DJANGO_SERVER } from "./src/constants/endPoints";
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [react()],
-    base: '/cdpc/',
+    base: '/cdpc/recruiter_portal/',
     server: {
         proxy: {
             "/admin": {

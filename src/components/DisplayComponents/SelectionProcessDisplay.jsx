@@ -21,14 +21,18 @@ function SelectionProcessDisplay({ formData }) {
                         <Col>
                             <KeyValue
                                 keyName={"Eligibility Criteria"}
-                                value={formData.selection_process.eligibility_criteria}
+                                value={
+                                    formData.selection_process
+                                        .eligibility_criteria
+                                }
                             />
                         </Col>
                         <Col>
                             <KeyValue
                                 keyName={"Allow Backlogs"}
                                 value={
-                                    formData.selection_process.allow_backlog_students
+                                    formData.selection_process
+                                        .allow_backlog_students
                                         ? "Yes"
                                         : "No"
                                 }
@@ -42,7 +46,9 @@ function SelectionProcessDisplay({ formData }) {
                         list={Object.keys(formData.selection_process.test_type)
                             .filter(
                                 (key) =>
-                                    formData.selection_process.test_type[key] === true
+                                    formData.selection_process.test_type[
+                                        key
+                                    ] === true
                             )
                             .map((key) => snakeCaseToSentence(key))}
                         keyName={"Test Types"}
@@ -63,27 +69,51 @@ function SelectionProcessDisplay({ formData }) {
                         <Col md={6} xs={12}>
                             <KeyValue
                                 keyName={"Number of Rounds"}
-                                value={formData.selection_process.number_of_rounds}
+                                value={
+                                    formData.selection_process.number_of_rounds
+                                }
                             />
                         </Col>
                         <Col md={6} xs={12}>
                             <KeyValue
                                 keyName={"Number of Offers"}
-                                value={formData.selection_process.number_of_offers}
+                                value={
+                                    formData.selection_process.number_of_offers
+                                }
                             />
                         </Col>
                         <Col md={6} xs={12}>
                             <KeyValue
                                 keyName={"Preferred Period"}
-                                value={formData.selection_process.preferred_period}
+                                value={
+                                    formData.selection_process.preferred_period
+                                }
                             />
                         </Col>
                         <Col md={6} xs={12}>
                             <KeyValue
                                 keyName={"Logistics Requirements"}
-                                value={formData.selection_process.logistics_requirements}
+                                value={
+                                    formData.selection_process
+                                        .logistics_requirements
+                                }
                             />
                         </Col>
+                        <h3>Intersted Disciplines</h3>
+                        {Object.keys(formData.selection_process.interested_discipline).map(
+                            (key, index) => {
+                                return (
+                                    <TypeList
+                                        key={index}
+                                        list={
+                                            formData.selection_process
+                                                .interested_discipline[key]
+                                        }
+                                        keyName={key}
+                                    />
+                                );
+                            }
+                        )}
                     </Row>
                 </div>
             </Container>

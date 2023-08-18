@@ -68,6 +68,7 @@ function TypeList(props) {
         "warning",
         "info",
     ]);
+    console.log(list);
     return (
         <div
             className={
@@ -76,7 +77,7 @@ function TypeList(props) {
         >
             <p className={`w-${width} h6 my-auto`}>{keyName}: </p>
             <p className={`my-auto text-break text-end`}>
-                {list.map((item, index) => (
+                { list.map((item, index) => (
                     <Badge
                         pill
                         key={index}

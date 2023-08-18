@@ -25,7 +25,7 @@ function App() {
             <AuthContextProvider>
                 {/* Header */}
                 <Header />
-                <Router basename="/cdpc">
+                <Router basename="/cdpc/recruiter_portal">
                     <Routes>
                         <Route path="/" element={<Email />} />
 

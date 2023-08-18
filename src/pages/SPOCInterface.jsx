@@ -39,15 +39,15 @@ import { toast } from "react-toastify";
 
 // const data = [
 //     {
-//         name: "Company 1", 
+//         name: "Company 1",
 //         email: "c1@gmail.com"
 //     },
 //     {
-//         name: "Company 2", 
+//         name: "Company 2",
 //         email: "c2@gmail.com"
 //     },
 //     {
-//         name: "Company 3", 
+//         name: "Company 3",
 //         email: "c3@gmail.com"
 //     },
 //     {
@@ -68,7 +68,7 @@ const Draft = ({
     setFormType,
     setCurrentJAFState,
     setCurrentINFState,
-    setVersionTitle
+    setVersionTitle,
 }) => {
     const { fetch } = useFetch();
 
@@ -84,8 +84,11 @@ const Draft = ({
         if (!response.ok) {
             alert(json.message);
         } else {
-            setVersionTitle(json.Data.versionTitle? json.Data.versionTitle + ` - [${id}]` : `Untitled - [${id}]`);
-
+            setVersionTitle(
+                json.Data.versionTitle
+                    ? json.Data.versionTitle + ` - [${id}]`
+                    : `Untitled - [${id}]`
+            );
 
             if (type == 0) {
                 const structuredFormData = backToFrontJAF(json.Data);
@@ -104,8 +107,11 @@ const Draft = ({
     }
 
     return (
-        <div className="note-container hover-effect cursor-pointer" onClick={handleClickDraft}>
-            <div className="space-between" >
+        <div
+            className="note-container hover-effect cursor-pointer"
+            onClick={handleClickDraft}
+        >
+            <div className="space-between">
                 <div>{versionTitle}</div>
                 <div>
                     {new Date(date).toLocaleDateString() +
@@ -117,14 +123,12 @@ const Draft = ({
     );
 };
 
-
 export default function SPOCInterface() {
-    
     // const [companyDetails, setCompanyDetails] = React.useState({
     //     name: "",
     //     email: ""
     // });
-    
+
     // const companyEls = data.map((company) => Company(company.name, company.email, setCompanyDetails));
     const { user } = useAuth();
 
@@ -133,14 +137,14 @@ export default function SPOCInterface() {
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(0);
     const [drafts, setDrafts] = React.useState({
-        JAF: [
-        ],
-        INF: [
-        ],
+        JAF: [],
+        INF: [],
     });
 
-    const [currentINFState, setCurrentINFState] = React.useState(blank_inf_object);
-    const [currentJAFState, setCurrentJAFState] = React.useState(blank_jaf_object);
+    const [currentINFState, setCurrentINFState] =
+        React.useState(blank_inf_object);
+    const [currentJAFState, setCurrentJAFState] =
+        React.useState(blank_jaf_object);
 
     React.useEffect(() => {
         const fetchJAFDrafts = async () => {
@@ -187,7 +191,7 @@ export default function SPOCInterface() {
         fetchINFDrafts();
     }, []);
 
-    const JAFDraftEls = drafts?.JAF.map((draft) =>
+    const JAFDraftEls = drafts?.JAF.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -199,8 +203,8 @@ export default function SPOCInterface() {
             setCurrentINFState={setCurrentINFState}
             setVersionTitle={setVersionTitle}
         />
-    );
-    const INFDraftEls = drafts?.INF.map((draft) =>
+    ));
+    const INFDraftEls = drafts?.INF.map((draft) => (
         <Draft
             key={draft.id}
             id={draft.id}
@@ -212,8 +216,7 @@ export default function SPOCInterface() {
             setCurrentINFState={setCurrentINFState}
             setVersionTitle={setVersionTitle}
         />
-    );
-
+    ));
 
     return (
         <div className="page-container">
@@ -224,11 +227,15 @@ export default function SPOCInterface() {
                             <h2>Current Drafts</h2>
                             <Accordion.Item eventKey="1">
                                 <Accordion.Header>JAF Drafts</Accordion.Header>
-                                <Accordion.Body>{JAFDraftEls}</Accordion.Body>
+                                <Accordion.Body className="list-container">
+                                    {JAFDraftEls}
+                                </Accordion.Body>
                             </Accordion.Item>
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>INF Drafts</Accordion.Header>
-                                <Accordion.Body>{INFDraftEls}</Accordion.Body>
+                                <Accordion.Body className="list-container">
+                                    {INFDraftEls}
+                                </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>
                     </div>

@@ -22,6 +22,14 @@ const Signup = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (isLoggedIn && user.user.role === "recruiter") {
+            navigate("/recruiter");
+        } else if (isLoggedIn && user.user.role === "spoc") {
+            navigate("/spoc");
+        }
+    }, []);
+
     const verifyEmail = (email) => {
         // Verify email using regex
         return email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null;

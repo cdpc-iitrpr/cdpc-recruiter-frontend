@@ -27,7 +27,6 @@ const Email = () => {
         setIsEmailVerified(verifyEmail(e.target.value));
     };
 
-
     const handleSendOtp = async (e) => {
         e.preventDefault();
         setError(null);
@@ -83,7 +82,7 @@ const Email = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ otp }),
+                body: JSON.stringify({ email, otp }),
             });
             const data = await res.json();
 

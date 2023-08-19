@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Spinner } from "react-bootstrap";
 import { DJANGO_SERVER } from "../constants/endPoints";
 import { OTP_LENGTH } from "../constants/otp";
@@ -18,7 +18,7 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const auth = useAuth();
+    const { isLoggedIn,user } = useAuth();
 
     const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-const DJANGO_SERVER = "http://localhost:8000";
+const DJANGO_SERVER = "https://iitrpr.ac.in/cdpc/recruiter_portal/backend";
 const INF_FORM_ACTION = DJANGO_SERVER + "/api/recruiterSubmitINF/"
 const JAF_SUBMIT_ACTION = DJANGO_SERVER + "/api/recruiterSubmitJAF/"
 const JAF_FETCH_DRAFTS = DJANGO_SERVER + "/api/recruiterJAF/"

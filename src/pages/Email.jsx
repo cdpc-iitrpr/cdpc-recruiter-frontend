@@ -27,13 +27,6 @@ const Email = () => {
         setIsEmailVerified(verifyEmail(e.target.value));
     };
 
-    useEffect(() => {
-        if (isLoggedIn && user.user.role === "recruiter") {
-            navigate("/recruiter");
-        } else if (isLoggedIn && user.user.role === "spoc") {
-            navigate("/spoc");
-        }
-    }, []);
 
     const handleSendOtp = async (e) => {
         e.preventDefault();
@@ -118,6 +111,14 @@ const Email = () => {
             await handleSendOtp(e);
         }
     };
+
+    useEffect(() => {
+        if (isLoggedIn && user.user.role === "recruiter") {
+            navigate("/recruiter");
+        } else if (isLoggedIn && user.user.role === "spoc") {
+            navigate("/spoc");
+        }
+    }, []);
 
     return (
         <Container className="mt-5" style={{ maxWidth: "500px" }}>

@@ -14,7 +14,7 @@ const ProtectedRoute = ({ element, role }) => {
                 <h1>403 Forbidden</h1>
                 <p>You are not authorized to access this page.</p>
                 {/* link */}
-                <a href="/">Go to Home</a>
+                <a href="https://iitrpr.ac.in/cdpc/recruiter_portal/">Go to Home</a>
             </div>
         );
     } else {
@@ -23,7 +23,7 @@ const ProtectedRoute = ({ element, role }) => {
                 <h1>401 Unauthorized</h1>
                 <p>You need to login to access this page.</p>
                 {/* link */}
-                <a href="/">Go to Home</a>
+                <a href="https://iitrpr.ac.in/cdpc/recruiter_portal/">Go to Home</a>
             </div>
         );
     }

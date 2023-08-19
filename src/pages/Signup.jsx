@@ -113,7 +113,7 @@ const Signup = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ otp }),
+                body: JSON.stringify({ email,otp }),
             });
             const data = await res.json();
 

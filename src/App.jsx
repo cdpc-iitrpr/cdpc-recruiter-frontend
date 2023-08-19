@@ -16,7 +16,7 @@ import InfDisplay from "./components/Display/InfDisplay";
 import JafDisplay from "./components/Display/JafDisplay";
 import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import NotFound from "./components/NotFound";
 
 function App() {
@@ -24,8 +24,8 @@ function App() {
         <>
             <AuthContextProvider>
                 {/* Header */}
-                <Header />
                 <Router basename="/cdpc/recruiter_portal">
+                    <Header />
                     <Routes>
                         <Route path="/" element={<Email />} />
 

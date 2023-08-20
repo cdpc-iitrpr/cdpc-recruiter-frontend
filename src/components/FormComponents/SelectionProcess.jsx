@@ -140,7 +140,7 @@ const SelectionProcess = ({
                         >
                             <Form.Label>
                                 Eligibility Criteria (min. CGPA cutoff, 0-10
-                                scale) {reqd}
+                                scale)
                             </Form.Label>
                             <Form.Control
                                 name="eligibility_criteria"
@@ -152,7 +152,6 @@ const SelectionProcess = ({
                                         .eligibility_criteria
                                 }
                                 onChange={(e) => handleSelectionProcess(e)}
-                                required
                             />
                         </Form.Group>
 

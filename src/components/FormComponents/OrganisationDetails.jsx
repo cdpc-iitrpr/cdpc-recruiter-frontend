@@ -204,7 +204,7 @@ function OrganisationDetails({ formState, setFormState, handleSubmit }) {
                         <h4 className="mb-3">Contact Details</h4>
                         <Row>
                             <Col xl={4}>
-                                <h5 className="my-1">Head HR {reqd}</h5>
+                                <h5 className="my-1">Head HR</h5>
                                 <OrganisationContactGroup
                                     formState={formState}
                                     setFormState={setFormState}

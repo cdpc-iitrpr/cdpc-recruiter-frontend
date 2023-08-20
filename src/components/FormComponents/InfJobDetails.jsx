@@ -140,18 +140,17 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                             setFormState={setFormState}
                         />
                         <Form.Group className="mb-3" controlId="placeOfPosting">
-                            <Form.Label column>Place of Posting {reqd} </Form.Label>
+                            <Form.Label column>Place of Posting </Form.Label>
                             <Form.Control
                                 type="text"
                                 name="place_of_posting"
                                 placeholder="Enter Place of Posting"
                                 onChange={handleJobDetail}
                                 value={formState.job_profile.place_of_posting}
-                                required
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="jobDescription">
-                            <Form.Label>Job Description {reqd} </Form.Label>
+                            <Form.Label>Job Description </Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={3}
@@ -159,7 +158,6 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                 name="job_description"
                                 value={formState.job_profile.job_description}
                                 onChange={handleJobDetail}
-                                required
                             />
                         </Form.Group>
                         <Form.Group
@@ -215,7 +213,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     className="mb-3"
                                     controlId="stipendAmount"
                                 >
-                                    <Form.Label>Stipend Amount {reqd} </Form.Label>
+                                    <Form.Label>Stipend Amount  </Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter Amount"
@@ -225,7 +223,6 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                             formState.stipend_details
                                                 .stipend_amount
                                         }
-                                        required
                                     />
                                 </Form.Group>
                             </Col>
@@ -235,7 +232,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     controlId="bonusPerksIncentives"
                                 >
                                     <Form.Label>
-                                        Bonus/Perks/Incentives{reqd} 
+                                        Bonus/Perks/Incentives 
                                     </Form.Label>
                                     <Form.Control
                                         type="text"
@@ -246,7 +243,6 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                             formState.stipend_details
                                                 .bonus_perks_incentives
                                         }
-                                        required
                                     />
                                 </Form.Group>
                             </Col>
@@ -256,7 +252,7 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     controlId="accomodationFare"
                                 >
                                     <Form.Label>
-                                        Accommodation/Trip Fare {reqd} 
+                                        Accommodation/Trip Fare  
                                     </Form.Label>
                                     <Form.Control
                                         type="text"
@@ -267,14 +263,13 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                             formState.stipend_details
                                                 .accomodation_trip_fare
                                         }
-                                        required
                                     />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Form.Group className="mb-3">
                             <Form.Label>
-                                Bond/ Service Contract (if any) {reqd} 
+                                Bond/ Service Contract (if any)  
                             </Form.Label>
                             <Form.Control
                                 type="text"
@@ -285,7 +280,6 @@ function InfJobDetails({ formState, setFormState, handleSubmit, handleBack }) {
                                     formState.stipend_details
                                         .bond_service_contract
                                 }
-                                required
                             />
                         </Form.Group>
                     </div>

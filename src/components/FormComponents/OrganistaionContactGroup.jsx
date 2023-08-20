@@ -27,7 +27,7 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="text"
                         onChange={handleChange}
                         placeholder="Enter Contact Name"
-                        required={personType !== "second_person_of_contact"}
+                        required={personType === "first_person_of_contact"}
                     />
                 </Form.Group>
 
@@ -39,19 +39,19 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="email"
                         onChange={handleChange}
                         placeholder="Enter Contact Email"
-                        required={personType !== "second_person_of_contact"}
+                        required={personType === "first_person_of_contact"}
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-2" controlId="contactNumber">
-                    <Form.Label>Company Number</Form.Label>
+                    <Form.Label>Contact Number</Form.Label>
                     <Form.Control
                         name="phone"
                         value={formState.contact_details[personType].phone}
                         type="tel"
                         onChange={handleChange}
-                        placeholder="Enter Company Number"
-                        required={personType !== "second_person_of_contact"}
+                        placeholder="Enter Contact Number"
+                        required={personType === "first_person_of_contact"}
                     />
                 </Form.Group>
 
@@ -63,7 +63,6 @@ function OrganisationContactGroup({ formState, setFormState, personType }) {
                         type="tel"
                         onChange={handleChange}
                         placeholder="Enter Personal Phone"
-                        required={personType !== "second_person_of_contact"}
                     />
                 </Form.Group>
             </Col>

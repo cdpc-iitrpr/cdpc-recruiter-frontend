@@ -12,7 +12,7 @@ import useFetch from "../../hooks/useFetch";
 import { toast } from "react-toastify";
 
 function JafForm(props) {
-    const { formData, setFormData, versionTitle, setEditable } = props;
+    const { formData, setFormData, versionTitle, setEditable, setRefresh } = props;
     const { fetch } = useFetch();
 
     const [formPage, setFormPage] = React.useState(1);
@@ -57,9 +57,11 @@ function JafForm(props) {
         } else {
             toast.success(json.success);
             setEditable(false);
+            setRefresh(prev => !prev);
         }
 
     };
+
 
     useEffect(() => {
         setProgress(Math.round(((formPage - 1) / 3) * 100));

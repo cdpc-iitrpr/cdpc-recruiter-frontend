@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+
 .page-container{
     margin: 10px;
     padding: 10px;
@@ -70,4 +77,13 @@
 
 .cursor-pointer{
     cursor: pointer;
+}
+
+.header-link{
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.header-link:hover{
+    background-color: #4095b7;
 }

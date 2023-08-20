@@ -1,13 +1,13 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-export default function FormHeader({versionTitle, setVersionTitle, disabled})
+export default function FormHeader({versionTitle, setVersionTitle, disabled, handleSaveDraft})
 {
     return (
-        <div className="space-between text-margin container">
+        <div className="d-flex justify-content-around text-margin container">
             <Form.Control
                 id="versionTitle"
-                className="w-100 fs-3 fw-bold border-secondary"
+                className="w-75 fs-3 fw-bold border-secondary"
                 style={{backgroundColor:"#E6EEF1"}}
                 type="text"
                 placeholder="Version Title"
@@ -15,18 +15,18 @@ export default function FormHeader({versionTitle, setVersionTitle, disabled})
                 onChange={(e) => setVersionTitle(e.target.value)}
                 disabled={disabled}
             />
-            {/* <div className="space-between">
-                <Button
+            <div className="" >
+                {/* <Button
                 variant="primary"
                 className="button-margin"
                 onClick={handleClone}
-                >Clone</Button>
+                >Clone</Button> */}
                 <Button
                 variant="primary"
                 className="button-margin"
                 onClick={handleSaveDraft}
-                >Save</Button>
-            </div> */}
+                >Save Draft</Button>
+            </div>
         </div>
     )
 }

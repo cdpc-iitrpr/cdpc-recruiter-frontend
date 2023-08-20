@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Form, Row, Col, Accordion, Button } from "react-bootstrap";
+import { Form, Row, Col, Accordion, Button, Badge } from "react-bootstrap";
 import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
 import { blank_inf_object, blank_jaf_object } from "../constants/formObjects";
-import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS } from "../constants/endPoints";
+import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS, JAF_SUBMIT_ACTION, INF_FORM_ACTION } from "../constants/endPoints";
 import { useAuth } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
-import { backToFront as backToFrontJAF } from "../utils/JAFParser";
-import { backToFront as backToFrontINF } from "../utils/INFParser";
+import { backToFront as backToFrontJAF, frontToBack as frontToBackJAF } from "../utils/JAFParser";
+import { backToFront as backToFrontINF, frontToBack as frontToBackINF } from "../utils/INFParser";
 import JafDisplay from "../components/Display/JafDisplay";
 import InfDisplay from "../components/Display/InfDisplay";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ const Draft = ({
     versionTitle,
     date,
     type,
+    isDraft,
     setFormType,
     setCurrentJAFState,
     setCurrentINFState,
@@ -25,7 +26,7 @@ const Draft = ({
     setIsEditable,
 }) => {
     const { fetch } = useFetch();
-
+    
     const loadFormData = async () => {
         const url = type == 0 ? JAF_FETCH_DRAFTS : INF_FETCH_DRAFTS;
         const response = await fetch(url + `${id}`, {
@@ -69,12 +70,11 @@ const Draft = ({
             className="note-container hover-effect cursor-pointer"
             onClick={handleClickDraft}
         >
-            <div className="space-between">
+            <div className="space-between align-items-center">
                 <div>{versionTitle}</div>
+                {isDraft && <Badge className = {"text-black"} bg="warning">Draft</Badge>}
                 <div>
-                    {new Date(date).toLocaleDateString() +
-                        " " +
-                        new Date(date).toLocaleTimeString()}
+                    {new Date(date).toLocaleDateString()}
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@ export default function RecruiterInterface() {
     const { user } = useAuth();
     const { fetch } = useFetch();
     const [isEditable, setIsEditable] = useState(true);
-
+    const [refresh, setRefresh] = useState(false);
     const [versionTitle, setVersionTitle] = React.useState("");
     const [formType, setFormType] = React.useState(0);
     const [drafts, setDrafts] = React.useState({
@@ -146,7 +146,7 @@ export default function RecruiterInterface() {
 
         fetchJAFDrafts();
         fetchINFDrafts();
-    }, []);
+    }, [refresh]);
 
     function handleAddJAF() {
         // save current form, then create new JAF form
@@ -182,48 +182,38 @@ export default function RecruiterInterface() {
         }
     }
 
-    function handleSaveDraft() {
-        if (versionTitle == "") {
-            alert("Please enter a version title to save the current draft!");
-            return false;
+    async function handleSaveDraft () {
+        toast.info("Saving form draft...");
+        
+        const parsedFormData = formType == 0 ? frontToBackJAF(currentJAFState) : frontToBackINF(currentINFState);
+
+        // check if version title is empty
+        if (versionTitle === "") {
+            alert("Please enter a version title");
+            return;
         }
-        if (formType == 0) {
-            for (var i = 0; i < drafts.JAF.length; i++) {
-                if (drafts.JAF[i].versionTitle == versionTitle) {
-                    //update existing draft
-                    return true;
-                }
-            }
-            setDrafts((prevDrafts) => ({
-                ...prevDrafts,
-                JAF: [
-                    ...prevDrafts.JAF,
-                    {
-                        versionTitle: versionTitle,
-                        date: new Date().toISOString().substring(0, 10),
-                    },
-                ],
-            }));
+
+        // post request to server
+        const url = formType == 0 ? JAF_SUBMIT_ACTION : INF_FORM_ACTION;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                form_id: "id",
+                save_as_draft: true,
+                form_data: parsedFormData,
+                versionTitle: versionTitle,
+            }),
+        });
+        const json = await response.json();
+        if (!response.ok) {
+            toast.error(json.error);
         } else {
-            for (var i = 0; i < drafts.INF.length; i++) {
-                if (drafts.INF[i].versionTitle == versionTitle) {
-                    //update existing draft
-                    return true;
-                }
-            }
-            setDrafts((prevDrafts) => ({
-                ...prevDrafts,
-                INF: [
-                    ...prevDrafts.INF,
-                    {
-                        versionTitle: versionTitle,
-                        date: new Date().toISOString().substring(0, 10),
-                    },
-                ],
-            }));
+            toast.success(json.success);
+            setRefresh(prev => !prev);
         }
-        //send entered form data to backend
-        return true;
     }
 
     function handleSearch(e, type) {
@@ -275,6 +265,7 @@ export default function RecruiterInterface() {
         <Draft
             key={draft.id}
             id={draft.id}
+            isDraft={draft.is_draft}
             versionTitle={draft.versionTitle}
             date={draft.timestamp}
             type={0}
@@ -289,6 +280,7 @@ export default function RecruiterInterface() {
         <Draft
             key={draft.id}
             id={draft.id}
+            isDraft={draft.is_draft}
             versionTitle={draft.versionTitle}
             date={draft.timestamp}
             type={1}
@@ -381,6 +373,7 @@ export default function RecruiterInterface() {
                         />
                         {formType == 0 && isEditable && (
                             <JafForm
+                                setRefresh = {setRefresh}
                                 formData={currentJAFState}
                                 setFormData={setCurrentJAFState}
                                 versionTitle={versionTitle}
@@ -389,6 +382,7 @@ export default function RecruiterInterface() {
                         )}
                         {formType == 1 && isEditable && (
                             <InfForm
+                                setRefresh = {setRefresh}
                                 formData={currentINFState}
                                 setFormData={setCurrentINFState}
                                 versionTitle={versionTitle}

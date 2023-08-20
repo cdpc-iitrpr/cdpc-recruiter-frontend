@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import JafDisplay from "../Display/JafDisplay";
 import InfDisplay from "../Display/InfDisplay";
 
-function InfForm({ formData, setFormData, versionTitle, setEditable }) {
+function InfForm({ formData, setFormData, versionTitle, setEditable, setRefresh }) {
     const { fetch } = useFetch();
 
     const [formPage, setFormPage] = React.useState(1);
@@ -54,6 +54,7 @@ function InfForm({ formData, setFormData, versionTitle, setEditable }) {
         } else {
             toast.success(json.success);
             setEditable(false);
+            setRefresh(prev => !prev);
         }
     };
 

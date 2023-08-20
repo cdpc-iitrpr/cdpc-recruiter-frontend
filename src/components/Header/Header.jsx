@@ -9,7 +9,6 @@ import { useNavigate } from "react-router";
 
 function LinkContainer({ links }) {
     const [showList, setShowList] = useState(false);
-    const navigate = useNavigate();
 
     return (
         <>
@@ -17,9 +16,10 @@ function LinkContainer({ links }) {
                 <div className="d-flex justify-content-between text-center">
                     {links.map((key, index) => {
                         return (
-                            <a key={index}
+                            <a
+                                key={index}
                                 href={key.link}
-                                className="link-light link-underline-opacity-0 py-2 px-1 my-1 m-0 header-link"
+                                className="link-light link-underline-opacity-0 py-2 px-2 my-1 m-0 header-link"
                             >
                                 {key.title}
                             </a>
@@ -45,7 +45,8 @@ function LinkContainer({ links }) {
                     <div>
                         {links.map((key, index) => {
                             return (
-                                <a key={index}
+                                <a
+                                    key={index}
                                     href={key.link}
                                     className="link-light d-block link-underline-opacity-0 mx-2 py-2 m-0 header-link"
                                 >
@@ -62,6 +63,7 @@ function LinkContainer({ links }) {
 
 export default function Header() {
     const { isLoggedIn, logout } = useAuth();
+    const navigate = useNavigate();
     const [links, setLinks] = useState([
         {
             title: "Why Recruit",
@@ -131,7 +133,10 @@ export default function Header() {
                             <Button
                                 className="rounded-pill d-flex align-items-center"
                                 style={{ background: "#05709a" }}
-                                onClick={() => {logout(); navigate("/");}}
+                                onClick={() => {
+                                    logout();
+                                    navigate("/");
+                                }}
                             >
                                 <span className="d-lg-block d-none">
                                     Log Out

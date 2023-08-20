@@ -1,10 +1,11 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const ProtectedRoute = ({ element, role }) => {
     const { isLoggedIn, user } = useAuth();
     const userRole = user?.user?.role?.toLowerCase() || "";
+    const navigate = useNavigate();
 
     if (isLoggedIn && userRole === role) {
         return element;
@@ -14,7 +15,9 @@ const ProtectedRoute = ({ element, role }) => {
                 <h1>403 Forbidden</h1>
                 <p>You are not authorized to access this page.</p>
                 {/* link */}
-                <a href="https://iitrpr.ac.in/cdpc/recruiter_portal/">Go to Home</a>
+                <button className="btn btn-link" onClick={() => navigate("/")}>
+                    Go to Home
+                </button>
             </div>
         );
     } else {
@@ -23,7 +26,9 @@ const ProtectedRoute = ({ element, role }) => {
                 <h1>401 Unauthorized</h1>
                 <p>You need to login to access this page.</p>
                 {/* link */}
-                <a href="https://iitrpr.ac.in/cdpc/recruiter_portal/">Go to Home</a>
+                <button className="btn btn-link" onClick={() => navigate("/")}>
+                    Go to Home
+                </button>
             </div>
         );
     }

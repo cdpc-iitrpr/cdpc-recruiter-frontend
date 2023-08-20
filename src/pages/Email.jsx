@@ -19,7 +19,7 @@ const Email = () => {
 
     const verifyEmail = (email) => {
         // verify email using regex
-        return email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null;
+        return email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) !== null;
     };
 
     const handleChangedEmail = (e) => {

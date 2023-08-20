@@ -4,11 +4,22 @@ import JafForm from "../components/Form/JafForm";
 import InfForm from "../components/Form/InfForm";
 import FormHeader from "../components/FormComponents/FormHeader";
 import { blank_inf_object, blank_jaf_object } from "../constants/formObjects";
-import { JAF_FETCH_DRAFTS, INF_FETCH_DRAFTS, JAF_SUBMIT_ACTION, INF_FORM_ACTION } from "../constants/endPoints";
+import {
+    JAF_FETCH_DRAFTS,
+    INF_FETCH_DRAFTS,
+    JAF_SUBMIT_ACTION,
+    INF_FORM_ACTION,
+} from "../constants/endPoints";
 import { useAuth } from "../context/AuthContext";
 import useFetch from "../hooks/useFetch";
-import { backToFront as backToFrontJAF, frontToBack as frontToBackJAF } from "../utils/JAFParser";
-import { backToFront as backToFrontINF, frontToBack as frontToBackINF } from "../utils/INFParser";
+import {
+    backToFront as backToFrontJAF,
+    frontToBack as frontToBackJAF,
+} from "../utils/JAFParser";
+import {
+    backToFront as backToFrontINF,
+    frontToBack as frontToBackINF,
+} from "../utils/INFParser";
 import JafDisplay from "../components/Display/JafDisplay";
 import InfDisplay from "../components/Display/InfDisplay";
 import { toast } from "react-toastify";
@@ -26,7 +37,7 @@ const Draft = ({
     setIsEditable,
 }) => {
     const { fetch } = useFetch();
-    
+
     const loadFormData = async () => {
         const url = type == 0 ? JAF_FETCH_DRAFTS : INF_FETCH_DRAFTS;
         const response = await fetch(url + `${id}`, {
@@ -55,9 +66,9 @@ const Draft = ({
 
     const handleClickDraft = async () => {
         // toast.info("Loading draft...");
-        toast.info("Click on New JAF/INF to edit this form");
         setFormType(type);
-        setIsEditable(false);
+        if (!isDraft) setIsEditable(false);
+        else setIsEditable(true);
         try {
             await loadFormData();
         } catch (err) {
@@ -72,10 +83,12 @@ const Draft = ({
         >
             <div className="space-between align-items-center">
                 <div>{versionTitle}</div>
-                {isDraft && <Badge className = {"text-black"} bg="warning">Draft</Badge>}
-                <div>
-                    {new Date(date).toLocaleDateString()}
-                </div>
+                {isDraft && (
+                    <Badge className={"text-black"} bg="warning">
+                        Draft
+                    </Badge>
+                )}
+                <div>{new Date(date).toLocaleDateString()}</div>
             </div>
         </div>
     );
@@ -182,10 +195,13 @@ export default function RecruiterInterface() {
         }
     }
 
-    async function handleSaveDraft () {
+    async function handleSaveDraft() {
         toast.info("Saving form draft...");
-        
-        const parsedFormData = formType == 0 ? frontToBackJAF(currentJAFState) : frontToBackINF(currentINFState);
+
+        const parsedFormData =
+            formType == 0
+                ? frontToBackJAF(currentJAFState)
+                : frontToBackINF(currentINFState);
 
         // check if version title is empty
         if (versionTitle === "") {
@@ -212,7 +228,7 @@ export default function RecruiterInterface() {
             toast.error(json.error);
         } else {
             toast.success(json.success);
-            setRefresh(prev => !prev);
+            setRefresh((prev) => !prev);
         }
     }
 
@@ -373,7 +389,7 @@ export default function RecruiterInterface() {
                         />
                         {formType == 0 && isEditable && (
                             <JafForm
-                                setRefresh = {setRefresh}
+                                setRefresh={setRefresh}
                                 formData={currentJAFState}
                                 setFormData={setCurrentJAFState}
                                 versionTitle={versionTitle}
@@ -382,7 +398,7 @@ export default function RecruiterInterface() {
                         )}
                         {formType == 1 && isEditable && (
                             <InfForm
-                                setRefresh = {setRefresh}
+                                setRefresh={setRefresh}
                                 formData={currentINFState}
                                 setFormData={setCurrentINFState}
                                 versionTitle={versionTitle}

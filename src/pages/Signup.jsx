@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Container, Form, Button, Spinner } from "react-bootstrap";
 import { DJANGO_SERVER } from "../constants/endPoints";
 import { OTP_LENGTH } from "../constants/otp";
@@ -17,8 +17,11 @@ const Signup = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [timer, setTimer] = useState(0);
+    const [resend, setResend] = useState(false);
+    const intervalIdRef = useRef(null);
 
-    const { isLoggedIn,user, login } = useAuth();
+    const { isLoggedIn, user, login } = useAuth();
 
     const navigate = useNavigate();
 
@@ -30,9 +33,57 @@ const Signup = () => {
         }
     }, []);
 
-    const verifyEmail = (email) => {
-        // Verify email using regex
-        return email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) !== null;
+    useEffect(() => {
+        if (timer === 0) {
+            clearInterval(intervalIdRef.current);
+        }
+    }, [timer]);
+
+    const handleSendOtp = async () => {
+        setError(null);
+        setLoading(true);
+        setResend(false);
+
+        try {
+            // send otp to the django server
+            const res = await fetch(DJANGO_SERVER + "/api/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ email: email.toLowerCase() }),
+            });
+            const data = await res.json();
+
+            if (res.status !== 200) {
+                setError(data.error);
+                toast.error(data.error);
+            } else {
+                // otp sent successfully
+                setIsOtpSent(true);
+                toast.success("OTP sent successfully");
+                setTimeout(() => {
+                    setResend(true);
+                }, 15000);
+
+                setTimer(15);
+                const startInterval = () => {
+                    intervalIdRef.current = setInterval(() => {
+                        setTimer((prev) => prev - 1);
+                    }, 1000);
+                };
+
+                startInterval();
+            }
+        } catch (err) {
+            setError(err.message);
+            toast.error(err.message);
+            setTimer(0);
+            setResend(true);
+            // setIsOtpSent(true); //! for testing
+        }
+        setLoading(false);
     };
 
     const handleOnSubmit = async (e) => {
@@ -81,7 +132,12 @@ const Signup = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ name, email, company_name, phone }),
+                body: JSON.stringify({
+                    name,
+                    email: email.toLowerCase(),
+                    company_name,
+                    phone,
+                }),
             });
             const data = await res.json();
 
@@ -90,8 +146,22 @@ const Signup = () => {
             } else {
                 // Otp sent successfully
                 setIsOtpSent(true);
-                setError(null);
+                toast.success("OTP sent successfully");
+                setTimeout(() => {
+                    setResend(true);
+                }, 15000);
+    
+                setTimer(15);
+                const startInterval = () => {
+                    intervalIdRef.current = setInterval(() => {
+                        setTimer((prev) => prev - 1);
+                    }, 1000);
+                };
             }
+
+            startInterval();
+            setIsOtpSent(true);
+            setError(null);
         } catch (err) {
             setIsOtpSent(false);
             setError(err.message);
@@ -113,7 +183,7 @@ const Signup = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ email,otp }),
+                body: JSON.stringify({ email: email.toLowerCase(), otp }),
             });
             const data = await res.json();
 
@@ -183,7 +253,7 @@ const Signup = () => {
                             variant="primary"
                             type="submit"
                             onClick={(e) => handleOnSubmit(e)}
-                            className="d-flex align-items-center justify-content-center"
+                            className="d-flex align-items-center justify-content-center gap-2"
                         >
                             Sign up
                             {loading && (
@@ -215,21 +285,30 @@ const Signup = () => {
                                 onChange={(e) => setOtp(e.target.value)}
                             />
                         </Form.Group>
-                        <Button
-                            variant="success"
-                            onClick={handleLogin}
-                            disabled={otp.length !== OTP_LENGTH}
-                            className="mt-3 me-2 d-flex align-items-center justify-content-center gap-2"
-                        >
-                            Verify OTP
-                            {loading && (
-                                <Spinner
-                                    animation="border"
-                                    variant="info"
-                                    size="sm"
-                                />
-                            )}
-                        </Button>
+                        <div className="mt-3 d-flex justify-content-between">
+                            <Button
+                                variant="success"
+                                onClick={handleLogin}
+                                disabled={otp.length !== OTP_LENGTH}
+                                className="d-flex align-items-center justify-content-center gap-2"
+                            >
+                                Verify OTP
+                                {loading && (
+                                    <Spinner
+                                        animation="border"
+                                        variant="info"
+                                        size="sm"
+                                    />
+                                )}
+                            </Button>
+                            <button
+                                onClick={() => handleSendOtp()}
+                                className="btn btn-link"
+                                disabled={!resend}
+                            >
+                                {timer !== 0 ? `(${timer}s)` : ""} Resend OTP
+                            </button>
+                        </div>
                     </>
                 )}
             </Form>

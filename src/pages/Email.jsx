@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Form, Button, Spinner } from "react-bootstrap";
 import { DJANGO_SERVER } from "../constants/endPoints";
 import { OTP_LENGTH } from "../constants/otp";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+
 const Email = () => {
     const { login } = useAuth();
 
@@ -14,12 +15,19 @@ const Email = () => {
     const [isEmailVerified, setIsEmailVerified] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [resend, setResend] = useState(false);
+    const [timer, setTimer] = useState(0);
+    const intervalIdRef = useRef(null);
+
     const navigate = useNavigate();
     const { isLoggedIn, user } = useAuth();
 
     const verifyEmail = (email) => {
         // verify email using regex
-        return email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) !== null;
+        return (
+            email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/) !==
+            null
+        );
     };
 
     const handleChangedEmail = (e) => {
@@ -27,11 +35,10 @@ const Email = () => {
         setIsEmailVerified(verifyEmail(e.target.value));
     };
 
-    const handleSendOtp = async (e) => {
-        e.preventDefault();
+    const handleSendOtp = async () => {
         setError(null);
         setLoading(true);
-
+        setResend(false);
         // email should be valid using regex
         // if (email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) === null) {
         //   setIsEmailVerified(false);
@@ -49,7 +56,7 @@ const Email = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email: email.toLowerCase() }),
             });
             const data = await res.json();
 
@@ -60,17 +67,36 @@ const Email = () => {
                 // otp sent successfully
                 setIsOtpSent(true);
                 toast.success("OTP sent successfully");
+                setTimeout(() => {
+                    setResend(true);
+                }, 15000);
+
+                setTimer(15);
+                const startInterval = () => {
+                    intervalIdRef.current = setInterval(() => {
+                        setTimer((prev) => prev - 1);
+                    }, 1000);
+                };
+
+                startInterval();
             }
         } catch (err) {
             setError(err.message);
             toast.error(err.message);
+            setTimer(0);
+            setResend(true);
             // setIsOtpSent(true); //! for testing
         }
         setLoading(false);
     };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        if (timer === 0) {
+            clearInterval(intervalIdRef.current);
+        }
+    }, [timer]);
+
+    const handleLogin = async () => {
         setLoading(true);
         setError(null);
 
@@ -82,7 +108,7 @@ const Email = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({ email, otp }),
+                body: JSON.stringify({ email: email.toLowerCase(), otp }),
             });
             const data = await res.json();
 
@@ -172,21 +198,30 @@ const Email = () => {
                                 onChange={(e) => setOtp(e.target.value)}
                             />
                         </Form.Group>
-                        <Button
-                            variant="success"
-                            onClick={handleLogin}
-                            disabled={otp.length !== OTP_LENGTH}
-                            className="mt-3 d-flex align-items-center justify-content-center gap-2"
-                        >
-                            Verify OTP
-                            {loading && (
-                                <Spinner
-                                    animation="border"
-                                    variant="info"
-                                    size="sm"
-                                />
-                            )}
-                        </Button>
+                        <div className="mt-3 d-flex justify-content-between">
+                            <Button
+                                variant="success"
+                                onClick={handleLogin}
+                                disabled={otp.length !== OTP_LENGTH}
+                                className="d-flex align-items-center justify-content-center gap-2"
+                            >
+                                Verify OTP
+                                {loading && (
+                                    <Spinner
+                                        animation="border"
+                                        variant="info"
+                                        size="sm"
+                                    />
+                                )}
+                            </Button>
+                            <button
+                                onClick={() => handleSendOtp()}
+                                className="btn btn-link"
+                                disabled={!resend}
+                            >
+                                {timer !== 0 ? `(${timer}s)` : ""} Resend OTP
+                            </button>
+                        </div>
                     </>
                 )}
             </Form>

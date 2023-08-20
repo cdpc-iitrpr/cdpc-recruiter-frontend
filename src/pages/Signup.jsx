@@ -18,7 +18,7 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const { isLoggedIn,user } = useAuth();
+    const { isLoggedIn,user, login } = useAuth();
 
     const navigate = useNavigate();
 
@@ -121,6 +121,7 @@ const Signup = () => {
                 setError(data.error);
             } else {
                 toast.success("Login Successful");
+                login(data);
                 navigate("/recruiter");
             }
         } catch (err) {

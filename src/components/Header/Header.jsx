@@ -14,12 +14,12 @@ function LinkContainer({ links }) {
     return (
         <>
             <div className="d-xl-block d-none ">
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between text-center">
                     {links.map((key, index) => {
                         return (
                             <a key={index}
                                 href={key.link}
-                                className="link-light link-underline-opacity-0 pe-4 py-2 m-0"
+                                className="link-light link-underline-opacity-0 py-2 px-1 my-1 m-0 header-link"
                             >
                                 {key.title}
                             </a>
@@ -47,7 +47,7 @@ function LinkContainer({ links }) {
                             return (
                                 <a key={index}
                                     href={key.link}
-                                    className="link-light d-block link-underline-opacity-0 mx-2 py-2 m-0"
+                                    className="link-light d-block link-underline-opacity-0 mx-2 py-2 m-0 header-link"
                                 >
                                     {key.title}
                                 </a>

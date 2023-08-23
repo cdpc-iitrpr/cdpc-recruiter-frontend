@@ -157,9 +157,10 @@ const Signup = () => {
                         setTimer((prev) => prev - 1);
                     }, 1000);
                 };
+                
+                startInterval();
             }
 
-            startInterval();
             setIsOtpSent(true);
             setError(null);
         } catch (err) {

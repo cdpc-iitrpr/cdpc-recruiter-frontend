@@ -195,7 +195,7 @@ export default function JafJobDetails(props) {
                                 />
                             </Col>
                         </Row>
-                        <p>
+                        {/* <p>
                             Or, upload these details as an attachment. Please
                             provide a detailed breakup of salary/perks.
                         </p>
@@ -207,7 +207,7 @@ export default function JafJobDetails(props) {
                                     salary_details_pdf: e.target.files[0],
                                 }));
                             }}
-                        />
+                        /> */}
                     </Form.Group>
                     <div className="d-flex justify-content-around my-3">
                         <Button variant="primary" onClick={handleBack}>
